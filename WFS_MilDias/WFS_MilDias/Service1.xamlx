@@ -1,0 +1,291 @@
+﻿<WorkflowService mc:Ignorable="sap sap2010 sads" p1:TextExpression.Namespaces="{x:Reference __ReferenceID8}" p1:TextExpression.References="{x:Reference __ReferenceID9}" ConfigurationName="Service1" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap2010:WorkflowViewState.IdRef="WorkflowService_1" Name="Service1"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/servicemodel"
+ xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
+ xmlns:p="http://tempuri.org/"
+ xmlns:p1="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:w="clr-namespace:WFS_MilDias;assembly=WFS_MilDias"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <p1:Sequence DisplayName="Sequencia Principal" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <p1:TextExpression.Namespaces>
+      <sco:Collection x:TypeArguments="x:String" x:Name="__ReferenceID8">
+        <x:String>System</x:String>
+        <x:String>System.Collections.Generic</x:String>
+        <x:String>System.Data</x:String>
+        <x:String>System.Linq</x:String>
+        <x:String>System.Text</x:String>
+      </sco:Collection>
+    </p1:TextExpression.Namespaces>
+    <p1:TextExpression.References>
+      <sco:Collection x:TypeArguments="p1:AssemblyReference" x:Name="__ReferenceID9">
+        <p1:AssemblyReference>Microsoft.CSharp</p1:AssemblyReference>
+        <p1:AssemblyReference>System.Web.DynamicData</p1:AssemblyReference>
+        <p1:AssemblyReference>System.Drawing</p1:AssemblyReference>
+        <p1:AssemblyReference>System.Web.Entity</p1:AssemblyReference>
+        <p1:AssemblyReference>System.Web.ApplicationServices</p1:AssemblyReference>
+        <p1:AssemblyReference>System</p1:AssemblyReference>
+        <p1:AssemblyReference>System.Activities</p1:AssemblyReference>
+        <p1:AssemblyReference>System.Core</p1:AssemblyReference>
+        <p1:AssemblyReference>System.Data</p1:AssemblyReference>
+        <p1:AssemblyReference>System.Data.Entity</p1:AssemblyReference>
+        <p1:AssemblyReference>System.Runtime.Serialization</p1:AssemblyReference>
+        <p1:AssemblyReference>System.ServiceModel</p1:AssemblyReference>
+        <p1:AssemblyReference>System.ServiceModel.Activities</p1:AssemblyReference>
+        <p1:AssemblyReference>System.ServiceModel.Channels</p1:AssemblyReference>
+        <p1:AssemblyReference>System.Web</p1:AssemblyReference>
+        <p1:AssemblyReference>System.Xaml</p1:AssemblyReference>
+        <p1:AssemblyReference>System.Xml</p1:AssemblyReference>
+        <p1:AssemblyReference>System.Xml.Linq</p1:AssemblyReference>
+        <p1:AssemblyReference>Microsoft.ApplicationInsights</p1:AssemblyReference>
+        <p1:AssemblyReference>Microsoft.AI.Agent.Intercept</p1:AssemblyReference>
+        <p1:AssemblyReference>Microsoft.AI.DependencyCollector</p1:AssemblyReference>
+        <p1:AssemblyReference>Microsoft.AI.PerfCounterCollector</p1:AssemblyReference>
+        <p1:AssemblyReference>Microsoft.AI.ServerTelemetryChannel</p1:AssemblyReference>
+        <p1:AssemblyReference>Microsoft.AI.WindowsServer</p1:AssemblyReference>
+        <p1:AssemblyReference>Microsoft.AI.Web</p1:AssemblyReference>
+        <p1:AssemblyReference>System.Net.Http</p1:AssemblyReference>
+        <p1:AssemblyReference>System.Net</p1:AssemblyReference>
+        <p1:AssemblyReference>Newtonsoft.Json</p1:AssemblyReference>
+        <p1:AssemblyReference>mscorlib</p1:AssemblyReference>
+        <p1:AssemblyReference>WFS_MilDias</p1:AssemblyReference>
+      </sco:Collection>
+    </p1:TextExpression.References>
+    <p1:Sequence.Variables>
+      <p1:Variable x:TypeArguments="CorrelationHandle" Name="handle" />
+      <p1:Variable x:TypeArguments="x:Int32" Name="data" />
+    </p1:Sequence.Variables>
+    <p1:Persist sap2010:WorkflowViewState.IdRef="Persist_1" />
+    <Receive x:Name="__ReferenceID7" CanCreateInstance="True" DisplayName="ReceiveRequest" sap2010:WorkflowViewState.IdRef="Receive_1" OperationName="GetData" ServiceContractName="p:IService">
+      <Receive.CorrelationInitializers>
+        <RequestReplyCorrelationInitializer>
+          <RequestReplyCorrelationInitializer.CorrelationHandle>
+            <p1:InArgument x:TypeArguments="CorrelationHandle">
+              <mca:CSharpValue x:TypeArguments="CorrelationHandle">handle</mca:CSharpValue>
+            </p1:InArgument>
+          </RequestReplyCorrelationInitializer.CorrelationHandle>
+        </RequestReplyCorrelationInitializer>
+      </Receive.CorrelationInitializers>
+      <ReceiveMessageContent>
+        <p1:OutArgument x:TypeArguments="x:Int32">
+          <mca:CSharpReference x:TypeArguments="x:Int32">data</mca:CSharpReference>
+        </p1:OutArgument>
+      </ReceiveMessageContent>
+    </Receive>
+    <p1:Flowchart DisplayName="Envio de SMSs" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+      <p1:Flowchart.Variables>
+        <p1:Variable x:TypeArguments="x:Boolean" Name="resultSMS1" />
+      </p1:Flowchart.Variables>
+      <p1:Flowchart.StartNode>
+        <x:Reference>__ReferenceID2</x:Reference>
+      </p1:Flowchart.StartNode>
+      <p1:FlowDecision x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+        <p1:FlowDecision.Condition>
+          <mca:CSharpValue x:TypeArguments="x:Boolean">resultSMS1==true</mca:CSharpValue>
+        </p1:FlowDecision.Condition>
+        <p1:FlowDecision.True>
+          <p1:FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_9">
+            <p1:Delay Duration="00:00:03" sap2010:WorkflowViewState.IdRef="Delay_1" />
+            <p1:FlowStep.Next>
+              <p1:FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_6">
+                <w:SendSMS DisplayName="SendSMS-2" sap2010:WorkflowViewState.IdRef="SendSMS_6" Text="mensaje 2">
+                  <w:SendSMS.Result>
+                    <p1:OutArgument x:TypeArguments="x:Boolean">
+                      <mca:CSharpReference x:TypeArguments="x:Boolean">resultSMS1</mca:CSharpReference>
+                    </p1:OutArgument>
+                  </w:SendSMS.Result>
+                </w:SendSMS>
+                <p1:FlowStep.Next>
+                  <p1:FlowDecision x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
+                    <p1:FlowDecision.Condition>
+                      <mca:CSharpValue x:TypeArguments="x:Boolean">resultSMS1==true</mca:CSharpValue>
+                    </p1:FlowDecision.Condition>
+                    <p1:FlowDecision.True>
+                      <p1:FlowStep x:Name="__ReferenceID5" sap2010:WorkflowViewState.IdRef="FlowStep_8">
+                        <p1:Delay Duration="00:00:03" sap2010:WorkflowViewState.IdRef="Delay_2" />
+                        <p1:FlowStep.Next>
+                          <p1:FlowStep x:Name="__ReferenceID6" sap2010:WorkflowViewState.IdRef="FlowStep_7">
+                            <w:SendSMS DisplayName="SendSMS-3" sap2010:WorkflowViewState.IdRef="SendSMS_7" Text="mensaje 3">
+                              <w:SendSMS.Result>
+                                <p1:OutArgument x:TypeArguments="x:Boolean">
+                                  <mca:CSharpReference x:TypeArguments="x:Boolean">resultSMS1</mca:CSharpReference>
+                                </p1:OutArgument>
+                              </w:SendSMS.Result>
+                            </w:SendSMS>
+                          </p1:FlowStep>
+                        </p1:FlowStep.Next>
+                      </p1:FlowStep>
+                    </p1:FlowDecision.True>
+                    <p1:FlowDecision.False>
+                      <x:Reference>__ReferenceID0</x:Reference>
+                    </p1:FlowDecision.False>
+                  </p1:FlowDecision>
+                </p1:FlowStep.Next>
+              </p1:FlowStep>
+            </p1:FlowStep.Next>
+          </p1:FlowStep>
+        </p1:FlowDecision.True>
+        <p1:FlowDecision.False>
+          <p1:FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_5">
+            <w:SendSMS DisplayName="SendSMS-1" sap2010:WorkflowViewState.IdRef="SendSMS_5" Text="mensaje1">
+              <w:SendSMS.Result>
+                <p1:OutArgument x:TypeArguments="x:Boolean">
+                  <mca:CSharpReference x:TypeArguments="x:Boolean">resultSMS1</mca:CSharpReference>
+                </p1:OutArgument>
+              </w:SendSMS.Result>
+            </w:SendSMS>
+            <p1:FlowStep.Next>
+              <x:Reference>__ReferenceID1</x:Reference>
+            </p1:FlowStep.Next>
+          </p1:FlowStep>
+        </p1:FlowDecision.False>
+      </p1:FlowDecision>
+      <x:Reference>__ReferenceID2</x:Reference>
+      <x:Reference>__ReferenceID0</x:Reference>
+      <x:Reference>__ReferenceID3</x:Reference>
+      <x:Reference>__ReferenceID4</x:Reference>
+      <x:Reference>__ReferenceID5</x:Reference>
+      <x:Reference>__ReferenceID6</x:Reference>
+    </p1:Flowchart>
+    <SendReply Request="{x:Reference __ReferenceID7}" DisplayName="SendResponse" sap2010:WorkflowViewState.IdRef="SendReply_1">
+      <SendMessageContent DeclaredMessageType="x:String">
+        <p1:InArgument x:TypeArguments="x:String">Termino</p1:InArgument>
+      </SendMessageContent>
+    </SendReply>
+    <sads:DebugSymbol.Symbol>d15jOlx1c2Vyc1xqcGdhcmNpYVxkb2N1bWVudHNcdmlzdWFsIHN0dWRpbyAyMDE1XFByb2plY3RzXFdGU19NaWxEaWFzXFdGU19NaWxEaWFzXFNlcnZpY2UxLnhhbWx4Fw8DoQERAQE/BT8/ATBABU8PASlQBZoBFAEKmwEFnwERAQJMC0xUAS1FD0VcASqHAQ2NARkBI1kLWVoBH10NXVcBHWARZh0BF2oXamYBE24ZbmMBEXEddykBC50BM50BOgEDhwFhhwFrASiKAROKAWQBJF0gXSoBHmBlYHABHGMXY2gBGG4sbjYBEnFxcXwBEHQjdHQBDA==</sads:DebugSymbol.Symbol>
+  </p1:Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="Persist_1" sap:VirtualizedContainerService.HintSize="255,22" />
+      <sap2010:ViewStateData Id="Receive_1" sap:VirtualizedContainerService.HintSize="255,90" />
+      <sap2010:ViewStateData Id="Delay_1" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="SendSMS_6" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Delay_2" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="SendSMS_7" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_7">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">190,869</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">310,531 310,561 290,561 290,616.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">190,729</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">290,751 290,869</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_3" sap:VirtualizedContainerService.HintSize="70,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">245,606.5</av:Point>
+            <av:Size x:Key="ShapeSize">70,87</av:Size>
+            <av:PointCollection x:Key="FalseConnector">315,650 430,650 430,510 400,510</av:PointCollection>
+            <av:PointCollection x:Key="TrueConnector">245,650 160,650 160,740 190,740</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_6">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,499</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,521 300,551 280,551 280,606.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_9">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,379</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,401 300,499</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="SendSMS_5" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_5">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">210,119</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">310,141 310,171 290,171 290,236.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_2" sap:VirtualizedContainerService.HintSize="70,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">255,236.5</av:Point>
+            <av:Size x:Key="ShapeSize">70,87</av:Size>
+            <av:PointCollection x:Key="FalseConnector">325,280 440,280 440,130 410,130</av:PointCollection>
+            <av:PointCollection x:Key="TrueConnector">255,280 170,280 170,390 200,390</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="255,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
+            <av:Size x:Key="ShapeSize">60,75</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,107.5 310,107.5 310,119</av:PointCollection>
+            <x:Double x:Key="Height">1122.92</x:Double>
+            <x:Double x:Key="Width">700</x:Double>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="SendReply_1" sap:VirtualizedContainerService.HintSize="255,90" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="277,497">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="WorkflowService_1" sap:VirtualizedContainerService.HintSize="307,567" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</WorkflowService>
