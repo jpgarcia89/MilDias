@@ -18,3 +18,4 @@ c:\users\jpgarcia\documents\visual studio 2015\Projects\WFS_MilDias\WFS_MilDias\
 c:\users\jpgarcia\documents\visual studio 2015\Projects\WFS_MilDias\WFS_MilDias\bin\Newtonsoft.Json.xml
 c:\users\jpgarcia\documents\visual studio 2015\Projects\WFS_MilDias\WFS_MilDias\obj\Debug\WFS_MilDias.dll
 c:\users\jpgarcia\documents\visual studio 2015\Projects\WFS_MilDias\WFS_MilDias\obj\Debug\WFS_MilDias.pdb
+c:\users\jpgarcia\documents\visual studio 2015\Projects\WFS_MilDias\WFS_MilDias\obj\Debug\WFS_MilDias.csprojResolveAssemblyReference.cache

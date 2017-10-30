@@ -92,7 +92,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SendSMS.cs" />
+    <Compile Include="Custom Activities\SendSMS.cs" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Web.config" />
@@ -102,13 +102,16 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Compile Include="Models\BaseRequest.cs" />
+    <Compile Include="Models\MORequest.cs" />
+    <Compile Include="Models\MTRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Service1.xamlx">
+    <Content Include="WorkFlows\WF_SMSGestacion.xamlx">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Content>
