@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace WFS_MilDias
 {
@@ -51,6 +52,10 @@ namespace WFS_MilDias
                 var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
                 var respuesta = cliente.PostAsync("/api/MilDias/Prueba", content).Result;
                 var resultContent = respuesta.Content.ReadAsStringAsync().Result;
+
+                var id = context.WorkflowInstanceId;
+                Debug.WriteLine(id.ToString());
+
 
                 return JsonConvert.DeserializeObject<bool>(resultContent);
             }

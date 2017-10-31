@@ -19,3 +19,24 @@ c:\users\jpgarcia\documents\visual studio 2015\Projects\WFS_MilDias\WFS_MilDias\
 c:\users\jpgarcia\documents\visual studio 2015\Projects\WFS_MilDias\WFS_MilDias\obj\Debug\WFS_MilDias.dll
 c:\users\jpgarcia\documents\visual studio 2015\Projects\WFS_MilDias\WFS_MilDias\obj\Debug\WFS_MilDias.pdb
 c:\users\jpgarcia\documents\visual studio 2015\Projects\WFS_MilDias\WFS_MilDias\obj\Debug\WFS_MilDias.csprojResolveAssemblyReference.cache
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\ApplicationInsights.config
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\WFS_MilDias.dll.config
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\WFS_MilDias.dll
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\WFS_MilDias.pdb
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\Microsoft.AI.Agent.Intercept.dll
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\Microsoft.AI.DependencyCollector.dll
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\Microsoft.AI.PerfCounterCollector.dll
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\Microsoft.AI.ServerTelemetryChannel.dll
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\Microsoft.AI.Web.dll
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\Microsoft.AI.WindowsServer.dll
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\Microsoft.ApplicationInsights.dll
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\Newtonsoft.Json.dll
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\Microsoft.AI.DependencyCollector.xml
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\Microsoft.AI.ServerTelemetryChannel.xml
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\Microsoft.AI.Web.xml
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\Microsoft.AI.WindowsServer.xml
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\Microsoft.ApplicationInsights.xml
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\bin\Newtonsoft.Json.xml
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\obj\Debug\WFS_MilDias.csprojResolveAssemblyReference.cache
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\obj\Debug\WFS_MilDias.dll
+F:\Sistemas\GitHub-Repositorios\MilDias\WFS_MilDias\WFS_MilDias\obj\Debug\WFS_MilDias.pdb

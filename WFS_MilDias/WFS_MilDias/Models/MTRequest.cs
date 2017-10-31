@@ -11,10 +11,13 @@ namespace WFS_MilDias.Models.MovilGates
     {
         [XmlElement(ElementName = "Proveedor")]
         public Proveedor Proveedor { get; set; }
+
         [XmlElement(ElementName = "Servicio")]
         public Servicio Servicio { get; set; }
+
         [XmlElement(ElementName = "Telefono")]
         public Telefono Telefono { get; set; }
+
         [XmlElement(ElementName = "Contenido")]
         public Contenido Contenido { get; set; }
     }
