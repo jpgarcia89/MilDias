@@ -54,6 +54,7 @@ namespace WFS_MilDias
                 var resultContent = respuesta.Content.ReadAsStringAsync().Result;
 
                 var id = context.WorkflowInstanceId;
+                
                 Debug.WriteLine(id.ToString());
 
 
