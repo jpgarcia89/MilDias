@@ -12,12 +12,13 @@ namespace ServiceRestSMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class logMensajeRecibido
+    public partial class LogMensaje
     {
-        public int ID { get; set; }
-        public System.DateTime Fecha { get; set; }
-        public string Mensaje { get; set; }
-        public string Origen { get; set; }
-        public bool Procesado { get; set; }
+        public long ID { get; set; }
+        public System.DateTime FECHA { get; set; }
+        public string MENSAJE { get; set; }
+        public byte ID_TIPOMENSAJE { get; set; }
+    
+        public virtual TipoMensaje TipoMensaje { get; set; }
     }
 }

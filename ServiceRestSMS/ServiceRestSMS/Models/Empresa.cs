@@ -12,12 +12,19 @@ namespace ServiceRestSMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class logMensajeEnviado
+    public partial class Empresa
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Empresa()
+        {
+            this.Embarazada = new HashSet<Embarazada>();
+        }
+    
         public int ID { get; set; }
-        public System.DateTime Fecha { get; set; }
-        public string Mensaje { get; set; }
-        public string Origen { get; set; }
-        public bool Procesado { get; set; }
+        public string Nombre { get; set; }
+        public string Carrier { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Embarazada> Embarazada { get; set; }
     }
 }

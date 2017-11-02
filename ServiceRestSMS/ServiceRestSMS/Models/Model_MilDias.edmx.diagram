@@ -4,11 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="423096baed4c4101a98874f5f129a0ea" Name="Diagram1">
-        <EntityTypeShape EntityType="ProgMilDiasModel.logMensajeEnviado" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProgMilDiasModel.logMensajeRecibido" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProgMilDiasModel.logNotificacion" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="ProgMilDiasModel.logSMSError" Width="1.5" PointX="3.375" PointY="3.75" />
+      <Diagram DiagramId="2ef1423e0df84d1cb8e0b1f752ed6a19" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.Embarazada" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Empresa" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Inscripcion" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.LogMensaje" Width="1.5" PointX="10" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.LogMensajeControl" Width="1.5" PointX="8" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TipoInstancia" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TipoMensaje" Width="1.5" PointX="7.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TipoRespuestaControl" Width="1.5" PointX="5.75" PointY="5.125" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_Embarazada_Empresa" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Inscripcion_Embarazada" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Inscripcion_TipoInstancia" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_LogMensaje_TipoMensaje" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_LogMensajeControl_TipoRespuestaControl" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
