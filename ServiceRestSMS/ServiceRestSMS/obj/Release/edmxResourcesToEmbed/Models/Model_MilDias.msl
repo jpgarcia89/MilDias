@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ProgMilDiasModelStoreContainer" CdmEntityContainer="ProgMilDiasEntities">
+    <EntitySetMapping Name="logMensajeEnviado">
+      <EntityTypeMapping TypeName="ProgMilDiasModel.logMensajeEnviado">
+        <MappingFragment StoreEntitySet="logMensajeEnviado">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+          <ScalarProperty Name="Origen" ColumnName="Origen" />
+          <ScalarProperty Name="Procesado" ColumnName="Procesado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="logMensajeRecibido">
+      <EntityTypeMapping TypeName="ProgMilDiasModel.logMensajeRecibido">
+        <MappingFragment StoreEntitySet="logMensajeRecibido">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+          <ScalarProperty Name="Origen" ColumnName="Origen" />
+          <ScalarProperty Name="Procesado" ColumnName="Procesado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="logNotificacion">
+      <EntityTypeMapping TypeName="ProgMilDiasModel.logNotificacion">
+        <MappingFragment StoreEntitySet="logNotificacion">
+          <ScalarProperty Name="Procesado" ColumnName="Procesado" />
+          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="logSMSError">
+      <EntityTypeMapping TypeName="ProgMilDiasModel.logSMSError">
+        <MappingFragment StoreEntitySet="logSMSError">
+          <ScalarProperty Name="Origen" ColumnName="Origen" />
+          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

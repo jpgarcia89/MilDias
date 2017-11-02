@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProgMilDiasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="logMensajeEnviado">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Fecha" Type="date" Nullable="false" />
+    <Property Name="Mensaje" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Origen" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Procesado" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="logMensajeRecibido">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Fecha" Type="date" Nullable="false" />
+    <Property Name="Mensaje" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Origen" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Procesado" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="logNotificacion">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Fecha" Type="date" Nullable="false" />
+    <Property Name="Mensaje" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Procesado" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="logSMSError">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Fecha" Type="date" Nullable="false" />
+    <Property Name="Mensaje" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Origen" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="ProgMilDiasModelStoreContainer">
+    <EntitySet Name="logMensajeEnviado" EntityType="Self.logMensajeEnviado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="logMensajeRecibido" EntityType="Self.logMensajeRecibido" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="logNotificacion" EntityType="Self.logNotificacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="logSMSError" EntityType="Self.logSMSError" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>
