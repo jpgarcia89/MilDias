@@ -174,16 +174,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\logMensajeEnviado.cs">
+    <Compile Include="Models\Embarazada.cs">
       <DependentUpon>Model_MilDias.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\logMensajeRecibido.cs">
+    <Compile Include="Models\Empresa.cs">
       <DependentUpon>Model_MilDias.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\logNotificacion.cs">
+    <Compile Include="Models\Inscripcion.cs">
       <DependentUpon>Model_MilDias.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\logSMSError.cs">
+    <Compile Include="Models\LogMensaje.cs">
+      <DependentUpon>Model_MilDias.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LogMensajeControl.cs">
       <DependentUpon>Model_MilDias.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model_MilDias.Context.cs">
@@ -204,6 +207,16 @@
     <Compile Include="Models\MovilGates\BaseRequest.cs" />
     <Compile Include="Models\MovilGates\MORequest.cs" />
     <Compile Include="Models\MovilGates\MTRequest.cs" />
+    <Compile Include="Models\SMS.cs" />
+    <Compile Include="Models\TipoInstancia.cs">
+      <DependentUpon>Model_MilDias.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TipoMensaje.cs">
+      <DependentUpon>Model_MilDias.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TipoRespuestaControl.cs">
+      <DependentUpon>Model_MilDias.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

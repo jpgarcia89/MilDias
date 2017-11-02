@@ -14,36 +14,36 @@ namespace ServiceRestSMS.Controllers
     public class NuevoSMSController : ApiController
     {
         // POST api/values
-        [HttpPost]
-        public HttpResponseMessage NuevoSMS(HttpRequestMessage request)
-        {
-            ProgMilDiasEntities db = new ProgMilDiasEntities();
-            try
-            {
-                logMensajeRecibido log = new logMensajeRecibido();
-                string xmlString = request.Content.ReadAsStringAsync().Result;
-                if (xmlString != "" && xmlString != "\n")
-                {
-                    log.Fecha = DateTime.Now;
-                    log.Mensaje = xmlString;
-                    log.Origen = "NuevoSMS";
-                    log.Procesado = false;
-                    db.logMensajeRecibido.Add(log);
-                    db.SaveChanges();          
-                }
-                return new HttpResponseMessage(HttpStatusCode.OK);
-            }
-            catch (Exception e)
-            {
-                logSMSError logError = new logSMSError();
-                logError.Fecha = DateTime.Now;
-                logError.Mensaje = e.Message;
-                logError.Origen = "NuevoSMS";
-                db.logSMSError.Add(logError);
-                db.SaveChanges();
-                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
-            }
-        }
+        //[HttpPost]
+        //public HttpResponseMessage NuevoSMS(HttpRequestMessage request)
+        //{
+        //    MilDiasEntities db = new MilDiasEntities();
+        //    try
+        //    {
+        //        logMensajeRecibido log = new logMensajeRecibido();
+        //        string xmlString = request.Content.ReadAsStringAsync().Result;
+        //        if (xmlString != "" && xmlString != "\n")
+        //        {
+        //            log.Fecha = DateTime.Now;
+        //            log.Mensaje = xmlString;
+        //            log.Origen = "NuevoSMS";
+        //            log.Procesado = false;
+        //            db.logMensajeRecibido.Add(log);
+        //            db.SaveChanges();          
+        //        }
+        //        return new HttpResponseMessage(HttpStatusCode.OK);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        logSMSError logError = new logSMSError();
+        //        logError.Fecha = DateTime.Now;
+        //        logError.Mensaje = e.Message;
+        //        logError.Origen = "NuevoSMS";
+        //        db.logSMSError.Add(logError);
+        //        db.SaveChanges();
+        //        return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+        //    }
+        //}
 
         public static string[] splitContenido(string contenido)
         {

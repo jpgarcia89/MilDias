@@ -1,45 +1,81 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="ProgMilDiasModelStoreContainer" CdmEntityContainer="ProgMilDiasEntities">
-    <EntitySetMapping Name="logMensajeEnviado">
-      <EntityTypeMapping TypeName="ProgMilDiasModel.logMensajeEnviado">
-        <MappingFragment StoreEntitySet="logMensajeEnviado">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="MilDiasEntities">
+    <EntitySetMapping Name="Embarazada">
+      <EntityTypeMapping TypeName="Model.Embarazada">
+        <MappingFragment StoreEntitySet="Embarazada">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
-          <ScalarProperty Name="Origen" ColumnName="Origen" />
-          <ScalarProperty Name="Procesado" ColumnName="Procesado" />
+          <ScalarProperty Name="ID_EMPRESA" ColumnName="ID_EMPRESA" />
+          <ScalarProperty Name="DNI" ColumnName="DNI" />
+          <ScalarProperty Name="TELEFONO" ColumnName="TELEFONO" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="logMensajeRecibido">
-      <EntityTypeMapping TypeName="ProgMilDiasModel.logMensajeRecibido">
-        <MappingFragment StoreEntitySet="logMensajeRecibido">
+    <EntitySetMapping Name="Empresa">
+      <EntityTypeMapping TypeName="Model.Empresa">
+        <MappingFragment StoreEntitySet="Empresa">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
-          <ScalarProperty Name="Origen" ColumnName="Origen" />
-          <ScalarProperty Name="Procesado" ColumnName="Procesado" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Carrier" ColumnName="Carrier" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="logNotificacion">
-      <EntityTypeMapping TypeName="ProgMilDiasModel.logNotificacion">
-        <MappingFragment StoreEntitySet="logNotificacion">
-          <ScalarProperty Name="Procesado" ColumnName="Procesado" />
-          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
-          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+    <EntitySetMapping Name="Inscripcion">
+      <EntityTypeMapping TypeName="Model.Inscripcion">
+        <MappingFragment StoreEntitySet="Inscripcion">
           <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_EMBARAZADA" ColumnName="ID_EMBARAZADA" />
+          <ScalarProperty Name="FECHA_ALTA" ColumnName="FECHA_ALTA" />
+          <ScalarProperty Name="FECHA_BAJA" ColumnName="FECHA_BAJA" />
+          <ScalarProperty Name="MES" ColumnName="MES" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="ID_TIPOINSTANCIA" ColumnName="ID_TIPOINSTANCIA" />
+          <ScalarProperty Name="ID_INSTANCIA" ColumnName="ID_INSTANCIA" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="logSMSError">
-      <EntityTypeMapping TypeName="ProgMilDiasModel.logSMSError">
-        <MappingFragment StoreEntitySet="logSMSError">
-          <ScalarProperty Name="Origen" ColumnName="Origen" />
-          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
-          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+    <EntitySetMapping Name="LogMensaje">
+      <EntityTypeMapping TypeName="Model.LogMensaje">
+        <MappingFragment StoreEntitySet="LogMensaje">
           <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="MENSAJE" ColumnName="MENSAJE" />
+          <ScalarProperty Name="ID_TIPOMENSAJE" ColumnName="ID_TIPOMENSAJE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LogMensajeControl">
+      <EntityTypeMapping TypeName="Model.LogMensajeControl">
+        <MappingFragment StoreEntitySet="LogMensajeControl">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_INSTANCIA" ColumnName="ID_INSTANCIA" />
+          <ScalarProperty Name="ID_TRANSACCION" ColumnName="ID_TRANSACCION" />
+          <ScalarProperty Name="ID_RESPUESTA" ColumnName="ID_RESPUESTA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TipoInstancia">
+      <EntityTypeMapping TypeName="Model.TipoInstancia">
+        <MappingFragment StoreEntitySet="TipoInstancia">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TipoMensaje">
+      <EntityTypeMapping TypeName="Model.TipoMensaje">
+        <MappingFragment StoreEntitySet="TipoMensaje">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TipoRespuestaControl">
+      <EntityTypeMapping TypeName="Model.TipoRespuestaControl">
+        <MappingFragment StoreEntitySet="TipoRespuestaControl">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

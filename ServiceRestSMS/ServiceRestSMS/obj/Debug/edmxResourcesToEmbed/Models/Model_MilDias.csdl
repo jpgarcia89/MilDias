@@ -1,47 +1,173 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="ProgMilDiasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="logMensajeEnviado">
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Embarazada">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_EMPRESA" Type="Int32" Nullable="false" />
+    <Property Name="DNI" Type="Int32" Nullable="false" />
+    <Property Name="TELEFONO" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Empresa" Relationship="Self.FK_Embarazada_Empresa" FromRole="Embarazada" ToRole="Empresa" />
+    <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_Embarazada" FromRole="Embarazada" ToRole="Inscripcion" />
+  </EntityType>
+  <EntityType Name="Empresa">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Mensaje" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Origen" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
-    <Property Name="Procesado" Type="Boolean" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Carrier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Embarazada" Relationship="Self.FK_Embarazada_Empresa" FromRole="Empresa" ToRole="Embarazada" />
   </EntityType>
-  <EntityType Name="logMensajeRecibido">
+  <EntityType Name="Inscripcion">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_EMBARAZADA" Type="Int64" Nullable="false" />
+    <Property Name="FECHA_ALTA" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FECHA_BAJA" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="MES" Type="Int32" Nullable="false" />
+    <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+    <Property Name="ID_TIPOINSTANCIA" Type="Int32" Nullable="false" />
+    <Property Name="ID_INSTANCIA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Embarazada" Relationship="Self.FK_Inscripcion_Embarazada" FromRole="Inscripcion" ToRole="Embarazada" />
+    <NavigationProperty Name="TipoInstancia" Relationship="Self.FK_Inscripcion_TipoInstancia" FromRole="Inscripcion" ToRole="TipoInstancia" />
+  </EntityType>
+  <EntityType Name="LogMensaje">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FECHA" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="MENSAJE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ID_TIPOMENSAJE" Type="Byte" Nullable="false" />
+    <NavigationProperty Name="TipoMensaje" Relationship="Self.FK_LogMensaje_TipoMensaje" FromRole="LogMensaje" ToRole="TipoMensaje" />
+  </EntityType>
+  <EntityType Name="LogMensajeControl">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_INSTANCIA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ID_TRANSACCION" Type="Int32" Nullable="false" />
+    <Property Name="ID_RESPUESTA" Type="Byte" Nullable="false" />
+    <NavigationProperty Name="TipoRespuestaControl" Relationship="Self.FK_LogMensajeControl_TipoRespuestaControl" FromRole="LogMensajeControl" ToRole="TipoRespuestaControl" />
+  </EntityType>
+  <EntityType Name="TipoInstancia">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Mensaje" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Origen" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
-    <Property Name="Procesado" Type="Boolean" Nullable="false" />
+    <Property Name="NOMBRE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ACTIVO" Type="Boolean" />
+    <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_TipoInstancia" FromRole="TipoInstancia" ToRole="Inscripcion" />
   </EntityType>
-  <EntityContainer Name="ProgMilDiasEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="logMensajeEnviado" EntityType="Self.logMensajeEnviado" />
-    <EntitySet Name="logMensajeRecibido" EntityType="Self.logMensajeRecibido" />
-    <EntitySet Name="logNotificacion" EntityType="ProgMilDiasModel.logNotificacion" />
-    <EntitySet Name="logSMSError" EntityType="ProgMilDiasModel.logSMSError" />
+  <EntityType Name="TipoMensaje">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DESCRIPCION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="LogMensaje" Relationship="Self.FK_LogMensaje_TipoMensaje" FromRole="TipoMensaje" ToRole="LogMensaje" />
+  </EntityType>
+  <EntityType Name="TipoRespuestaControl">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DESCRIPCION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="LogMensajeControl" Relationship="Self.FK_LogMensajeControl_TipoRespuestaControl" FromRole="TipoRespuestaControl" ToRole="LogMensajeControl" />
+  </EntityType>
+  <Association Name="FK_Embarazada_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+    <End Role="Embarazada" Type="Self.Embarazada" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Embarazada">
+        <PropertyRef Name="ID_EMPRESA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inscripcion_Embarazada">
+    <End Role="Embarazada" Type="Self.Embarazada" Multiplicity="1" />
+    <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Embarazada">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Inscripcion">
+        <PropertyRef Name="ID_EMBARAZADA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inscripcion_TipoInstancia">
+    <End Role="TipoInstancia" Type="Self.TipoInstancia" Multiplicity="1" />
+    <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoInstancia">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Inscripcion">
+        <PropertyRef Name="ID_TIPOINSTANCIA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LogMensaje_TipoMensaje">
+    <End Role="TipoMensaje" Type="Self.TipoMensaje" Multiplicity="1" />
+    <End Role="LogMensaje" Type="Self.LogMensaje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoMensaje">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LogMensaje">
+        <PropertyRef Name="ID_TIPOMENSAJE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LogMensajeControl_TipoRespuestaControl">
+    <End Role="TipoRespuestaControl" Type="Self.TipoRespuestaControl" Multiplicity="1" />
+    <End Role="LogMensajeControl" Type="Self.LogMensajeControl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoRespuestaControl">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LogMensajeControl">
+        <PropertyRef Name="ID_RESPUESTA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MilDiasEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Embarazada" EntityType="Self.Embarazada" />
+    <EntitySet Name="Empresa" EntityType="Self.Empresa" />
+    <EntitySet Name="Inscripcion" EntityType="Self.Inscripcion" />
+    <EntitySet Name="LogMensaje" EntityType="Self.LogMensaje" />
+    <EntitySet Name="LogMensajeControl" EntityType="Self.LogMensajeControl" />
+    <EntitySet Name="TipoInstancia" EntityType="Self.TipoInstancia" />
+    <EntitySet Name="TipoMensaje" EntityType="Self.TipoMensaje" />
+    <EntitySet Name="TipoRespuestaControl" EntityType="Self.TipoRespuestaControl" />
+    <AssociationSet Name="FK_Embarazada_Empresa" Association="Self.FK_Embarazada_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Embarazada" EntitySet="Embarazada" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inscripcion_Embarazada" Association="Self.FK_Inscripcion_Embarazada">
+      <End Role="Embarazada" EntitySet="Embarazada" />
+      <End Role="Inscripcion" EntitySet="Inscripcion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inscripcion_TipoInstancia" Association="Self.FK_Inscripcion_TipoInstancia">
+      <End Role="TipoInstancia" EntitySet="TipoInstancia" />
+      <End Role="Inscripcion" EntitySet="Inscripcion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LogMensaje_TipoMensaje" Association="Self.FK_LogMensaje_TipoMensaje">
+      <End Role="TipoMensaje" EntitySet="TipoMensaje" />
+      <End Role="LogMensaje" EntitySet="LogMensaje" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LogMensajeControl_TipoRespuestaControl" Association="Self.FK_LogMensajeControl_TipoRespuestaControl">
+      <End Role="TipoRespuestaControl" EntitySet="TipoRespuestaControl" />
+      <End Role="LogMensajeControl" EntitySet="LogMensajeControl" />
+    </AssociationSet>
   </EntityContainer>
-  <EntityType Name="logNotificacion">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Mensaje" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Procesado" Type="Boolean" Nullable="false" />
-  </EntityType>
-  <EntityType Name="logSMSError">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Mensaje" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Origen" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-  </EntityType>
 </Schema>
