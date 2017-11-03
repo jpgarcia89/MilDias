@@ -22,6 +22,7 @@ namespace ServiceRestSMS.Controllers
             {
                 LogMensaje log = new LogMensaje();
                 string xmlString = request.Content.ReadAsStringAsync().Result;
+                xmlString = xmlString.Trim();
                 if (xmlString != "" && xmlString != "\n")
                 {
                     string mensaje = "";
@@ -40,8 +41,15 @@ namespace ServiceRestSMS.Controllers
                         case 1:
                             //Es mensaje de control (SI, NO, INFO)
                             if(mensaje == "SI" || mensaje == "NO") {
-
                                 LogMensajeControl logControl = new LogMensajeControl();
+                                Embarazada embarazada = new Embarazada();
+                                embarazada = db.Embarazada.Where(e => e.TELEFONO == MO.Telefono.Msisdn).FirstOrDefault();
+                                
+                                logControl = db.LogMensajeControl
+                                    .Where(c => c.ID_INSTANCIA == embarazada.Inscripcion.First().ID_INSTANCIA)
+                                    .OrderByDescending(x => x.ID).FirstOrDefault();
+
+                                logControl.ID_RESPUESTA = 1;
                             }
                             else
                             {
