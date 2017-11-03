@@ -13,7 +13,7 @@ namespace ServiceRestSMS.Controllers
 {
     public class NuevoSMSController : ApiController
     {
-        
+
         [HttpPost]
         public HttpResponseMessage NuevoSMS(HttpRequestMessage request)
         {
@@ -29,7 +29,7 @@ namespace ServiceRestSMS.Controllers
                     string mensaje = "";
                     log.FECHA = DateTime.Now;
                     log.MENSAJE = xmlString;
-                    
+
                     var serializer = new XmlSerializer(typeof(MORequest));
                     MORequest MO = new MORequest();
                     using (TextReader readerXML = new StringReader(xmlString))
@@ -42,17 +42,16 @@ namespace ServiceRestSMS.Controllers
                     /*Obtengo la embarazada por unica vez*/
                     Embarazada embarazada = new Embarazada();
                     embarazada = db.Embarazada.Where(e => e.TELEFONO == MO.Telefono.Msisdn).FirstOrDefault();
-                    if (embarazada != null)
+
+                    switch (mensaje.Split(' ').Count())
                     {
-                        switch (mensaje.Split(' ').Count())
-                        {
-                            case 1:
-                                //Es mensaje de control (SI, NO, INFO, BAJA, BEBE)
+                        case 1:
+                            //Es mensaje de control (SI, NO, INFO, BAJA, BEBE)
+                            if (embarazada != null)
+                            {
                                 if (mensaje == "SI" || mensaje == "NO")
                                 {
                                     LogMensajeControl logControl = new LogMensajeControl();
-
-
                                     logControl = db.LogMensajeControl
                                         .Where(c => c.ID_INSTANCIA == embarazada.Inscripcion.First().ID_INSTANCIA)
                                         .OrderByDescending(x => x.ID).FirstOrDefault();
@@ -76,8 +75,7 @@ namespace ServiceRestSMS.Controllers
 
                                     EnviarSMSController sms = new EnviarSMSController();
                                     SMS smsModel = new SMS();
-
-                                    //Revisar con JM que exista un solo registro activo
+                                                                        
                                     smsModel.Mensaje = "Mensaje modelo de info";
                                     smsModel.ID_Instancia = embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_INSTANCIA;
                                     smsModel.Es_Control = false;
@@ -103,7 +101,7 @@ namespace ServiceRestSMS.Controllers
                                     db.SaveChanges();
 
 
-                                    /*Cambio el campo ACTIVO de la embarazada porque reccibi la palabra baja*/
+                                    /*Cambio el campo ACTIVO de la embarazada porque recibi la palabra baja*/
                                     Inscripcion inscripcion = new Inscripcion();
                                     inscripcion = db.Inscripcion.Where(e => e.ID_EMBARAZADA == embarazada.ID).FirstOrDefault();
                                     BajaEmbarazada(inscripcion.ID_INSTANCIA, 1);
@@ -119,30 +117,31 @@ namespace ServiceRestSMS.Controllers
                                     db.SaveChanges();
 
 
-                                    /*Cambio el campo ACTIVO de la embarazada porque el bebe nacio*/ 
+                                    /*Cambio el campo ACTIVO de la embarazada porque el bebe nacio*/
                                     Inscripcion inscripcion = new Inscripcion();
                                     inscripcion = db.Inscripcion.Where(e => e.ID_EMBARAZADA == embarazada.ID).FirstOrDefault();
                                     BajaEmbarazada(inscripcion.ID_INSTANCIA, 2);
                                     /******/
                                 }
-                                break;
+                            }
+                            break;
 
-                            case 3:
-                                //Es mensaje de inscripción (MAMA DNI MES)
+                        case 3:
+                            //Es mensaje de inscripción (MAMA DNI MES)
 
-                                break;
-                            default:
-                                //Respondemos que no tiene el formato correcto
+                            break;
+                        default:
+                            //Respondemos que no tiene el formato correcto
 
-                                break;
-                        }
-
+                            break;
                     }
-                    else
-                    {
-                        //Envio Mensaje informando que el tel no esta registrado.
 
-                    }
+                    //}
+                    //else
+                    //{
+                    //    //Envio Mensaje informando que el tel no esta registrado.
+
+                    //}
 
                     db.LogMensaje.Add(log);
                     db.SaveChanges();
@@ -174,30 +173,6 @@ namespace ServiceRestSMS.Controllers
             return rslt.ToUpper();
         }
 
-
-        public static string[] splitContenido(string contenido)
-        {
-            string[] retString;
-            try
-            {
-                while (contenido.Contains("  "))
-                    contenido = contenido.Replace("  ", " ");
-
-                retString = contenido.Split(' ');
-                if (retString.Length != 3)//Si viene con formato incorrecto, devuelvo el array por defecto
-                {
-                    retString = "0 0 0".Split(' ');
-                }
-                return retString;
-            }
-            catch (Exception)
-            {
-                retString = "0 0 0".Split(' ');
-                return retString;
-            }
-
-        }
-
         [HttpPost]
         public IHttpActionResult BajaEmbarazada(string ID_INSTANCIA, int motivo)
         {
@@ -205,7 +180,7 @@ namespace ServiceRestSMS.Controllers
             motivo:
             1 - recibi un mensaje con la palabra baja
             2 - termina gestacion
-            3 - 
+            3 - Termina instancia de nacido
             */
             MilDiasEntities db = new MilDiasEntities();
             Embarazada embarazada = new Embarazada();
@@ -221,7 +196,8 @@ namespace ServiceRestSMS.Controllers
                             inscripcion.ACTIVO = false;
                             inscripcion.FECHA_BAJA = DateTime.Now;
                             db.SaveChanges();
-                        } break;
+                        }
+                        break;
 
                     case 2: //Termina la gestación
                         {
@@ -230,18 +206,19 @@ namespace ServiceRestSMS.Controllers
                             inscripcion.FECHA_BAJA = DateTime.Now;
                             db.SaveChanges();
 
-                            embarazada = db.Embarazada.Where(e => e.ID == inscripcion.ID_EMBARAZADA ).FirstOrDefault();
+                            embarazada = db.Embarazada.Where(e => e.ID == inscripcion.ID_EMBARAZADA).FirstOrDefault();
 
                             //Crear instancia de inscripcion 
                             inscripcion.ID_EMBARAZADA = embarazada.ID;
-                            inscripcion.ID_TIPOINSTANCIA = 0; // 
-                            inscripcion.MES = 10;
+                            inscripcion.ID_TIPOINSTANCIA = 2; // WF Nacido
+                            inscripcion.MES = 0;
                             /**/
 
                             /*Se debera crear una nueva instancia de bebe nacido 
                             y hacer todo el WF deshabilitando la actual*/
 
-                        } break;
+                        }
+                        break;
 
                     case 3: //Termina instancia de nacido
                         {
@@ -256,12 +233,12 @@ namespace ServiceRestSMS.Controllers
                 }
                 return Json(true);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return Json(false);
             }
 
-            
+
         }
     }
 }
