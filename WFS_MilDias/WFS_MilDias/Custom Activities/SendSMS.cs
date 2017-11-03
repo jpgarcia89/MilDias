@@ -15,13 +15,25 @@ namespace WFS_MilDias
     public sealed class SendSMS : CodeActivity<bool>
     {
         // Define an activity input argument of type string
-        public InArgument<string> Text { get; set; }
+        //public InArgument<string> Text { get; set; }
 
-        public InArgument<Int32> Telefono { get; set; }
+        //public InArgument<Int32> Telefono { get; set; }
 
-        public InArgument<string> DNI { get; set; }
+        //public InArgument<string> DNI { get; set; }
 
-        public InArgument<string> Carrier { get; set; }
+        //public InArgument<string> Carrier { get; set; }
+
+        public InArgument<string> Mensaje { get; set; }
+
+        public InArgument<string> ID_Instancia { get; set; }
+
+        public InArgument<bool> Es_Control { get; set; }
+
+        public InArgument<Int32> Mes { get; set; }
+
+
+
+
 
         //public OutArgument<bool> res { get; set; }
 
@@ -43,10 +55,15 @@ namespace WFS_MilDias
 
                 SMS data = new SMS
                 {
-                    Mensaje = context.GetValue(this.Text),
-                    Telefono = context.GetValue(this.Telefono),
-                    DNI = context.GetValue(this.DNI),
-                    Carrier = context.GetValue(this.Carrier),
+                    //Mensaje = context.GetValue(this.Text),
+                    //Telefono = context.GetValue(this.Telefono),
+                    //DNI = context.GetValue(this.DNI),
+                    //Carrier = context.GetValue(this.Carrier),
+
+                    Mensaje = context.GetValue(this.Mensaje),
+                    ID_Instancia = context.GetValue(this.ID_Instancia),
+                    Es_Control = context.GetValue(this.Es_Control),
+                    Mes = context.GetValue(this.Mes),
                 };
 
                 var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
@@ -71,12 +88,22 @@ namespace WFS_MilDias
     public class SMS
     {
         public string Mensaje { get; set; }
-
-        public Int32 Telefono { get; set; }
-
-        public string DNI { get; set; }
-
-        public string Carrier { get; set; }
+        public string ID_Instancia { get; set; }
+        public bool Es_Control { get; set; }
+        public int Mes { get; set; }
     }
+    //public class SMS
+    //{
+    //    public string Mensaje { get; set; }
+
+    //    public Int32 Telefono { get; set; }
+
+    //    public string DNI { get; set; }
+
+    //    public string Carrier { get; set; }
+    //}
+
+
+    
 
 }

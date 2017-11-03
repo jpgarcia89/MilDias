@@ -58,6 +58,6 @@ D:\Git-MilDias\MilDias\WFS_MilDias\WFS_MilDias\bin\Microsoft.AI.Web.xml
 D:\Git-MilDias\MilDias\WFS_MilDias\WFS_MilDias\bin\Microsoft.AI.WindowsServer.xml
 D:\Git-MilDias\MilDias\WFS_MilDias\WFS_MilDias\bin\Microsoft.ApplicationInsights.xml
 D:\Git-MilDias\MilDias\WFS_MilDias\WFS_MilDias\bin\Newtonsoft.Json.xml
+D:\Git-MilDias\MilDias\WFS_MilDias\WFS_MilDias\obj\Debug\WFS_MilDias.csprojResolveAssemblyReference.cache
 D:\Git-MilDias\MilDias\WFS_MilDias\WFS_MilDias\obj\Debug\WFS_MilDias.dll
 D:\Git-MilDias\MilDias\WFS_MilDias\WFS_MilDias\obj\Debug\WFS_MilDias.pdb
-D:\Git-MilDias\MilDias\WFS_MilDias\WFS_MilDias\obj\Debug\WFS_MilDias.csprojResolveAssemblyReference.cache
