@@ -13,37 +13,86 @@ namespace ServiceRestSMS.Controllers
 {
     public class NuevoSMSController : ApiController
     {
-        // POST api/values
-        //[HttpPost]
-        //public HttpResponseMessage NuevoSMS(HttpRequestMessage request)
-        //{
-        //    MilDiasEntities db = new MilDiasEntities();
-        //    try
-        //    {
-        //        logMensajeRecibido log = new logMensajeRecibido();
-        //        string xmlString = request.Content.ReadAsStringAsync().Result;
-        //        if (xmlString != "" && xmlString != "\n")
-        //        {
-        //            log.Fecha = DateTime.Now;
-        //            log.Mensaje = xmlString;
-        //            log.Origen = "NuevoSMS";
-        //            log.Procesado = false;
-        //            db.logMensajeRecibido.Add(log);
-        //            db.SaveChanges();          
-        //        }
-        //        return new HttpResponseMessage(HttpStatusCode.OK);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        logSMSError logError = new logSMSError();
-        //        logError.Fecha = DateTime.Now;
-        //        logError.Mensaje = e.Message;
-        //        logError.Origen = "NuevoSMS";
-        //        db.logSMSError.Add(logError);
-        //        db.SaveChanges();
-        //        return new HttpResponseMessage(HttpStatusCode.InternalServerError);
-        //    }
-        //}
+        
+        [HttpPost]
+        public HttpResponseMessage NuevoSMS(HttpRequestMessage request)
+        {
+            MilDiasEntities db = new MilDiasEntities();
+            try
+            {
+                LogMensaje log = new LogMensaje();
+                string xmlString = request.Content.ReadAsStringAsync().Result;
+                if (xmlString != "" && xmlString != "\n")
+                {
+                    string mensaje = "";
+                    log.FECHA = DateTime.Now;
+                    log.MENSAJE = xmlString;
+                    
+                    var serializer = new XmlSerializer(typeof(MORequest));
+                    MORequest MO = new MORequest();
+                    using (TextReader readerXML = new StringReader(xmlString))
+                    {
+                        MO = (MORequest)serializer.Deserialize(readerXML);
+                    }
+                    mensaje = quitarAcentos(MO.Contenido);
+                    switch (mensaje.Split(' ').Count())
+                    {
+                        case 1:
+                            //Es mensaje de control (SI, NO, INFO)
+                            if(mensaje == "SI" || mensaje == "NO") {
+
+                                LogMensajeControl logControl = new LogMensajeControl();
+                            }
+                            else
+                            {
+                                if(mensaje == "INFO")
+                                {
+
+                                }
+                            }
+                            break;
+                        case 3:
+                            //Es mensaje de inscripción (MAMA DNI MES)
+
+                            break;
+                        default:
+                            //Respondemos que no tiene el formato correcto
+
+                            break;
+                    }
+
+
+
+                    db.LogMensaje.Add(log);
+                    db.SaveChanges();
+                }
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                LogMensaje log = new LogMensaje();
+                log.FECHA = DateTime.Now;
+                log.MENSAJE = e.Message;
+                log.ID_TIPOMENSAJE = 6;
+                db.SaveChanges();
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public string quitarAcentos(string ArgMensaje)
+        {
+            string rslt = "";
+            string consignos = "áàäéèëíìïóòöúùuñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑçÇ";
+            string sinsignos = "aaaeeeiiiooouuunAAAEEEIIIOOOUUUNcC";
+            for (int v = 0; v < sinsignos.Length; v++)
+            {
+                string i = consignos.Substring(v, 1);
+                string j = sinsignos.Substring(v, 1);
+                rslt = ArgMensaje.Replace(i, j);
+            }
+            return rslt.ToUpper();
+        }
+
 
         public static string[] splitContenido(string contenido)
         {

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Embarazada">
           <Key>
             <PropertyRef Name="ID" />
@@ -52,6 +52,7 @@
           <Property Name="ID_INSTANCIA" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ID_TRANSACCION" Type="int" Nullable="false" />
           <Property Name="ID_RESPUESTA" Type="tinyint" Nullable="false" />
+          <Property Name="FECHA" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="TipoInstancia">
           <Key>
@@ -165,8 +166,7 @@
             <End Role="LogMensajeControl" EntitySet="LogMensajeControl" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -224,6 +224,7 @@
           <Property Name="ID_TRANSACCION" Type="Int32" Nullable="false" />
           <Property Name="ID_RESPUESTA" Type="Byte" Nullable="false" />
           <NavigationProperty Name="TipoRespuestaControl" Relationship="Self.FK_LogMensajeControl_TipoRespuestaControl" FromRole="LogMensajeControl" ToRole="TipoRespuestaControl" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="TipoInstancia">
           <Key>
@@ -392,6 +393,7 @@
           <EntitySetMapping Name="LogMensajeControl">
             <EntityTypeMapping TypeName="Model.LogMensajeControl">
               <MappingFragment StoreEntitySet="LogMensajeControl">
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ID_INSTANCIA" ColumnName="ID_INSTANCIA" />
                 <ScalarProperty Name="ID_TRANSACCION" ColumnName="ID_TRANSACCION" />

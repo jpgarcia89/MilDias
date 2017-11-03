@@ -1,4 +1,5 @@
 ﻿using ServiceRestSMS.Models;
+using ServiceRestSMS.Models.MovilGates;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +10,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Xml.Serialization;
 
 namespace ServiceRestSMS.Controllers
 {
@@ -82,27 +84,48 @@ namespace ServiceRestSMS.Controllers
                     {
                         responseText = reader.ReadToEnd();
                     }
-                    //logMensajeRecibido log = new logMensajeRecibido();
-                    //log.Fecha = DateTime.Now;
-                    //log.Mensaje = responseText;
-                    //log.Origen = "EnviarSMS";
-                    //log.Procesado = false;
-                    //db.logMensajeRecibido.Add(log);
-                    //db.SaveChanges();
+
+                    LogMensaje log = new LogMensaje();
+                    log.FECHA = DateTime.Now;
+                    log.MENSAJE = responseText;
+                    if (ParamSMS.Es_Control == true)
+                    {
+                        log.ID_TIPOMENSAJE = 4;
+                        
+                        var serializer = new XmlSerializer(typeof(MTResponse));
+                        MTResponse MT = new MTResponse();
+                        using (TextReader readerXML = new StringReader(responseText))
+                        {
+                            MT = (MTResponse)serializer.Deserialize(readerXML);
+                        }                        
+                        LogMensajeControl logControl = new LogMensajeControl();
+                        logControl.FECHA = DateTime.Now;
+                        logControl.ID_INSTANCIA = ParamSMS.ID_Instancia;
+                        logControl.ID_TRANSACCION = int.Parse(MT.Transaccion.IdTran);
+                        logControl.ID_RESPUESTA = 3; //Por defecto ponemos que no contesto
+                        db.LogMensajeControl.Add(logControl);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        log.ID_TIPOMENSAJE = 1;
+                    }
+                    db.LogMensaje.Add(log);
+                    db.SaveChanges();
                     return Json(true);
                 }
             }
             catch (Exception e)
             {
                 request.Abort();
-                //logSMSError logError = new logSMSError();
-                //logError.Fecha = DateTime.Now;
-                //logError.Mensaje = e.Message;
-                //logError.Origen = "EnviarSMS";
-                //db.logSMSError.Add(logError);
-                //db.SaveChanges();
+                LogMensaje log = new LogMensaje();
+                log.FECHA = DateTime.Now;
+                log.MENSAJE = e.Message;
+                log.ID_TIPOMENSAJE = 6;                
+                db.SaveChanges();
                 return Json(false);
             }
         }
+        
     }
 }
