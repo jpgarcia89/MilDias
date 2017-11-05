@@ -166,7 +166,7 @@
                               <w:SendSMS DisplayName="SendSMS - Mes 1 y medio" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_1" Mensaje="Mamá para prevenir anemias en el Embarazo consumí carne de vaca, pollo, pescado, legumbres y vegetales de hojas verdes, acompañados de jugos naturales." Mes="1">
                                 <w:SendSMS.ID_Instancia>
                                   <p1:InArgument x:TypeArguments="x:String">
-                                    <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                    <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                   </p1:InArgument>
                                 </w:SendSMS.ID_Instancia>
                                 <w:SendSMS.Result>
@@ -203,7 +203,7 @@
                           <w:SendSMS DisplayName="SendSMS - Mes 1" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_2" Mensaje="Mamá el consumo de cigarrillos, alcohol y drogas puede ocasionar alteraciones serias en tu bebé. Si necesitas ayuda, consulta al centro por la vida Tel 4217824" Mes="1">
                             <w:SendSMS.ID_Instancia>
                               <p1:InArgument x:TypeArguments="x:String">
-                                <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                               </p1:InArgument>
                             </w:SendSMS.ID_Instancia>
                             <w:SendSMS.Result>
@@ -244,16 +244,16 @@
                                       <ssx:XPathMessageContextMarkup>
                                         <x:String x:Key="xgSc">http://tempuri.org/</x:String>
                                       </ssx:XPathMessageContextMarkup>
-                                    </XPathMessageQuery.Namespaces>sm:body()/xgSc:RespSMSControl/xgSc:p_embarazadaId</XPathMessageQuery>
+                                    </XPathMessageQuery.Namespaces>sm:body()/xgSc:RespSMSControl/xgSc:p_instanciaId</XPathMessageQuery>
                                 </Receive.CorrelatesOn>
                                 <Receive.CorrelatesWith>
                                   <p1:InArgument x:TypeArguments="CorrelationHandle">
-                                    <mca:CSharpValue x:TypeArguments="CorrelationHandle">embarazadaIdHandle</mca:CSharpValue>
+                                    <mca:CSharpValue x:TypeArguments="CorrelationHandle">instanciaIdHandle</mca:CSharpValue>
                                   </p1:InArgument>
                                 </Receive.CorrelatesWith>
                                 <ReceiveParametersContent>
-                                  <p1:OutArgument x:TypeArguments="x:String" x:Key="p_embarazadaId">
-                                    <mca:CSharpReference x:TypeArguments="x:String">embarazadaId</mca:CSharpReference>
+                                  <p1:OutArgument x:TypeArguments="x:String" x:Key="p_instanciaId">
+                                    <mca:CSharpReference x:TypeArguments="x:String">instanciaId</mca:CSharpReference>
                                   </p1:OutArgument>
                                 </ReceiveParametersContent>
                               </Receive>
@@ -333,7 +333,7 @@
                                   <w:SendSMS DisplayName="SendSMS - Mes 1 Control" Es_Control="True" sap2010:WorkflowViewState.IdRef="SendSMS_3" Mes="1">
                                     <w:SendSMS.ID_Instancia>
                                       <p1:InArgument x:TypeArguments="x:String">
-                                        <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                        <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                       </p1:InArgument>
                                     </w:SendSMS.ID_Instancia>
                                     <w:SendSMS.Mensaje>
@@ -393,7 +393,7 @@
                     <w:SendSMS DisplayName="SendSMS - Mes 2" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_4" Mensaje="Mamá podes realizar actividad física durante el embarazo, consulta a tu médico cual te recomienda." Mes="2">
                       <w:SendSMS.ID_Instancia>
                         <p1:InArgument x:TypeArguments="x:String">
-                          <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                          <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                         </p1:InArgument>
                       </w:SendSMS.ID_Instancia>
                       <w:SendSMS.Result>
@@ -419,7 +419,7 @@
                                 <w:SendSMS DisplayName="SendSMS - Mes 2 y medio" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_5" Mensaje="Mamá si tenes alguna urgencia, no dudes en consultar en la Guardia Médica, funciona las 24 horas." Mes="2">
                                   <w:SendSMS.ID_Instancia>
                                     <p1:InArgument x:TypeArguments="x:String">
-                                      <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                      <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                     </p1:InArgument>
                                   </w:SendSMS.ID_Instancia>
                                   <w:SendSMS.Result>
@@ -445,7 +445,7 @@
                                             <w:SendSMS DisplayName="SendSMS - Mes 3" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_6" Mensaje="Mamá esta es la etapa ideal para realizarte controles con el odontólogo, hacerte un PAP y control de mamas." Mes="3">
                                               <w:SendSMS.ID_Instancia>
                                                 <p1:InArgument x:TypeArguments="x:String">
-                                                  <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                  <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                 </p1:InArgument>
                                               </w:SendSMS.ID_Instancia>
                                               <w:SendSMS.Result>
@@ -471,7 +471,7 @@
                                                         <w:SendSMS DisplayName="SendSMS - Mes 3 y medio" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_7" Mensaje="Mamá esta es la etapa ideal para realizarte controles con el odontólogo, hacerte un PAP y control de mamas." Mes="3">
                                                           <w:SendSMS.ID_Instancia>
                                                             <p1:InArgument x:TypeArguments="x:String">
-                                                              <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                              <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                             </p1:InArgument>
                                                           </w:SendSMS.ID_Instancia>
                                                           <w:SendSMS.Result>
@@ -515,7 +515,7 @@
                                                                               <w:SendSMS DisplayName="SendSMS - Mes 4" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_8" Mensaje="Mamá una alimentación saludable te beneficia a vos y al crecimiento de tu bebé. No comas por dos.  Por eso  consulta con la nutricionista." Mes="4">
                                                                                 <w:SendSMS.ID_Instancia>
                                                                                   <p1:InArgument x:TypeArguments="x:String">
-                                                                                    <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                                                    <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                                                   </p1:InArgument>
                                                                                 </w:SendSMS.ID_Instancia>
                                                                                 <w:SendSMS.Result>
@@ -552,16 +552,16 @@
                                                                                           <ssx:XPathMessageContextMarkup>
                                                                                             <x:String x:Key="xgSc">http://tempuri.org/</x:String>
                                                                                           </ssx:XPathMessageContextMarkup>
-                                                                                        </XPathMessageQuery.Namespaces>sm:body()/xgSc:RespSMSControl/xgSc:p_embarazadaId</XPathMessageQuery>
+                                                                                        </XPathMessageQuery.Namespaces>sm:body()/xgSc:RespSMSControl/xgSc:p_instanciaId</XPathMessageQuery>
                                                                                     </Receive.CorrelatesOn>
                                                                                     <Receive.CorrelatesWith>
                                                                                       <p1:InArgument x:TypeArguments="CorrelationHandle">
-                                                                                        <mca:CSharpValue x:TypeArguments="CorrelationHandle">embarazadaIdHandle</mca:CSharpValue>
+                                                                                        <mca:CSharpValue x:TypeArguments="CorrelationHandle">instanciaIdHandle</mca:CSharpValue>
                                                                                       </p1:InArgument>
                                                                                     </Receive.CorrelatesWith>
                                                                                     <ReceiveParametersContent>
-                                                                                      <p1:OutArgument x:TypeArguments="x:String" x:Key="p_embarazadaId">
-                                                                                        <mca:CSharpReference x:TypeArguments="x:String">embarazadaId</mca:CSharpReference>
+                                                                                      <p1:OutArgument x:TypeArguments="x:String" x:Key="p_instanciaId">
+                                                                                        <mca:CSharpReference x:TypeArguments="x:String">instanciaId</mca:CSharpReference>
                                                                                       </p1:OutArgument>
                                                                                     </ReceiveParametersContent>
                                                                                   </Receive>
@@ -641,7 +641,7 @@
                                                                                       <w:SendSMS DisplayName="SendSMS - Mes 4 Control" Es_Control="True" sap2010:WorkflowViewState.IdRef="SendSMS_9" Mes="4">
                                                                                         <w:SendSMS.ID_Instancia>
                                                                                           <p1:InArgument x:TypeArguments="x:String">
-                                                                                            <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                                                            <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                                                           </p1:InArgument>
                                                                                         </w:SendSMS.ID_Instancia>
                                                                                         <w:SendSMS.Mensaje>
@@ -701,7 +701,7 @@
                                                                         <w:SendSMS DisplayName="SendSMS - Mes 5" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_10" Mensaje="Mamá ya sentís los movimientos de tu bebé? Disfrutalo, es un momento de plenitud, conectate con tu hijo." Mes="5">
                                                                           <w:SendSMS.ID_Instancia>
                                                                             <p1:InArgument x:TypeArguments="x:String">
-                                                                              <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                                              <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                                             </p1:InArgument>
                                                                           </w:SendSMS.ID_Instancia>
                                                                           <w:SendSMS.Result>
@@ -727,7 +727,7 @@
                                                                                     <w:SendSMS DisplayName="SendSMS - Mes 5 y medio" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_11" Mensaje="Mamá tu alimentación debe ser variada  y debes distribuirla al menos en 4 comidas al día. Recordá tomar 8 vasos de agua segura diaria." Mes="5">
                                                                                       <w:SendSMS.ID_Instancia>
                                                                                         <p1:InArgument x:TypeArguments="x:String">
-                                                                                          <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                                                          <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                                                         </p1:InArgument>
                                                                                       </w:SendSMS.ID_Instancia>
                                                                                       <w:SendSMS.Result>
@@ -753,7 +753,7 @@
                                                                                                 <w:SendSMS DisplayName="SendSMS - Mes 6" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_12" Mensaje="Mamá Podés iniciar los talleres de PIM (preparación integral para la maternidad y paternidad). Es tu espacio para informarte, recibir apoyo y contención." Mes="6">
                                                                                                   <w:SendSMS.ID_Instancia>
                                                                                                     <p1:InArgument x:TypeArguments="x:String">
-                                                                                                      <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                                                                      <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                                                                     </p1:InArgument>
                                                                                                   </w:SendSMS.ID_Instancia>
                                                                                                   <w:SendSMS.Result>
@@ -779,7 +779,7 @@
                                                                                                             <w:SendSMS Mensaje="{x:Null}" DisplayName="SendSMS - Mes 6 &quot;BEBE&quot;" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_13" Mes="6">
                                                                                                               <w:SendSMS.ID_Instancia>
                                                                                                                 <p1:InArgument x:TypeArguments="x:String">
-                                                                                                                  <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                                                                                  <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                                                                                 </p1:InArgument>
                                                                                                               </w:SendSMS.ID_Instancia>
                                                                                                               <w:SendSMS.Result>
@@ -805,7 +805,7 @@
                                                                                                                         <w:SendSMS DisplayName="SendSMS - Mes 6 y medio" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_14" Mensaje="Mamá si tenés problemas de sobrepeso u obesidad, acercate al equipo de salud. Hay soluciones y podemos ayudarte" Mes="7">
                                                                                                                           <w:SendSMS.ID_Instancia>
                                                                                                                             <p1:InArgument x:TypeArguments="x:String">
-                                                                                                                              <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                                                                                              <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                                                                                             </p1:InArgument>
                                                                                                                           </w:SendSMS.ID_Instancia>
                                                                                                                           <w:SendSMS.Result>
@@ -856,7 +856,7 @@
                                                                                                                                               <w:SendSMS Mensaje="{x:Null}" DisplayName="SendSMS - Mes 7 &quot;BEBE&quot;" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_15" Mes="7">
                                                                                                                                                 <w:SendSMS.ID_Instancia>
                                                                                                                                                   <p1:InArgument x:TypeArguments="x:String">
-                                                                                                                                                    <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                                                                                                                    <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                                                                                                                   </p1:InArgument>
                                                                                                                                                 </w:SendSMS.ID_Instancia>
                                                                                                                                                 <w:SendSMS.Result>
@@ -883,7 +883,7 @@
                                                                                                                                               <w:SendSMS DisplayName="SendSMS - Mes 7" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_16" Mensaje="Mamá seguramente estarán eligiendo el nombre de tu bebé. Este es un buen momento para pensar en la lactancia y asesorate con el equipo de salud." Mes="7">
                                                                                                                                                 <w:SendSMS.ID_Instancia>
                                                                                                                                                   <p1:InArgument x:TypeArguments="x:String">
-                                                                                                                                                    <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                                                                                                                    <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                                                                                                                   </p1:InArgument>
                                                                                                                                                 </w:SendSMS.ID_Instancia>
                                                                                                                                                 <w:SendSMS.Result>
@@ -921,16 +921,16 @@
                                                                                                                                                           <ssx:XPathMessageContextMarkup>
                                                                                                                                                             <x:String x:Key="xgSc">http://tempuri.org/</x:String>
                                                                                                                                                           </ssx:XPathMessageContextMarkup>
-                                                                                                                                                        </XPathMessageQuery.Namespaces>sm:body()/xgSc:RespSMSControl/xgSc:p_embarazadaId</XPathMessageQuery>
+                                                                                                                                                        </XPathMessageQuery.Namespaces>sm:body()/xgSc:RespSMSControl/xgSc:p_instanciaId</XPathMessageQuery>
                                                                                                                                                     </Receive.CorrelatesOn>
                                                                                                                                                     <Receive.CorrelatesWith>
                                                                                                                                                       <p1:InArgument x:TypeArguments="CorrelationHandle">
-                                                                                                                                                        <mca:CSharpValue x:TypeArguments="CorrelationHandle">embarazadaIdHandle</mca:CSharpValue>
+                                                                                                                                                        <mca:CSharpValue x:TypeArguments="CorrelationHandle">instanciaIdHandle</mca:CSharpValue>
                                                                                                                                                       </p1:InArgument>
                                                                                                                                                     </Receive.CorrelatesWith>
                                                                                                                                                     <ReceiveParametersContent>
-                                                                                                                                                      <p1:OutArgument x:TypeArguments="x:String" x:Key="p_embarazadaId">
-                                                                                                                                                        <mca:CSharpReference x:TypeArguments="x:String">embarazadaId</mca:CSharpReference>
+                                                                                                                                                      <p1:OutArgument x:TypeArguments="x:String" x:Key="p_instanciaId">
+                                                                                                                                                        <mca:CSharpReference x:TypeArguments="x:String">instanciaId</mca:CSharpReference>
                                                                                                                                                       </p1:OutArgument>
                                                                                                                                                     </ReceiveParametersContent>
                                                                                                                                                   </Receive>
@@ -1010,7 +1010,7 @@
                                                                                                                                                       <w:SendSMS DisplayName="SendSMS - Mes 7 Control" Es_Control="True" sap2010:WorkflowViewState.IdRef="SendSMS_17" Mes="7">
                                                                                                                                                         <w:SendSMS.ID_Instancia>
                                                                                                                                                           <p1:InArgument x:TypeArguments="x:String">
-                                                                                                                                                            <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                                                                                                                            <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                                                                                                                           </p1:InArgument>
                                                                                                                                                         </w:SendSMS.ID_Instancia>
                                                                                                                                                         <w:SendSMS.Mensaje>
@@ -1088,7 +1088,7 @@
                                                                                                                                                   <w:SendSMS Mensaje="{x:Null}" DisplayName="SendSMS - Mes 8 &quot;BEBE&quot;" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_18" Mes="8">
                                                                                                                                                     <w:SendSMS.ID_Instancia>
                                                                                                                                                       <p1:InArgument x:TypeArguments="x:String">
-                                                                                                                                                        <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                                                                                                                        <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                                                                                                                       </p1:InArgument>
                                                                                                                                                     </w:SendSMS.ID_Instancia>
                                                                                                                                                     <w:SendSMS.Result>
@@ -1125,7 +1125,7 @@
                                                                                                                                                   <w:SendSMS DisplayName="SendSMS - Mes 8" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_19" Mensaje="Mamá la guardia medica esta a tu disposición las 24 hs. del día. No dudes en consultar si tenés alguna urgencia." Mes="8">
                                                                                                                                                     <w:SendSMS.ID_Instancia>
                                                                                                                                                       <p1:InArgument x:TypeArguments="x:String">
-                                                                                                                                                        <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                                                                                                                        <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                                                                                                                       </p1:InArgument>
                                                                                                                                                     </w:SendSMS.ID_Instancia>
                                                                                                                                                     <w:SendSMS.Result>
@@ -1163,16 +1163,16 @@
                                                                                                                                                               <ssx:XPathMessageContextMarkup>
                                                                                                                                                                 <x:String x:Key="xgSc">http://tempuri.org/</x:String>
                                                                                                                                                               </ssx:XPathMessageContextMarkup>
-                                                                                                                                                            </XPathMessageQuery.Namespaces>sm:body()/xgSc:RespSMSControl/xgSc:p_embarazadaId</XPathMessageQuery>
+                                                                                                                                                            </XPathMessageQuery.Namespaces>sm:body()/xgSc:RespSMSControl/xgSc:p_instanciaId</XPathMessageQuery>
                                                                                                                                                         </Receive.CorrelatesOn>
                                                                                                                                                         <Receive.CorrelatesWith>
                                                                                                                                                           <p1:InArgument x:TypeArguments="CorrelationHandle">
-                                                                                                                                                            <mca:CSharpValue x:TypeArguments="CorrelationHandle">embarazadaIdHandle</mca:CSharpValue>
+                                                                                                                                                            <mca:CSharpValue x:TypeArguments="CorrelationHandle">instanciaIdHandle</mca:CSharpValue>
                                                                                                                                                           </p1:InArgument>
                                                                                                                                                         </Receive.CorrelatesWith>
                                                                                                                                                         <ReceiveParametersContent>
-                                                                                                                                                          <p1:OutArgument x:TypeArguments="x:String" x:Key="p_embarazadaId">
-                                                                                                                                                            <mca:CSharpReference x:TypeArguments="x:String">embarazadaId</mca:CSharpReference>
+                                                                                                                                                          <p1:OutArgument x:TypeArguments="x:String" x:Key="p_instanciaId">
+                                                                                                                                                            <mca:CSharpReference x:TypeArguments="x:String">instanciaId</mca:CSharpReference>
                                                                                                                                                           </p1:OutArgument>
                                                                                                                                                         </ReceiveParametersContent>
                                                                                                                                                       </Receive>
@@ -1252,7 +1252,7 @@
                                                                                                                                                           <w:SendSMS DisplayName="SendSMS - Mes 8 Control" Es_Control="True" sap2010:WorkflowViewState.IdRef="SendSMS_20" Mes="8">
                                                                                                                                                             <w:SendSMS.ID_Instancia>
                                                                                                                                                               <p1:InArgument x:TypeArguments="x:String">
-                                                                                                                                                                <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                                                                                                                                <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                                                                                                                               </p1:InArgument>
                                                                                                                                                             </w:SendSMS.ID_Instancia>
                                                                                                                                                             <w:SendSMS.Mensaje>
@@ -1330,7 +1330,7 @@
                                                                                                                                                       <w:SendSMS DisplayName="SendSMS - Mes 9 y medio" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_21" Mensaje="Mamá prende al pecho a tu bebé en la 1ª hora de vida, el calostro es el mejor alimento,  se presenta en poca cantidad, de consistencia aguada y transparente." Mes="9">
                                                                                                                                                         <w:SendSMS.ID_Instancia>
                                                                                                                                                           <p1:InArgument x:TypeArguments="x:String">
-                                                                                                                                                            <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                                                                                                                            <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                                                                                                                           </p1:InArgument>
                                                                                                                                                         </w:SendSMS.ID_Instancia>
                                                                                                                                                         <w:SendSMS.Result>
@@ -1367,7 +1367,7 @@
                                                                                                                                                       <w:SendSMS Mensaje="{x:Null}" DisplayName="SendSMS - Mes 9 &quot;BEBE&quot;" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_22" Mes="9">
                                                                                                                                                         <w:SendSMS.ID_Instancia>
                                                                                                                                                           <p1:InArgument x:TypeArguments="x:String">
-                                                                                                                                                            <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                                                                                                                            <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                                                                                                                           </p1:InArgument>
                                                                                                                                                         </w:SendSMS.ID_Instancia>
                                                                                                                                                         <w:SendSMS.Result>
@@ -1404,7 +1404,7 @@
                                                                                                                                                       <w:SendSMS DisplayName="SendSMS - Mes 9" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_23" Mensaje="Mamá llega tu bebé. ¿signos de parto? Contracciones cada 5 minutos en 1 hora, perdida de liquido o sangre, vómitos o diarrea. Consulta en la guardia." Mes="9">
                                                                                                                                                         <w:SendSMS.ID_Instancia>
                                                                                                                                                           <p1:InArgument x:TypeArguments="x:String">
-                                                                                                                                                            <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                                                                                                                            <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                                                                                                                           </p1:InArgument>
                                                                                                                                                         </w:SendSMS.ID_Instancia>
                                                                                                                                                         <w:SendSMS.Result>
@@ -1443,16 +1443,16 @@
                                                                                                                                                                   <ssx:XPathMessageContextMarkup>
                                                                                                                                                                     <x:String x:Key="xgSc">http://tempuri.org/</x:String>
                                                                                                                                                                   </ssx:XPathMessageContextMarkup>
-                                                                                                                                                                </XPathMessageQuery.Namespaces>sm:body()/xgSc:RespSMSControl/xgSc:p_embarazadaId</XPathMessageQuery>
+                                                                                                                                                                </XPathMessageQuery.Namespaces>sm:body()/xgSc:RespSMSControl/xgSc:p_instanciaId</XPathMessageQuery>
                                                                                                                                                             </Receive.CorrelatesOn>
                                                                                                                                                             <Receive.CorrelatesWith>
                                                                                                                                                               <p1:InArgument x:TypeArguments="CorrelationHandle">
-                                                                                                                                                                <mca:CSharpValue x:TypeArguments="CorrelationHandle">embarazadaIdHandle</mca:CSharpValue>
+                                                                                                                                                                <mca:CSharpValue x:TypeArguments="CorrelationHandle">instanciaIdHandle</mca:CSharpValue>
                                                                                                                                                               </p1:InArgument>
                                                                                                                                                             </Receive.CorrelatesWith>
                                                                                                                                                             <ReceiveParametersContent>
-                                                                                                                                                              <p1:OutArgument x:TypeArguments="x:String" x:Key="p_embarazadaId">
-                                                                                                                                                                <mca:CSharpReference x:TypeArguments="x:String">embarazadaId</mca:CSharpReference>
+                                                                                                                                                              <p1:OutArgument x:TypeArguments="x:String" x:Key="p_instanciaId">
+                                                                                                                                                                <mca:CSharpReference x:TypeArguments="x:String">instanciaId</mca:CSharpReference>
                                                                                                                                                               </p1:OutArgument>
                                                                                                                                                             </ReceiveParametersContent>
                                                                                                                                                           </Receive>
@@ -1532,7 +1532,7 @@
                                                                                                                                                               <w:SendSMS DisplayName="SendSMS - Mes 8 Control" Es_Control="True" sap2010:WorkflowViewState.IdRef="SendSMS_24" Mes="8">
                                                                                                                                                                 <w:SendSMS.ID_Instancia>
                                                                                                                                                                   <p1:InArgument x:TypeArguments="x:String">
-                                                                                                                                                                    <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
+                                                                                                                                                                    <mca:CSharpValue x:TypeArguments="x:String">instanciaId</mca:CSharpValue>
                                                                                                                                                                   </p1:InArgument>
                                                                                                                                                                 </w:SendSMS.ID_Instancia>
                                                                                                                                                                 <w:SendSMS.Mensaje>
