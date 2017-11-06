@@ -207,8 +207,6 @@
     <Compile Include="Models\MovilGates\BaseRequest.cs" />
     <Compile Include="Models\MovilGates\MORequest.cs" />
     <Compile Include="Models\MovilGates\MTRequest.cs" />
-    <Compile Include="Models\MovilGates\MTRequestNotify.cs" />
-    <Compile Include="Models\MovilGates\MTResponse.cs" />
     <Compile Include="Models\SMS.cs" />
     <Compile Include="Models\TipoInstancia.cs">
       <DependentUpon>Model_MilDias.tt</DependentUpon>
