@@ -262,7 +262,8 @@ namespace ServiceRestSMS.Controllers
             {
                 LogMensaje logSMS = new LogMensaje();
                 logSMS.MENSAJE = Mensaje;
-                logSMS.ID_TIPOMENSAJE = IDTipoMensaje; 
+                logSMS.ID_TIPOMENSAJE = IDTipoMensaje;
+                logSMS.FECHA = DateTime.Now;
                 db.LogMensaje.Add(logSMS);
                 db.SaveChanges();
 
