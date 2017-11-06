@@ -38,7 +38,7 @@ namespace ServiceRestSMS.Controllers
                     }
 
                     mensaje = quitarAcentos(MO.Contenido);
-
+                    
                     /*Obtengo la embarazada por unica vez*/
                     Embarazada embarazada = new Embarazada();
                     embarazada = db.Embarazada.Where(e => e.TELEFONO == MO.Telefono.Msisdn).FirstOrDefault();
@@ -127,12 +127,91 @@ namespace ServiceRestSMS.Controllers
                             break;
 
                         case 3:
-                            //Es mensaje de inscripción (MAMA DNI MES)
+                            {
+                                //Es mensaje de inscripción (MAMA DNI MES)
+
+                                /*Tomo la primera palabras del mensaje entrante para saber si es bebe o mama*/
+                                String Palabra = mensaje[0].ToString();
+
+                                String tmpDNI = mensaje[1].ToString();
+                                String tmpMES = mensaje[2].ToString();
+
+                                int  DNI = 0;
+                                int MES = 0;
+                                bool continuar = false;
+
+                                //Valido que el DNI sea numerico
+                                if (Int32.TryParse(tmpDNI, out DNI))
+                                {
+                                    continuar = true;
+                                }
+                                else
+                                {
+                                    EnviarMensajeMalformado();
+                                }
+
+                                //Valido que si la palabra es mama y las otras dos palabras son numericas, esten dentro del siguiente rango.
+                                if (Int32.TryParse(tmpMES, out MES)) 
+                                {
+                                    if (Palabra == "MAMA" && (MES >= 0 || MES < 10))
+                                    {
+                                        continuar = true;
+                                    }
+                                    if (Palabra == "BEBE" && (MES >= 0 || MES < 25))
+                                    {
+                                        continuar = true;
+                                    }
+                                }
+                                else
+                                {
+                                    EnviarMensajeMalformado();
+                                }
+
+                                if (continuar)
+                                {
+                                    /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
+                                    LogMensaje logSMS = new LogMensaje();
+                                    logSMS.MENSAJE = (Palabra == "MAMA" ) ? "ALTA MAMA" : "ALTA BEBE";
+                                    logSMS.ID_TIPOMENSAJE = 2; //Mensaje de Alta
+                                    db.LogMensaje.Add(logSMS);
+                                    db.SaveChanges();
+
+                                    embarazada = db.Embarazada.Where(e => e.TELEFONO == MO.Telefono.Msisdn).FirstOrDefault();
+                                    if (embarazada == null)
+                                    {
+                                        /*Creo el registro de la embarazada*/
+
+                                    }
+
+                                    Inscripcion inscripcion = new Inscripcion();
+                                    inscripcion = db.Inscripcion.Where(e => e.ID_EMBARAZADA == embarazada.ID).FirstOrDefault();
+                                    if (inscripcion == null)
+                                    {
+                                        //Crear instancia de inscripcion 
+                                        inscripcion.ID_EMBARAZADA = embarazada.ID;
+                                        inscripcion.ID_TIPOINSTANCIA = (Palabra == "MAMA") ? 1 : 2; // 
+                                        inscripcion.MES = 0;
+                                        db.SaveChanges();
+                                    }
+
+                                    /*Doy inicio al WF segun palabra*/
+                                    /********************************/
+                                }
+                            }
 
                             break;
                         default:
-                            //Respondemos que no tiene el formato correcto
+                            {
+                                //Respondemos que no tiene el formato correcto
 
+
+                                /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
+                                LogMensaje logSMS = new LogMensaje();
+                                logSMS.MENSAJE = "ERROR";
+                                logSMS.ID_TIPOMENSAJE = 8; //Mensaje mal formado
+                                db.LogMensaje.Add(logSMS);
+                                db.SaveChanges();
+                            }
                             break;
                     }
 
@@ -157,6 +236,11 @@ namespace ServiceRestSMS.Controllers
                 db.SaveChanges();
                 return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
+        }
+
+        public void EnviarMensajeMalformado()
+        {
+
         }
 
         public string quitarAcentos(string ArgMensaje)
@@ -212,6 +296,7 @@ namespace ServiceRestSMS.Controllers
                             inscripcion.ID_EMBARAZADA = embarazada.ID;
                             inscripcion.ID_TIPOINSTANCIA = 2; // WF Nacido
                             inscripcion.MES = 0;
+                            db.SaveChanges();
                             /**/
 
                             /*Se debera crear una nueva instancia de bebe nacido 
