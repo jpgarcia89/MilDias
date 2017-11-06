@@ -17,7 +17,7 @@ namespace ServiceRestSMS.Controllers
     public class EnviarSMSController : ApiController
     {
         [HttpPost]
-        public IHttpActionResult EnviarSM(SMS ArgSMS)
+        public IHttpActionResult EnviarSMS(SMS ArgSMS)
         {
             MilDiasEntities db = new MilDiasEntities();
             var embarazada = from e in db.Embarazada
@@ -30,7 +30,7 @@ namespace ServiceRestSMS.Controllers
                              };
             if (embarazada.ToList().Count > 0)
             {
-                return Json(EnviarSM(ArgSMS.Mensaje, embarazada.First().carrier, embarazada.First().telefono, ArgSMS.Es_Control, ArgSMS.ID_Instancia));
+                return Json(EnviarSMS(ArgSMS.Mensaje, embarazada.First().carrier, embarazada.First().telefono, ArgSMS.Es_Control, ArgSMS.ID_Instancia,ArgSMS.Mes));
             }
             else
             {
@@ -38,7 +38,7 @@ namespace ServiceRestSMS.Controllers
             }
         }
 
-        public bool EnviarSM(string ArgMensaje, string ArgCarrier, string ArgTelefono, bool ArgEsControl, string ArgInstancia)
+        public bool EnviarSMS(string ArgMensaje, string ArgCarrier, string ArgTelefono, bool ArgEsControl, string ArgInstancia,int Mes)
         {
             MilDiasEntities db = new MilDiasEntities();
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://64.76.120.14:6064/minsaludsanjuan");

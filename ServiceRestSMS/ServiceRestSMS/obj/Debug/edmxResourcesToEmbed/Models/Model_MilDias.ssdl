@@ -47,6 +47,7 @@
     <Property Name="ID_INSTANCIA" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="ID_TRANSACCION" Type="int" Nullable="false" />
     <Property Name="ID_RESPUESTA" Type="tinyint" Nullable="false" />
+    <Property Name="FECHA" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="TipoInstancia">
     <Key>

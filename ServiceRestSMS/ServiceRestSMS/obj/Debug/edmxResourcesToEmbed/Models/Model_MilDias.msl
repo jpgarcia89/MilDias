@@ -47,6 +47,7 @@
     <EntitySetMapping Name="LogMensajeControl">
       <EntityTypeMapping TypeName="Model.LogMensajeControl">
         <MappingFragment StoreEntitySet="LogMensajeControl">
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="ID_INSTANCIA" ColumnName="ID_INSTANCIA" />
           <ScalarProperty Name="ID_TRANSACCION" ColumnName="ID_TRANSACCION" />

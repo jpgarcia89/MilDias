@@ -54,6 +54,7 @@
     <Property Name="ID_TRANSACCION" Type="Int32" Nullable="false" />
     <Property Name="ID_RESPUESTA" Type="Byte" Nullable="false" />
     <NavigationProperty Name="TipoRespuestaControl" Relationship="Self.FK_LogMensajeControl_TipoRespuestaControl" FromRole="LogMensajeControl" ToRole="TipoRespuestaControl" />
+    <Property Name="FECHA" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
   <EntityType Name="TipoInstancia">
     <Key>

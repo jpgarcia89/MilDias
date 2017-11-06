@@ -28,8 +28,8 @@ namespace ServiceRestSMS.Controllers
                 if (xmlString != "" && xmlString != "\n")
                 {
                     string mensaje = "";
-                    log.FECHA = DateTime.Now;
-                    log.MENSAJE = xmlString;
+                    //log.FECHA = DateTime.Now;
+                    //log.MENSAJE = xmlString;
 
                     var serializer = new XmlSerializer(typeof(MORequest));
                     MORequest MO = new MORequest();
@@ -92,7 +92,7 @@ namespace ServiceRestSMS.Controllers
                                     smsModel.Mensaje = "Mensaje modelo de info";
                                     smsModel.ID_Instancia = embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_INSTANCIA;
                                     smsModel.Es_Control = false;
-                                    sms.EnviarSM(smsModel);
+                                    sms.EnviarSMS(smsModel);
 
                                     /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
                                     GuardaLog("MENSAJE DE INFORMACION", 7);
@@ -234,7 +234,7 @@ namespace ServiceRestSMS.Controllers
         public void EnviarMensaje(String Mensaje, string Carrier,string Telefono)
         {
             EnviarSMSController sms = new EnviarSMSController();
-            sms.EnviarSM(Mensaje,Carrier,Telefono,false,"");
+            sms.EnviarSMS(Mensaje,Carrier,Telefono,false,"",0);
         }
 
 

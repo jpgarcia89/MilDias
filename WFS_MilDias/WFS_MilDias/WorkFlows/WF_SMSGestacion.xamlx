@@ -139,6 +139,7 @@
             <p1:Variable x:TypeArguments="x:Boolean" Name="resultSMS1" />
             <p1:Variable x:TypeArguments="x:Boolean" Name="resultSMSControl" />
             <p1:Variable x:TypeArguments="x:String" Default="MAMÁ ¿HICISTE YA TU CONTROL? RECORDÁ SOLICITAR TU LIBRETA SANITARIA, ES TU DERECHO. Responde SI o NO" Name="mensajeControl" />
+            <p1:Variable x:TypeArguments="x:String" Default="Si tu bebe ya nacio, envia la palabra BEBE" Name="mensajeBEBE" />
           </p1:Flowchart.Variables>
           <p1:Flowchart.StartNode>
             <x:Reference>__ReferenceID101</x:Reference>
@@ -777,12 +778,17 @@
                                                                                                         </p1:Delay>
                                                                                                         <p1:FlowStep.Next>
                                                                                                           <p1:FlowStep x:Name="__ReferenceID62" sap2010:WorkflowViewState.IdRef="FlowStep_102">
-                                                                                                            <w:SendSMS Mensaje="{x:Null}" DisplayName="SendSMS - Mes 6 &quot;BEBE&quot;" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_57" Mes="6">
+                                                                                                            <w:SendSMS DisplayName="SendSMS - Mes 6 &quot;BEBE&quot;" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_57" Mes="6">
                                                                                                               <w:SendSMS.ID_Instancia>
                                                                                                                 <p1:InArgument x:TypeArguments="x:String">
                                                                                                                   <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
                                                                                                                 </p1:InArgument>
                                                                                                               </w:SendSMS.ID_Instancia>
+                                                                                                              <w:SendSMS.Mensaje>
+                                                                                                                <p1:InArgument x:TypeArguments="x:String">
+                                                                                                                  <mca:CSharpValue x:TypeArguments="x:String">mensajeBEBE</mca:CSharpValue>
+                                                                                                                </p1:InArgument>
+                                                                                                              </w:SendSMS.Mensaje>
                                                                                                               <w:SendSMS.Result>
                                                                                                                 <p1:OutArgument x:TypeArguments="x:Boolean">
                                                                                                                   <mca:CSharpReference x:TypeArguments="x:Boolean">resultSMS1</mca:CSharpReference>
@@ -854,12 +860,17 @@
                                                                                                                                           </p1:Delay>
                                                                                                                                           <p1:FlowStep.Next>
                                                                                                                                             <p1:FlowStep x:Name="__ReferenceID27" sap2010:WorkflowViewState.IdRef="FlowStep_104">
-                                                                                                                                              <w:SendSMS Mensaje="{x:Null}" DisplayName="SendSMS - Mes 7 &quot;BEBE&quot;" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_59" Mes="7">
+                                                                                                                                              <w:SendSMS DisplayName="SendSMS - Mes 7 &quot;BEBE&quot;" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_59" Mes="7">
                                                                                                                                                 <w:SendSMS.ID_Instancia>
                                                                                                                                                   <p1:InArgument x:TypeArguments="x:String">
                                                                                                                                                     <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
                                                                                                                                                   </p1:InArgument>
                                                                                                                                                 </w:SendSMS.ID_Instancia>
+                                                                                                                                                <w:SendSMS.Mensaje>
+                                                                                                                                                  <p1:InArgument x:TypeArguments="x:String">
+                                                                                                                                                    <mca:CSharpValue x:TypeArguments="x:String">mensajeBEBE</mca:CSharpValue>
+                                                                                                                                                  </p1:InArgument>
+                                                                                                                                                </w:SendSMS.Mensaje>
                                                                                                                                                 <w:SendSMS.Result>
                                                                                                                                                   <p1:OutArgument x:TypeArguments="x:Boolean">
                                                                                                                                                     <mca:CSharpReference x:TypeArguments="x:Boolean">resultSMS1</mca:CSharpReference>
@@ -1086,12 +1097,17 @@
                                                                                                                                               </p1:FlowDecision.True>
                                                                                                                                               <p1:FlowDecision.False>
                                                                                                                                                 <p1:FlowStep x:Name="__ReferenceID36" sap2010:WorkflowViewState.IdRef="FlowStep_107">
-                                                                                                                                                  <w:SendSMS Mensaje="{x:Null}" DisplayName="SendSMS - Mes 8 &quot;BEBE&quot;" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_62" Mes="8">
+                                                                                                                                                  <w:SendSMS DisplayName="SendSMS - Mes 8 &quot;BEBE&quot;" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_62" Mes="8">
                                                                                                                                                     <w:SendSMS.ID_Instancia>
                                                                                                                                                       <p1:InArgument x:TypeArguments="x:String">
                                                                                                                                                         <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
                                                                                                                                                       </p1:InArgument>
                                                                                                                                                     </w:SendSMS.ID_Instancia>
+                                                                                                                                                    <w:SendSMS.Mensaje>
+                                                                                                                                                      <p1:InArgument x:TypeArguments="x:String">
+                                                                                                                                                        <mca:CSharpValue x:TypeArguments="x:String">mensajeBEBE</mca:CSharpValue>
+                                                                                                                                                      </p1:InArgument>
+                                                                                                                                                    </w:SendSMS.Mensaje>
                                                                                                                                                     <w:SendSMS.Result>
                                                                                                                                                       <p1:OutArgument x:TypeArguments="x:Boolean">
                                                                                                                                                         <mca:CSharpReference x:TypeArguments="x:Boolean">resultSMS1</mca:CSharpReference>
@@ -1365,12 +1381,17 @@
                                                                                                                                                   </p1:FlowDecision.True>
                                                                                                                                                   <p1:FlowDecision.False>
                                                                                                                                                     <p1:FlowStep x:Name="__ReferenceID51" sap2010:WorkflowViewState.IdRef="FlowStep_108">
-                                                                                                                                                      <w:SendSMS Mensaje="{x:Null}" DisplayName="SendSMS - Mes 9 &quot;BEBE&quot;" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_63" Mes="9">
+                                                                                                                                                      <w:SendSMS DisplayName="SendSMS - Mes 9 &quot;BEBE&quot;" Es_Control="False" sap2010:WorkflowViewState.IdRef="SendSMS_63" Mes="9">
                                                                                                                                                         <w:SendSMS.ID_Instancia>
                                                                                                                                                           <p1:InArgument x:TypeArguments="x:String">
                                                                                                                                                             <mca:CSharpValue x:TypeArguments="x:String">embarazadaId</mca:CSharpValue>
                                                                                                                                                           </p1:InArgument>
                                                                                                                                                         </w:SendSMS.ID_Instancia>
+                                                                                                                                                        <w:SendSMS.Mensaje>
+                                                                                                                                                          <p1:InArgument x:TypeArguments="x:String">
+                                                                                                                                                            <mca:CSharpValue x:TypeArguments="x:String">mensajeBEBE</mca:CSharpValue>
+                                                                                                                                                          </p1:InArgument>
+                                                                                                                                                        </w:SendSMS.Mensaje>
                                                                                                                                                         <w:SendSMS.Result>
                                                                                                                                                           <p1:OutArgument x:TypeArguments="x:Boolean">
                                                                                                                                                             <mca:CSharpReference x:TypeArguments="x:Boolean">resultSMS1</mca:CSharpReference>
@@ -1827,7 +1848,7 @@
         <p1:TerminateWorkflow sap2010:WorkflowViewState.IdRef="TerminateWorkflow_2" Reason="Fin por SMS de baja" />
       </p1:Sequence>
     </p1:Parallel>
-    <sads:DebugSymbol.Symbol>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</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>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</sads:DebugSymbol.Symbol>
   </p1:Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -2340,7 +2361,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Delay_26" sap:VirtualizedContainerService.HintSize="200,22.4">
+      <sap2010:ViewStateData Id="Delay_26" sap:VirtualizedContainerService.HintSize="200,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -2351,29 +2372,29 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">220,609</av:Point>
-            <av:Size x:Key="ShapeSize">200,22.4</av:Size>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">467.5,741.04 467.5,979.04</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowDecision_40" sap:VirtualizedContainerService.HintSize="80.8,87.2">
+      <sap2010:ViewStateData Id="FlowDecision_40" sap:VirtualizedContainerService.HintSize="81,87">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <av:Point x:Key="ShapeLocation">269.5,496.5</av:Point>
-            <av:Size x:Key="ShapeSize">80.8,87.2</av:Size>
+            <av:Size x:Key="ShapeSize">81,87</av:Size>
             <av:PointCollection x:Key="TrueConnector">269.5,540 190,540 190,620 220,620</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Delay_27" sap:VirtualizedContainerService.HintSize="200,22.4">
+      <sap2010:ViewStateData Id="Delay_27" sap:VirtualizedContainerService.HintSize="200,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="SendSMS_59" sap:VirtualizedContainerService.HintSize="200,22.4">
+      <sap2010:ViewStateData Id="SendSMS_59" sap:VirtualizedContainerService.HintSize="200,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -2384,7 +2405,7 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">210,408.8</av:Point>
-            <av:Size x:Key="ShapeSize">200,22.4</av:Size>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">310,431.2 310,461.2 309.9,461.2 309.9,496.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -2393,12 +2414,12 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">210,299</av:Point>
-            <av:Size x:Key="ShapeSize">200,22.4</av:Size>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">310,321.4 310,408.8</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="SendSMS_60" sap:VirtualizedContainerService.HintSize="200,22.4">
+      <sap2010:ViewStateData Id="SendSMS_60" sap:VirtualizedContainerService.HintSize="200,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -2409,28 +2430,28 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">200,108.8</av:Point>
-            <av:Size x:Key="ShapeSize">200,22.4</av:Size>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">300,131.2 300,161.2 299.9,161.2 299.9,186.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowDecision_41" sap:VirtualizedContainerService.HintSize="80.8,87.2">
+      <sap2010:ViewStateData Id="FlowDecision_41" sap:VirtualizedContainerService.HintSize="81,87">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <av:Point x:Key="ShapeLocation">259.5,186.5</av:Point>
-            <av:Size x:Key="ShapeSize">80.8,87.2</av:Size>
+            <av:Size x:Key="ShapeSize">81,87</av:Size>
             <av:PointCollection x:Key="FalseConnector">340.3,230.1 430,230.1 430,120 400,120</av:PointCollection>
             <av:PointCollection x:Key="TrueConnector">259.5,230 180,230 180,310 210,310</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_6" sap:VirtualizedContainerService.HintSize="614.4,2608">
+      <sap2010:ViewStateData Id="Flowchart_6" sap:VirtualizedContainerService.HintSize="614,2607">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
-            <av:Size x:Key="ShapeSize">60,75.2</av:Size>
+            <av:Size x:Key="ShapeSize">60,75</av:Size>
             <x:Double x:Key="Height">2571.2000000000003</x:Double>
             <av:PointCollection x:Key="ConnectorLocation">300,77.7 300,108.8</av:PointCollection>
           </scg:Dictionary>
@@ -2532,7 +2553,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_7" sap:VirtualizedContainerService.HintSize="200,52.8">
+      <sap2010:ViewStateData Id="Flowchart_7" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -2551,7 +2572,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Delay_30" sap:VirtualizedContainerService.HintSize="200,22.4">
+      <sap2010:ViewStateData Id="Delay_30" sap:VirtualizedContainerService.HintSize="200,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -2562,11 +2583,11 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">210,609</av:Point>
-            <av:Size x:Key="ShapeSize">200,22.4</av:Size>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="SendSMS_62" sap:VirtualizedContainerService.HintSize="200,22.4">
+      <sap2010:ViewStateData Id="SendSMS_62" sap:VirtualizedContainerService.HintSize="200,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -2577,23 +2598,23 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">200,438.8</av:Point>
-            <av:Size x:Key="ShapeSize">200,22.4</av:Size>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">300,461.2 300,491.2 299.9,491.2 299.9,496.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowDecision_46" sap:VirtualizedContainerService.HintSize="80.8,87.2">
+      <sap2010:ViewStateData Id="FlowDecision_46" sap:VirtualizedContainerService.HintSize="81,87">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <av:Point x:Key="ShapeLocation">259.5,496.5</av:Point>
-            <av:Size x:Key="ShapeSize">80.8,87.2</av:Size>
+            <av:Size x:Key="ShapeSize">81,87</av:Size>
             <av:PointCollection x:Key="FalseConnector">340.3,540.1 430,540.1 430,450 400,450</av:PointCollection>
             <av:PointCollection x:Key="TrueConnector">259.5,540 180,540 180,620 210,620</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Delay_31" sap:VirtualizedContainerService.HintSize="200,22.4">
+      <sap2010:ViewStateData Id="Delay_31" sap:VirtualizedContainerService.HintSize="200,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -2604,12 +2625,12 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">200,309</av:Point>
-            <av:Size x:Key="ShapeSize">200,22.4</av:Size>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">300,331.4 300,438.8</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="SendSMS_61" sap:VirtualizedContainerService.HintSize="200,22.4">
+      <sap2010:ViewStateData Id="SendSMS_61" sap:VirtualizedContainerService.HintSize="200,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -2620,28 +2641,28 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">200,128.8</av:Point>
-            <av:Size x:Key="ShapeSize">200,22.4</av:Size>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">300,151.2 300,181.2 299.9,181.2 299.9,186.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowDecision_47" sap:VirtualizedContainerService.HintSize="80.8,87.2">
+      <sap2010:ViewStateData Id="FlowDecision_47" sap:VirtualizedContainerService.HintSize="81,87">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <av:Point x:Key="ShapeLocation">259.5,186.5</av:Point>
-            <av:Size x:Key="ShapeSize">80.8,87.2</av:Size>
+            <av:Size x:Key="ShapeSize">81,87</av:Size>
             <av:PointCollection x:Key="FalseConnector">340.3,230.1 430,230.1 430,140 400,140</av:PointCollection>
             <av:PointCollection x:Key="TrueConnector">259.5,230 170,230 170,320 200,320</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_8" sap:VirtualizedContainerService.HintSize="615.2,756.8">
+      <sap2010:ViewStateData Id="Flowchart_8" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
-            <av:Size x:Key="ShapeSize">60,75.2</av:Size>
+            <av:Size x:Key="ShapeSize">60,75</av:Size>
             <x:Double x:Key="Height">720.00000000000023</x:Double>
             <x:Double x:Key="Width">600.80000000000007</x:Double>
             <av:PointCollection x:Key="ConnectorLocation">300,77.7 300,128.8</av:PointCollection>
@@ -2744,7 +2765,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_9" sap:VirtualizedContainerService.HintSize="200,52.8">
+      <sap2010:ViewStateData Id="Flowchart_9" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -2774,7 +2795,7 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">214.5,936.04</av:Point>
-            <av:Size x:Key="ShapeSize">200,22.4</av:Size>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">344.5,768.04 344.5,866.04</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -2790,7 +2811,7 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">200,768.8</av:Point>
-            <av:Size x:Key="ShapeSize">200,22.4</av:Size>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">300,791.2 300,821.2 304.4,821.2 304.4,823.54</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -2800,13 +2821,13 @@
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <av:Point x:Key="ShapeLocation">264,823.54</av:Point>
-            <av:Size x:Key="ShapeSize">80.8,87.2</av:Size>
+            <av:Size x:Key="ShapeSize">81,87</av:Size>
             <av:PointCollection x:Key="FalseConnector">344.8,867.14 430,867.14 430,780 400,780</av:PointCollection>
             <av:PointCollection x:Key="TrueConnector">264,867.14 184.5,867.14 184.5,947.24 214.5,947.24</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Delay_34" sap:VirtualizedContainerService.HintSize="200,22.4">
+      <sap2010:ViewStateData Id="Delay_34" sap:VirtualizedContainerService.HintSize="200,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -2817,12 +2838,12 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">204.5,616.04</av:Point>
-            <av:Size x:Key="ShapeSize">200,22.4</av:Size>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">304.5,638.44 304.5,668.44 300,668.44 300,768.8</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="SendSMS_63" sap:VirtualizedContainerService.HintSize="200,22.4">
+      <sap2010:ViewStateData Id="SendSMS_63" sap:VirtualizedContainerService.HintSize="200,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -2833,23 +2854,23 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">200,438.8</av:Point>
-            <av:Size x:Key="ShapeSize">200,22.4</av:Size>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">300,461.2 300,496.4</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowDecision_52" sap:VirtualizedContainerService.HintSize="80.8,87.2">
+      <sap2010:ViewStateData Id="FlowDecision_52" sap:VirtualizedContainerService.HintSize="81,87">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <av:Point x:Key="ShapeLocation">259.6,496.4</av:Point>
-            <av:Size x:Key="ShapeSize">80.8,87.2</av:Size>
+            <av:Size x:Key="ShapeSize">81,87</av:Size>
             <av:PointCollection x:Key="FalseConnector">340.4,540 430,540 430,450 400,450</av:PointCollection>
             <av:PointCollection x:Key="TrueConnector">259.6,540 174.5,540 174.5,627.24 204.5,627.24</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Delay_35" sap:VirtualizedContainerService.HintSize="200,22.4">
+      <sap2010:ViewStateData Id="Delay_35" sap:VirtualizedContainerService.HintSize="200,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -2860,12 +2881,12 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">204.5,316.04</av:Point>
-            <av:Size x:Key="ShapeSize">200,22.4</av:Size>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">304.5,338.44 304.5,368.44 300,368.44 300,438.8</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="SendSMS_64" sap:VirtualizedContainerService.HintSize="200,22.4">
+      <sap2010:ViewStateData Id="SendSMS_64" sap:VirtualizedContainerService.HintSize="200,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -2876,28 +2897,28 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">200,138.8</av:Point>
-            <av:Size x:Key="ShapeSize">200,22.4</av:Size>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">300,161.2 300,196.4</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowDecision_53" sap:VirtualizedContainerService.HintSize="80.8,87.2">
+      <sap2010:ViewStateData Id="FlowDecision_53" sap:VirtualizedContainerService.HintSize="81,87">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <av:Point x:Key="ShapeLocation">259.6,196.4</av:Point>
-            <av:Size x:Key="ShapeSize">80.8,87.2</av:Size>
+            <av:Size x:Key="ShapeSize">81,87</av:Size>
             <av:PointCollection x:Key="FalseConnector">340.4,240 430,240 430,150 400,150</av:PointCollection>
             <av:PointCollection x:Key="TrueConnector">259.6,240 174.5,240 174.5,327.24 204.5,327.24</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_10" sap:VirtualizedContainerService.HintSize="200,51">
+      <sap2010:ViewStateData Id="Flowchart_10" sap:VirtualizedContainerService.HintSize="618,1047">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
-            <av:Size x:Key="ShapeSize">60,75.2</av:Size>
+            <av:Size x:Key="ShapeSize">60,75</av:Size>
             <x:Double x:Key="Height">1011.1999999999999</x:Double>
             <x:Double x:Key="Width">603.5</x:Double>
             <av:PointCollection x:Key="ConnectorLocation">300,77.7 300,138.8</av:PointCollection>
@@ -3000,7 +3021,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_11" sap:VirtualizedContainerService.HintSize="632,780">
+      <sap2010:ViewStateData Id="Flowchart_11" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -3423,7 +3444,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="200,51">
+      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="828,6987">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>

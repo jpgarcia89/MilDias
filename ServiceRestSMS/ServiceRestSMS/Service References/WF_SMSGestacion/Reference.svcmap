@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="2494da2f-cdc0-47d4-92a8-fb162eb79b91" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://10.64.65.200/WFS_MilDias/WorkFlows/WF_SMSGestacion.xamlx?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Service1.wsdl" MetadataType="Wsdl" ID="696e54f2-625b-48d5-91f8-2ba26994a906" SourceId="1" SourceUrl="http://10.64.65.200/WFS_MilDias/WorkFlows/WF_SMSGestacion.xamlx?wsdl" />
+    <MetadataFile FileName="WF_SMSGestacion.xsd" MetadataType="Schema" ID="0a7ba09f-ad8f-4ddd-8ac8-1bede2839311" SourceId="1" SourceUrl="http://10.64.65.200/WFS_MilDias/WorkFlows/WF_SMSGestacion.xamlx?xsd=xsd0" />
+    <MetadataFile FileName="WF_SMSGestacion1.xsd" MetadataType="Schema" ID="120e00fa-5666-4a52-a191-258e8666978f" SourceId="1" SourceUrl="http://10.64.65.200/WFS_MilDias/WorkFlows/WF_SMSGestacion.xamlx?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

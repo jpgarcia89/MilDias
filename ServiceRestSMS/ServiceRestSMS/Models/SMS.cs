@@ -10,5 +10,6 @@ namespace ServiceRestSMS.Models
         public string Mensaje { get; set; }
         public string ID_Instancia { get; set; }
         public bool Es_Control { get; set; }
+        public int Mes { get; set; }
     }
 }
