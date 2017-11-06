@@ -21,12 +21,13 @@ namespace ServiceRestSMS.Controllers
         {
             MilDiasEntities db = new MilDiasEntities();
             var embarazada = from e in db.Embarazada
-                                join i in db.Inscripcion on e.ID equals i.ID_EMBARAZADA
-                                select new
-                                {
-                                    telefono = e.TELEFONO,
-                                    carrier = e.Empresa.Carrier
-                                };
+                             join i in db.Inscripcion on e.ID equals i.ID_EMBARAZADA
+                             where i.ACTIVO == true
+                             select new
+                             {
+                                 telefono = e.TELEFONO,
+                                 carrier = e.Empresa.Carrier
+                             };
             if (embarazada.ToList().Count > 0)
             {
                 return Json(EnviarSM(ArgSMS.Mensaje, embarazada.First().carrier, embarazada.First().telefono, ArgSMS.Es_Control, ArgSMS.ID_Instancia));

@@ -1,5 +1,7 @@
 ﻿using ServiceRestSMS.Models;
 using ServiceRestSMS.Models.MovilGates;
+using ServiceRestSMS.WF_SMSGestacion;
+using ServiceRestSMS.WF_SMSNacido;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,7 +22,6 @@ namespace ServiceRestSMS.Controllers
             MilDiasEntities db = new MilDiasEntities();
             try
             {
-                LogMensaje log = new LogMensaje();
                 string xmlString = request.Content.ReadAsStringAsync().Result;
                 xmlString = xmlString.Trim();
 
@@ -53,7 +54,8 @@ namespace ServiceRestSMS.Controllers
                                 {
                                     LogMensajeControl logControl = new LogMensajeControl();
                                     logControl = db.LogMensajeControl
-                                        .Where(c => c.ID_INSTANCIA == embarazada.Inscripcion.First().ID_INSTANCIA)
+                                        .Where(c => c.ID_INSTANCIA == embarazada.Inscripcion.First().ID_INSTANCIA 
+                                                                   && embarazada.Inscripcion.First().ACTIVO == true )
                                         .OrderByDescending(x => x.ID).FirstOrDefault();
 
                                     //Actualizo segun respuesta en LogMensajeControl
@@ -65,9 +67,20 @@ namespace ServiceRestSMS.Controllers
                                     {
                                         logControl.ID_RESPUESTA = 2;
                                     }
+
+                                    if (embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_TIPOINSTANCIA == 1)
+                                    {
+                                        WF_SMSGestacion.RespSMSControlClient clientResp = new WF_SMSGestacion.RespSMSControlClient();
+                                        clientResp.RespSMSControl(embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_INSTANCIA);
+                                    }
+                                    else if (embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_TIPOINSTANCIA  == 2)
+                                    {
+                                        WF_SMSNacido.RespSMSControlClient clientResp = new WF_SMSNacido.RespSMSControlClient();
+                                        clientResp.RespSMSControl(embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_INSTANCIA);
+                                    }
+
                                     //Update DB
                                     db.SaveChanges();
-
                                 }
                                 else if (mensaje == "INFO")
                                 {
@@ -136,7 +149,7 @@ namespace ServiceRestSMS.Controllers
                                 }
                                 else
                                 {
-                                    EnviarMensaje("El mensaje no tiene el formato correcto. ", MO.Servicio.Id, MO.Telefono.Msisdn);
+                                    EnviarMensaje("El mensaje no tiene el formato correcto. Recorda que para inscribirte debes enviar MAMA DNI MES. Ejemplo MAMA 30XXXXXX 3", MO.Servicio.Id, MO.Telefono.Msisdn);
                                 }
 
                                 //Valido que si la palabra es mama y las otras dos palabras son numericas, esten dentro del siguiente rango.
@@ -153,7 +166,7 @@ namespace ServiceRestSMS.Controllers
                                 }
                                 else
                                 {
-                                    EnviarMensaje("El mensaje no tiene el formato correcto. ", MO.Servicio.Id, MO.Telefono.Msisdn);
+                                    EnviarMensaje("El mensaje no tiene el formato correcto. Recorda que para inscribirte debes enviar MAMA DNI MES. Ejemplo MAMA 30XXXXXX 3", MO.Servicio.Id, MO.Telefono.Msisdn);
                                 }
 
                                 if (continuar)
@@ -171,11 +184,17 @@ namespace ServiceRestSMS.Controllers
                                         db.SaveChanges();
                                     }
 
-
-
                                     /*Doy inicio al WF segun palabra*/
                                     /********************************/
-
+                                    string InstanciaID = "";
+                                    if (Palabra == "MAMA")
+                                    {
+                                        InstanciaID = WFAltaGestacion(MES);
+                                    }
+                                    else if (Palabra == "BEBE")
+                                    {
+                                        InstanciaID = WFAltaNacido(MES);
+                                    }
 
                                     Inscripcion inscripcion = new Inscripcion();
                                     inscripcion = db.Inscripcion.Where(e => e.ID_EMBARAZADA == embarazada.ID).FirstOrDefault();
@@ -185,6 +204,7 @@ namespace ServiceRestSMS.Controllers
                                         inscripcion.ID_EMBARAZADA = embarazada.ID;
                                         inscripcion.ID_TIPOINSTANCIA = (Palabra == "MAMA") ? 1 : 2; // 
                                         inscripcion.MES = 0;
+                                        inscripcion.ID_INSTANCIA = InstanciaID;
                                         db.SaveChanges();
                                     }
 
@@ -197,13 +217,10 @@ namespace ServiceRestSMS.Controllers
                                 /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
                                 GuardaLog("MENSAJE MAL FORMADO", 8);
                                 //Respondemos que no tiene el formato correcto
-                                EnviarMensaje("El mensaje no tiene el formato correcto. ",MO.Servicio.Id,MO.Telefono.Msisdn);
+                                EnviarMensaje("El mensaje no tiene el formato correcto. Recorda que para inscribirte debes enviar MAMA DNI MES. Ejemplo MAMA 30XXXXXX 3", MO.Servicio.Id, MO.Telefono.Msisdn);
                             }
                             break;
-                    }
-
-                    db.LogMensaje.Add(log);
-                    db.SaveChanges();
+                    }                   
                 }
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
@@ -291,9 +308,18 @@ namespace ServiceRestSMS.Controllers
                 {
                     case 1: //Recibi un mensaje de baja
                         {
+                            if (inscripcion.ID_TIPOINSTANCIA == 1) {
+                                StopSMSGestacionClient clientGestacion = new StopSMSGestacionClient();
+                                clientGestacion.StopSMSGestacion(inscripcion.ID_INSTANCIA);
+                            }
+                            else if (inscripcion.ID_TIPOINSTANCIA == 2)
+                            {
+                                StopSMSNacidoClient clientNacido = new WF_SMSNacido.StopSMSNacidoClient();
+                                clientNacido.StopSMSNacido(inscripcion.ID_INSTANCIA);
+                            }
                             inscripcion.ACTIVO = false;
                             inscripcion.FECHA_BAJA = DateTime.Now;
-                            db.SaveChanges();
+                            db.SaveChanges();                            
                         }
                         break;
 
@@ -306,16 +332,19 @@ namespace ServiceRestSMS.Controllers
 
                             embarazada = db.Embarazada.Where(e => e.ID == inscripcion.ID_EMBARAZADA).FirstOrDefault();
 
-                            //Crear instancia de inscripcion 
-                            inscripcion.ID_EMBARAZADA = embarazada.ID;
-                            inscripcion.ID_TIPOINSTANCIA = 2; // WF Nacido
-                            inscripcion.MES = 0;
-                            db.SaveChanges();
-                            /**/
 
                             /*Se debera crear una nueva instancia de bebe nacido 
                             y hacer todo el WF deshabilitando la actual*/
 
+                            string InstanciaID = WFAltaNacido(0);
+
+                            //Crear instancia de inscripcion 
+                            inscripcion.ID_EMBARAZADA = embarazada.ID;
+                            inscripcion.ID_TIPOINSTANCIA = 2; // WF Nacido
+                            inscripcion.MES = 0;
+                            inscripcion.ID_INSTANCIA = InstanciaID;
+                            db.SaveChanges();
+                            /**/
                         }
                         break;
 
@@ -338,6 +367,18 @@ namespace ServiceRestSMS.Controllers
             }
 
 
+        }
+
+        public string WFAltaGestacion(int ArgMes)
+        {
+            StartSMSGestacionClient client = new StartSMSGestacionClient();
+            return client.StartSMSGestacion(ArgMes);
+        }
+
+        public string WFAltaNacido(int ArgMes)
+        {
+            StartSMSNacidoClient client = new StartSMSNacidoClient();
+            return client.StartSMSNacido(ArgMes);
         }
     }
 }
