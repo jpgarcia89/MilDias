@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Activities.Statements;
 
 namespace WFS_MilDias
 {
@@ -47,6 +48,27 @@ namespace WFS_MilDias
             //string dni = context.GetValue(this.DNI);
             //string carrier = context.GetValue(this.Carrier);
 
+            DateTime dt09AM = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 09, 0, 0);
+            DateTime dt01PM = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 0, 0);
+            //var delay = new Delay();
+
+
+            if ((DateTime.Now < dt09AM) || (DateTime.Now > dt01PM))
+            {
+                TimeSpan tiempoEspera = dt09AM.Subtract(DateTime.Now);
+                
+
+                var seq = new Sequence
+                {
+                    Activities = { new Delay { Duration = tiempoEspera } }
+                };
+
+                WorkflowInvoker.Invoke(seq);
+            }
+
+
+
+
             try
             {
                 HttpClient cliente = new HttpClient();
@@ -71,7 +93,7 @@ namespace WFS_MilDias
                 var resultContent = respuesta.Content.ReadAsStringAsync().Result;
 
                 var id = context.WorkflowInstanceId;
-                
+
                 Debug.WriteLine(id.ToString());
 
 
@@ -104,6 +126,6 @@ namespace WFS_MilDias
     //}
 
 
-    
+
 
 }
