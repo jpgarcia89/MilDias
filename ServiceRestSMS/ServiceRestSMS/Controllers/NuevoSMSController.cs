@@ -79,14 +79,10 @@ namespace ServiceRestSMS.Controllers
                                     smsModel.Mensaje = "Mensaje modelo de info";
                                     smsModel.ID_Instancia = embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_INSTANCIA;
                                     smsModel.Es_Control = false;
-                                    sms.EnviarSMS(smsModel);
+                                    sms.EnviarSM(smsModel);
 
                                     /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
-                                    LogMensaje logSMS = new LogMensaje();
-                                    logSMS.MENSAJE = "INFO";
-                                    logSMS.ID_TIPOMENSAJE = 7; //Mensaje de informacion
-                                    db.LogMensaje.Add(logSMS);
-                                    db.SaveChanges();
+                                    GuardaLog("MENSAJE DE INFORMACION", 7);
 
 
                                 }
@@ -94,11 +90,8 @@ namespace ServiceRestSMS.Controllers
                                 {
                                     //BAJA EL SERVICIO PARA LA EMBARAZADA 
                                     /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
-                                    LogMensaje logSMS = new LogMensaje();
-                                    logSMS.MENSAJE = "BAJA";
-                                    logSMS.ID_TIPOMENSAJE = 3; // Mensaje de baja
-                                    db.LogMensaje.Add(logSMS);
-                                    db.SaveChanges();
+
+                                    GuardaLog("MENSAJE DE BAJA", 3);
 
 
                                     /*Cambio el campo ACTIVO de la embarazada porque recibi la palabra baja*/
@@ -110,12 +103,8 @@ namespace ServiceRestSMS.Controllers
                                 else if (mensaje == "BEBE")
                                 {
                                     //UPDATE DE EMBARAZADA CON EL INDICADOR DE QUE EL BEBE HA NACIDO
-                                    LogMensaje logSMS = new LogMensaje();
-                                    logSMS.MENSAJE = "BAJA";
-                                    logSMS.ID_TIPOMENSAJE = 3; // Mensaje de baja
-                                    db.LogMensaje.Add(logSMS);
-                                    db.SaveChanges();
 
+                                    GuardaLog("MENSAJE DE BAJA", 3);
 
                                     /*Cambio el campo ACTIVO de la embarazada porque el bebe nacio*/
                                     Inscripcion inscripcion = new Inscripcion();
@@ -147,7 +136,7 @@ namespace ServiceRestSMS.Controllers
                                 }
                                 else
                                 {
-                                    EnviarMensajeMalformado();
+                                    EnviarMensaje("El mensaje no tiene el formato correcto. ", MO.Servicio.Id, MO.Telefono.Msisdn);
                                 }
 
                                 //Valido que si la palabra es mama y las otras dos palabras son numericas, esten dentro del siguiente rango.
@@ -164,24 +153,29 @@ namespace ServiceRestSMS.Controllers
                                 }
                                 else
                                 {
-                                    EnviarMensajeMalformado();
+                                    EnviarMensaje("El mensaje no tiene el formato correcto. ", MO.Servicio.Id, MO.Telefono.Msisdn);
                                 }
 
                                 if (continuar)
                                 {
                                     /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
-                                    LogMensaje logSMS = new LogMensaje();
-                                    logSMS.MENSAJE = (Palabra == "MAMA" ) ? "ALTA MAMA" : "ALTA BEBE";
-                                    logSMS.ID_TIPOMENSAJE = 2; //Mensaje de Alta
-                                    db.LogMensaje.Add(logSMS);
-                                    db.SaveChanges();
+                                    GuardaLog(Palabra , 2);
 
                                     embarazada = db.Embarazada.Where(e => e.TELEFONO == MO.Telefono.Msisdn).FirstOrDefault();
                                     if (embarazada == null)
                                     {
                                         /*Creo el registro de la embarazada*/
-
+                                        embarazada.DNI = DNI;
+                                        embarazada.TELEFONO = MO.Telefono.Msisdn;
+                                        embarazada.ID_EMPRESA = getEmpresaID(MO.Servicio.Id);
+                                        db.SaveChanges();
                                     }
+
+
+
+                                    /*Doy inicio al WF segun palabra*/
+                                    /********************************/
+
 
                                     Inscripcion inscripcion = new Inscripcion();
                                     inscripcion = db.Inscripcion.Where(e => e.ID_EMBARAZADA == embarazada.ID).FirstOrDefault();
@@ -194,33 +188,19 @@ namespace ServiceRestSMS.Controllers
                                         db.SaveChanges();
                                     }
 
-                                    /*Doy inicio al WF segun palabra*/
-                                    /********************************/
                                 }
                             }
 
                             break;
                         default:
                             {
-                                //Respondemos que no tiene el formato correcto
-
-
                                 /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
-                                LogMensaje logSMS = new LogMensaje();
-                                logSMS.MENSAJE = "ERROR";
-                                logSMS.ID_TIPOMENSAJE = 8; //Mensaje mal formado
-                                db.LogMensaje.Add(logSMS);
-                                db.SaveChanges();
+                                GuardaLog("MENSAJE MAL FORMADO", 8);
+                                //Respondemos que no tiene el formato correcto
+                                EnviarMensaje("El mensaje no tiene el formato correcto. ",MO.Servicio.Id,MO.Telefono.Msisdn);
                             }
                             break;
                     }
-
-                    //}
-                    //else
-                    //{
-                    //    //Envio Mensaje informando que el tel no esta registrado.
-
-                    //}
 
                     db.LogMensaje.Add(log);
                     db.SaveChanges();
@@ -229,18 +209,52 @@ namespace ServiceRestSMS.Controllers
             }
             catch (Exception e)
             {
-                LogMensaje log = new LogMensaje();
-                log.FECHA = DateTime.Now;
-                log.MENSAJE = e.Message;
-                log.ID_TIPOMENSAJE = 6;
-                db.SaveChanges();
+                GuardaLog(e.Message, 6);
                 return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
         }
 
-        public void EnviarMensajeMalformado()
+        public void EnviarMensaje(String Mensaje, string Carrier,string Telefono)
         {
+            EnviarSMSController sms = new EnviarSMSController();
+            sms.EnviarSM(Mensaje,Carrier,Telefono,false,"");
+        }
 
+
+        int getEmpresaID(string MOid)
+        {
+            MilDiasEntities db = new MilDiasEntities();
+
+            try
+            {
+                var query = db.Empresa.Where(e => e.Carrier == MOid).FirstOrDefault();
+                return query.ID;
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+
+        }
+        /*Guardo el log con el id tipo de mensaje que corresponda segun db*/
+        public int GuardaLog(String Mensaje, byte IDTipoMensaje)
+        {
+            MilDiasEntities db = new MilDiasEntities();
+
+            try
+            {
+                LogMensaje logSMS = new LogMensaje();
+                logSMS.MENSAJE = Mensaje;
+                logSMS.ID_TIPOMENSAJE = IDTipoMensaje; 
+                db.LogMensaje.Add(logSMS);
+                db.SaveChanges();
+
+                return 0;
+            }
+            catch( Exception e)
+            {
+                return -1;
+            }
         }
 
         public string quitarAcentos(string ArgMensaje)
