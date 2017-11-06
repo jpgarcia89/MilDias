@@ -17,7 +17,7 @@ namespace ServiceRestSMS.Models
         public long ID { get; set; }
         public long ID_EMBARAZADA { get; set; }
         public System.DateTime FECHA_ALTA { get; set; }
-        public System.DateTime FECHA_BAJA { get; set; }
+        public Nullable<System.DateTime> FECHA_BAJA { get; set; }
         public int MES { get; set; }
         public bool ACTIVO { get; set; }
         public int ID_TIPOINSTANCIA { get; set; }

@@ -27,7 +27,7 @@
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ID_EMBARAZADA" Type="Int64" Nullable="false" />
     <Property Name="FECHA_ALTA" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="FECHA_BAJA" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FECHA_BAJA" Type="DateTime" Precision="3" />
     <Property Name="MES" Type="Int32" Nullable="false" />
     <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
     <Property Name="ID_TIPOINSTANCIA" Type="Int32" Nullable="false" />
