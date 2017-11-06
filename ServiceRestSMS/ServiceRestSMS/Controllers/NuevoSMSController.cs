@@ -25,6 +25,8 @@ namespace ServiceRestSMS.Controllers
                 string xmlString = request.Content.ReadAsStringAsync().Result;
                 xmlString = xmlString.Trim();
 
+
+                GuardaLog(xmlString,6);
                 if (xmlString != "" && xmlString != "\n")
                 {
                     string mensaje = "";
@@ -39,7 +41,7 @@ namespace ServiceRestSMS.Controllers
                     }
 
                     mensaje = quitarAcentos(MO.Contenido);
-                    
+                    GuardaLog(mensaje, 6);
                     /*Obtengo la embarazada por unica vez*/
                     Embarazada embarazada = new Embarazada();
                     embarazada = db.Embarazada.Where(e => e.TELEFONO == MO.Telefono.Msisdn).FirstOrDefault();
@@ -141,7 +143,7 @@ namespace ServiceRestSMS.Controllers
                                 int  DNI = 0;
                                 int MES = 0;
                                 bool continuar = false;
-
+                                GuardaLog("Entro al caso MAMA", 6);
                                 //Valido que el DNI sea numerico
                                 if (Int32.TryParse(tmpDNI, out DNI))
                                 {
