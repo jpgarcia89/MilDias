@@ -25,10 +25,15 @@ namespace ServiceRestSMS.Controllers
                 string xmlString = request.Content.ReadAsStringAsync().Result;
                 xmlString = xmlString.Trim();
 
-
-                GuardaLog(xmlString,6);
+                if (xmlString == "" || xmlString == "\n")
+                {
+                    GuardaLog("ValidaActualizacion-MovilGate "+xmlString, 6);
+                }
+                    
                 if (xmlString != "" && xmlString != "\n")
                 {
+                    GuardaLog( xmlString, 6);
+
                     string mensaje = "";
                     //log.FECHA = DateTime.Now;
                     //log.MENSAJE = xmlString;
@@ -45,7 +50,17 @@ namespace ServiceRestSMS.Controllers
                     /*Obtengo la embarazada por unica vez*/
                     Embarazada embarazada = new Embarazada();
                     embarazada = db.Embarazada.Where(e => e.TELEFONO == MO.Telefono.Msisdn).FirstOrDefault();
+
+
+
+                    //Quita los doble-espacios y los convierte en un espacio simple
+                    while (mensaje.Contains("  "))
+                        mensaje = mensaje.Replace("  ", " ");
+
+                    //Divide el Mensaje en componentes(por espacio en blanco simple)
                     string[] mensajeSplit = mensaje.Split(' ');
+
+                    //Posibles casos de Mensajes
                     switch (mensajeSplit.Count())
                     {
                         case 1:
@@ -56,8 +71,7 @@ namespace ServiceRestSMS.Controllers
                                 {
                                     LogMensajeControl logControl = new LogMensajeControl();
                                     logControl = db.LogMensajeControl
-                                        .Where(c => c.ID_INSTANCIA == embarazada.Inscripcion.First().ID_INSTANCIA 
-                                                                   && embarazada.Inscripcion.First().ACTIVO == true )
+                                        .Where(c => c.ID_INSTANCIA == embarazada.Inscripcion.First().ID_INSTANCIA  && embarazada.Inscripcion.First().ACTIVO == true )
                                         .OrderByDescending(x => x.ID).FirstOrDefault();
 
                                     //Actualizo segun respuesta en LogMensajeControl
@@ -111,7 +125,7 @@ namespace ServiceRestSMS.Controllers
 
                                     /*Cambio el campo ACTIVO de la embarazada porque recibi la palabra baja*/
                                     Inscripcion inscripcion = new Inscripcion();
-                                    inscripcion = db.Inscripcion.Where(e => e.ID_EMBARAZADA == embarazada.ID).FirstOrDefault();
+                                    inscripcion = db.Inscripcion.Where(e => e.ID_EMBARAZADA == embarazada.ID && e.ACTIVO==true).FirstOrDefault();
                                     BajaEmbarazada(inscripcion.ID_INSTANCIA, 1);
                                     /******/
                                 }
@@ -123,7 +137,7 @@ namespace ServiceRestSMS.Controllers
 
                                     /*Cambio el campo ACTIVO de la embarazada porque el bebe nacio*/
                                     Inscripcion inscripcion = new Inscripcion();
-                                    inscripcion = db.Inscripcion.Where(e => e.ID_EMBARAZADA == embarazada.ID).FirstOrDefault();
+                                    inscripcion = db.Inscripcion.Where(e => e.ID_EMBARAZADA == embarazada.ID && e.ACTIVO == true).FirstOrDefault();
                                     BajaEmbarazada(inscripcion.ID_INSTANCIA, 2);
                                     /******/
                                 }
@@ -135,10 +149,10 @@ namespace ServiceRestSMS.Controllers
                                 //Es mensaje de inscripción (MAMA DNI MES)
 
                                 /*Tomo la primera palabras del mensaje entrante para saber si es bebe o mama*/
-                                String Palabra = mensajeSplit[0].ToString();
+                                String Palabra = mensajeSplit[0].ToString().Trim();
 
-                                String tmpDNI = mensajeSplit[1].ToString();
-                                String tmpMES = mensajeSplit[2].ToString();
+                                String tmpDNI = mensajeSplit[1].ToString().Trim();
+                                String tmpMES = mensajeSplit[2].ToString().Trim();
 
                                 int  DNI = 0;
                                 int MES = 0;
@@ -146,29 +160,16 @@ namespace ServiceRestSMS.Controllers
                                 GuardaLog("Entro al caso MAMA", 6);
 
                                 //Valido que el DNI sea numerico
-                                if (!Int32.TryParse(tmpDNI, out DNI))
-                                {
-                                    //continuar = false;
-                                    EnviarMensaje("El mensaje no tiene el formato correcto. Recorda que para inscribirte debes enviar MAMA DNI MES. Ejemplo MAMA 30XXXXXX 3", MO.Servicio.Id, MO.Telefono.Msisdn);
-                                }
-
                                 //Valido que si la palabra es mama y las otras dos palabras son numericas, esten dentro del siguiente rango.
-                                if (Int32.TryParse(tmpMES, out MES)) 
+                                if (Palabra == "MAMA" || Palabra == "BEBE")
                                 {
-                                    if (Palabra == "MAMA" && (MES >= 0 || MES < 10))
+                                    if (Int32.TryParse(tmpMES, out MES) && Int32.TryParse(tmpDNI, out DNI))
                                     {
                                         continuar = true;
-                                    }
-                                    if (Palabra == "BEBE" && (MES >= 0 || MES < 25))
-                                    {
-                                        continuar = true;
-                                    }
+                                    }                                    
                                 }
-                                else
-                                {
-                                    continuar = false;
-                                    EnviarMensaje("El mensaje no tiene el formato correcto. Recorda que para inscribirte debes enviar MAMA DNI MES. Ejemplo MAMA 30XXXXXX 3", MO.Servicio.Id, MO.Telefono.Msisdn);
-                                }
+                                                              
+                                
 
                                 if (continuar)
                                 {
@@ -193,10 +194,12 @@ namespace ServiceRestSMS.Controllers
                                     if (Palabra == "MAMA")
                                     {
                                         InstanciaID = WFAltaGestacion(MES);
+                                        GuardaLog("MAMA InstanciaId: " + InstanciaID+ " -- Embarazada DNI: "+ embarazada.DNI, 6 );
                                     }
                                     else if (Palabra == "BEBE")
                                     {
                                         InstanciaID = WFAltaNacido(MES);
+                                        GuardaLog("BEBE InstanciaId: " + InstanciaID + " -- Embarazada DNI: " + embarazada.DNI, 6);
                                     }
 
                                     Inscripcion inscripcion = new Inscripcion();
@@ -207,14 +210,23 @@ namespace ServiceRestSMS.Controllers
                                         inscripcion = new Inscripcion();
                                         inscripcion.ID_EMBARAZADA = embarazada.ID;
                                         inscripcion.ID_TIPOINSTANCIA = (Palabra == "MAMA") ? 1 : 2; // 
-                                        inscripcion.MES = 0;
+                                        inscripcion.MES = MES;
                                         inscripcion.ID_INSTANCIA = InstanciaID;
                                         inscripcion.FECHA_ALTA = DateTime.Now;
                                         inscripcion.FECHA_BAJA = null;
+                                        inscripcion.ACTIVO = true;
                                         db.Inscripcion.Add(inscripcion);
+
+                                        GuardaLog("INSCRIPCION ---> ID_EMBARAZADA: "+ inscripcion.ID_EMBARAZADA+ "  -- ID_TIPOINSTANCIA: " + inscripcion.ID_TIPOINSTANCIA + " -- MES: "+inscripcion.MES+ " -- ID_INSTANCIA: " + inscripcion.ID_INSTANCIA + " -- FECHA_ALTA: " + inscripcion.FECHA_ALTA + " -- FECHA_BAJA: " + inscripcion.FECHA_BAJA + " -- ACTIVO: " + inscripcion.ACTIVO,6);
                                         db.SaveChanges();
+
                                     }
 
+                                }
+                                else
+                                {
+                                    //continuar = false;
+                                    EnviarMensaje("El mensaje no tiene el formato correcto. Recorda que para inscribirte debes enviar MAMA DNI MES. Ejemplo MAMA 30XXXXXX 3", MO.Servicio.Id, MO.Telefono.Msisdn);
                                 }
                             }
 
@@ -238,14 +250,14 @@ namespace ServiceRestSMS.Controllers
             }
         }
 
-        public void EnviarMensaje(String Mensaje, string Carrier,string Telefono)
+        private void EnviarMensaje(String Mensaje, string Carrier,string Telefono)
         {
             EnviarSMSController sms = new EnviarSMSController();
             sms.EnviarSMS(Mensaje,Carrier,Telefono,false,"",0);
         }
 
 
-        int getEmpresaID(string ArgCarrier)
+        private int getEmpresaID(string ArgCarrier)
         {
             MilDiasEntities db = new MilDiasEntities();
             int rslt = 0;
@@ -275,7 +287,7 @@ namespace ServiceRestSMS.Controllers
 
         }
         /*Guardo el log con el id tipo de mensaje que corresponda segun db*/
-        public int GuardaLog(String Mensaje, byte IDTipoMensaje)
+        private int GuardaLog(String Mensaje, byte IDTipoMensaje)
         {
             MilDiasEntities db = new MilDiasEntities();
 
@@ -296,7 +308,7 @@ namespace ServiceRestSMS.Controllers
             }
         }
 
-        public string quitarAcentos(string ArgMensaje)
+        private string quitarAcentos(string ArgMensaje)
         {
             string rslt = "";
             string consignos = "áàäéèëíìïóòöúùuñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑçÇ";
@@ -311,6 +323,7 @@ namespace ServiceRestSMS.Controllers
         }
 
         [HttpPost]
+        [Route("BajaEmbarazada")]
         public IHttpActionResult BajaEmbarazada(string ID_INSTANCIA, int motivo)
         {
             /*
@@ -385,6 +398,7 @@ namespace ServiceRestSMS.Controllers
             }
             catch (Exception e)
             {
+                GuardaLog(e.InnerException.Message,6);
                 return Json(false);
             }
 

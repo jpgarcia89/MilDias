@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b2af2c42-d9a2-4b57-9498-6bcfae365221" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d03ebe0f-44f7-4d0c-bc0d-ea8f6af08639" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,9 +22,9 @@
     <MetadataSource Address="http://10.64.65.200/WFS_MilDias/WorkFlows/WF_SMSNacido.xamlx?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="WF_SMSNacido.xsd" MetadataType="Schema" ID="86005b73-a9b0-4592-8279-32976462d734" SourceId="1" SourceUrl="http://10.64.65.200/WFS_MilDias/WorkFlows/WF_SMSNacido.xamlx?xsd=xsd1" />
-    <MetadataFile FileName="WF_SMSNacido.wsdl" MetadataType="Wsdl" ID="50821af1-bc9d-40da-8c70-0fe4128e1f46" SourceId="1" SourceUrl="http://10.64.65.200/WFS_MilDias/WorkFlows/WF_SMSNacido.xamlx?wsdl" />
-    <MetadataFile FileName="WF_SMSNacido1.xsd" MetadataType="Schema" ID="85e90393-d9ad-4ae8-8972-b928f8de4043" SourceId="1" SourceUrl="http://10.64.65.200/WFS_MilDias/WorkFlows/WF_SMSNacido.xamlx?xsd=xsd0" />
+    <MetadataFile FileName="WF_SMSNacido.xsd" MetadataType="Schema" ID="1dd1cabe-96ef-450f-9a1e-00b920420d41" SourceId="1" SourceUrl="http://10.64.65.200/WFS_MilDias/WorkFlows/WF_SMSNacido.xamlx?xsd=xsd1" />
+    <MetadataFile FileName="WF_SMSNacido.wsdl" MetadataType="Wsdl" ID="ebb2137f-6ae4-4792-baad-26426d95d76a" SourceId="1" SourceUrl="http://10.64.65.200/WFS_MilDias/WorkFlows/WF_SMSNacido.xamlx?wsdl" />
+    <MetadataFile FileName="WF_SMSNacido1.xsd" MetadataType="Schema" ID="891a56fb-6e68-4bf5-b1bf-953478ae8616" SourceId="1" SourceUrl="http://10.64.65.200/WFS_MilDias/WorkFlows/WF_SMSNacido.xamlx?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

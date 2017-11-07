@@ -98,9 +98,6 @@ D:\Sistemas\MilDias\ServiceRestSMS\ServiceRestSMS\bin\Antlr3.Runtime.pdb
 D:\Sistemas\MilDias\ServiceRestSMS\ServiceRestSMS\obj\Debug\ServiceRestSMS.csprojResolveAssemblyReference.cache
 D:\Sistemas\MilDias\ServiceRestSMS\ServiceRestSMS\obj\Debug\ServiceRestSMS.dll
 D:\Sistemas\MilDias\ServiceRestSMS\ServiceRestSMS\obj\Debug\ServiceRestSMS.pdb
-D:\Git-MilDias\MilDias\ServiceRestSMS\ServiceRestSMS\obj\Debug\ServiceRestSMS.csprojResolveAssemblyReference.cache
-D:\Git-MilDias\MilDias\ServiceRestSMS\ServiceRestSMS\obj\Debug\ServiceRestSMS.dll
-D:\Git-MilDias\MilDias\ServiceRestSMS\ServiceRestSMS\obj\Debug\ServiceRestSMS.pdb
 D:\Git-MilDias\MilDias\ServiceRestSMS\ServiceRestSMS\bin\roslyn\csc.exe
 D:\Git-MilDias\MilDias\ServiceRestSMS\ServiceRestSMS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 D:\Git-MilDias\MilDias\ServiceRestSMS\ServiceRestSMS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
@@ -148,3 +145,5 @@ D:\Git-MilDias\MilDias\ServiceRestSMS\ServiceRestSMS\bin\System.Web.WebPages.xml
 D:\Git-MilDias\MilDias\ServiceRestSMS\ServiceRestSMS\bin\System.Web.WebPages.Deployment.xml
 D:\Git-MilDias\MilDias\ServiceRestSMS\ServiceRestSMS\bin\System.Web.WebPages.Razor.xml
 D:\Git-MilDias\MilDias\ServiceRestSMS\ServiceRestSMS\bin\Antlr3.Runtime.pdb
+D:\Git-MilDias\MilDias\ServiceRestSMS\ServiceRestSMS\obj\Debug\ServiceRestSMS.dll
+D:\Git-MilDias\MilDias\ServiceRestSMS\ServiceRestSMS\obj\Debug\ServiceRestSMS.pdb

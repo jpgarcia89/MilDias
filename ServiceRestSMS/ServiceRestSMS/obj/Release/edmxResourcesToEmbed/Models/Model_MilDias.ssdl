@@ -24,7 +24,7 @@
     <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ID_EMBARAZADA" Type="bigint" Nullable="false" />
     <Property Name="FECHA_ALTA" Type="datetime" Nullable="false" />
-    <Property Name="FECHA_BAJA" Type="datetime" Nullable="false" />
+    <Property Name="FECHA_BAJA" Type="datetime" />
     <Property Name="MES" Type="int" Nullable="false" />
     <Property Name="ACTIVO" Type="bit" Nullable="false" />
     <Property Name="ID_TIPOINSTANCIA" Type="int" Nullable="false" />

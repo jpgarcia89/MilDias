@@ -16,6 +16,20 @@ namespace ServiceRestSMS.Controllers
 {
     public class EnviarSMSController : ApiController
     {
+        private string quitarAcentos(string ArgMensaje)
+        {
+            string rslt = "";
+            string consignos = "áàäéèëíìïóòöúùuñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑçÇ";
+            string sinsignos = "aaaeeeiiiooouuunAAAEEEIIIOOOUUUNcC";
+            for (int v = 0; v < sinsignos.Length; v++)
+            {
+                string i = consignos.Substring(v, 1);
+                string j = sinsignos.Substring(v, 1);
+                rslt = ArgMensaje.Replace(i, j);
+            }
+            return rslt.ToUpper();
+        }
+
         [HttpPost]
         public IHttpActionResult EnviarSMS(SMS ArgSMS)
         {
@@ -28,8 +42,12 @@ namespace ServiceRestSMS.Controllers
                                  telefono = e.TELEFONO,
                                  carrier = e.Empresa.Carrier
                              };
+
+            
+
             if (embarazada.ToList().Count > 0)
             {
+                GuardaLog("InstanceId: " + ArgSMS.ID_Instancia + " -- MSJ: " + ArgSMS.Mensaje + " -- Mes: " + ArgSMS.Mes + " -- Tel: " + embarazada.First().telefono + " -- Tel: " + embarazada.First().carrier, 6);
                 return Json(EnviarSMS(ArgSMS.Mensaje, embarazada.First().carrier, embarazada.First().telefono, ArgSMS.Es_Control, ArgSMS.ID_Instancia,ArgSMS.Mes));
             }
             else
@@ -38,7 +56,7 @@ namespace ServiceRestSMS.Controllers
             }
         }
 
-        public bool EnviarSMS(string ArgMensaje, string ArgCarrier, string ArgTelefono, bool ArgEsControl, string ArgInstancia,int Mes)
+        internal bool EnviarSMS(string ArgMensaje, string ArgCarrier, string ArgTelefono, bool ArgEsControl, string ArgInstancia,int Mes)
         {
             MilDiasEntities db = new MilDiasEntities();
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://64.76.120.14:6064/minsaludsanjuan");
@@ -54,7 +72,7 @@ namespace ServiceRestSMS.Controllers
                 MT.Servicio.Id = ArgCarrier;
                 MT.Servicio.ContentType = "0";
                 MT.Telefono.Msisdn = ArgTelefono;
-                MT.Contenido.Text = ArgMensaje;
+                MT.Contenido.Text = quitarAcentos(ArgMensaje);
 
                 var body = new StringWriter();
                 var serializerXML = new XmlSerializer(typeof(MTRequest));
@@ -115,6 +133,26 @@ namespace ServiceRestSMS.Controllers
             }           
         }
 
+        private int GuardaLog(String Mensaje, byte IDTipoMensaje)
+        {
+            MilDiasEntities db = new MilDiasEntities();
+
+            try
+            {
+                LogMensaje logSMS = new LogMensaje();
+                logSMS.MENSAJE = Mensaje;
+                logSMS.ID_TIPOMENSAJE = IDTipoMensaje;
+                logSMS.FECHA = DateTime.Now;
+                db.LogMensaje.Add(logSMS);
+                db.SaveChanges();
+
+                return 0;
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+        }
 
     }
 }
