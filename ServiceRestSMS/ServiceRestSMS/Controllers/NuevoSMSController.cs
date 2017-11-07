@@ -146,14 +146,8 @@ namespace ServiceRestSMS.Controllers
                                 GuardaLog("Entro al caso MAMA", 6);
 
                                 //Valido que el DNI sea numerico
-                                if (!Int32.TryParse(tmpDNI, out DNI))
-                                {
-                                    //continuar = false;
-                                    EnviarMensaje("El mensaje no tiene el formato correcto. Recorda que para inscribirte debes enviar MAMA DNI MES. Ejemplo MAMA 30XXXXXX 3", MO.Servicio.Id, MO.Telefono.Msisdn);
-                                }
-
                                 //Valido que si la palabra es mama y las otras dos palabras son numericas, esten dentro del siguiente rango.
-                                if (Int32.TryParse(tmpMES, out MES)) 
+                                if (Int32.TryParse(tmpMES, out MES) && Int32.TryParse(tmpDNI, out DNI)) 
                                 {
                                     if (Palabra == "MAMA" && (MES >= 0 || MES < 10))
                                     {
@@ -173,7 +167,7 @@ namespace ServiceRestSMS.Controllers
                                 if (continuar)
                                 {
                                     /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
-                                    GuardaLog(Palabra , 2);
+                                    GuardaLog(Palabra, 2);
 
                                     embarazada = db.Embarazada.Where(e => e.TELEFONO == MO.Telefono.Msisdn).FirstOrDefault();
                                     if (embarazada == null)
@@ -213,6 +207,10 @@ namespace ServiceRestSMS.Controllers
                                         inscripcion.FECHA_BAJA = null;
                                         db.Inscripcion.Add(inscripcion);
                                         db.SaveChanges();
+                                    }
+                                    else
+                                    {
+                                        //
                                     }
 
                                 }

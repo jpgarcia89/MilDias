@@ -76,6 +76,7 @@ namespace ServiceRestSMS.Controllers
                     LogMensaje log = new LogMensaje();
                     log.FECHA = DateTime.Now;
                     log.MENSAJE = responseText;
+                    
                     if (ArgEsControl == true)
                     {
                         log.ID_TIPOMENSAJE = 4;
