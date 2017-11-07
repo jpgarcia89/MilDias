@@ -13,5 +13,10 @@ namespace ServiceRestSMS.Models.MovilGates
         public Transaccion Transaccion { get; set; }
         [XmlElement(ElementName = "Texto")]
         public string Texto { get; set; }
+
+        public MTResponse()
+        {
+            Transaccion = new Transaccion();
+        }
     }
 }
