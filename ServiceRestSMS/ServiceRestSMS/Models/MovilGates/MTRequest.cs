@@ -17,5 +17,13 @@ namespace ServiceRestSMS.Models.MovilGates
         public Telefono Telefono { get; set; }
         [XmlElement(ElementName = "Contenido")]
         public Contenido Contenido { get; set; }
+
+        public MTRequest()
+        {
+            Proveedor = new Proveedor();
+            Servicio = new Servicio();
+            Telefono = new Telefono();
+            Contenido = new Contenido();
+        }
     }
 }

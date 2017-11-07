@@ -58,7 +58,7 @@ namespace ServiceRestSMS.Controllers
 
                 var body = new StringWriter();
                 var serializerXML = new XmlSerializer(typeof(MTRequest));
-                serializerXML.Serialize(body, this);
+                serializerXML.Serialize(body, MT);
 
                 byte[] postBytes = Encoding.UTF8.GetBytes(body.ToString());
                 request.ContentLength = postBytes.Length;
