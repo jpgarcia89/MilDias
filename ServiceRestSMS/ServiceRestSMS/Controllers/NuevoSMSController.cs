@@ -45,8 +45,8 @@ namespace ServiceRestSMS.Controllers
                     /*Obtengo la embarazada por unica vez*/
                     Embarazada embarazada = new Embarazada();
                     embarazada = db.Embarazada.Where(e => e.TELEFONO == MO.Telefono.Msisdn).FirstOrDefault();
-
-                    switch (mensaje.Split(' ').Count())
+                    string[] mensajeSplit = mensaje.Split(' ');
+                    switch (mensajeSplit.Count())
                     {
                         case 1:
                             //Es mensaje de control (SI, NO, INFO, BAJA, BEBE)
@@ -135,10 +135,10 @@ namespace ServiceRestSMS.Controllers
                                 //Es mensaje de inscripción (MAMA DNI MES)
 
                                 /*Tomo la primera palabras del mensaje entrante para saber si es bebe o mama*/
-                                String Palabra = mensaje[0].ToString();
+                                String Palabra = mensajeSplit[0].ToString();
 
-                                String tmpDNI = mensaje[1].ToString();
-                                String tmpMES = mensaje[2].ToString();
+                                String tmpDNI = mensajeSplit[1].ToString();
+                                String tmpMES = mensajeSplit[2].ToString();
 
                                 int  DNI = 0;
                                 int MES = 0;
@@ -180,9 +180,11 @@ namespace ServiceRestSMS.Controllers
                                     if (embarazada == null)
                                     {
                                         /*Creo el registro de la embarazada*/
+                                        embarazada = new Embarazada();
                                         embarazada.DNI = DNI;
                                         embarazada.TELEFONO = MO.Telefono.Msisdn;
                                         embarazada.ID_EMPRESA = getEmpresaID(MO.Servicio.Id);
+                                        db.Embarazada.Add(embarazada);
                                         db.SaveChanges();
                                     }
 
@@ -203,10 +205,14 @@ namespace ServiceRestSMS.Controllers
                                     if (inscripcion == null)
                                     {
                                         //Crear instancia de inscripcion 
+                                        inscripcion = new Inscripcion();
                                         inscripcion.ID_EMBARAZADA = embarazada.ID;
                                         inscripcion.ID_TIPOINSTANCIA = (Palabra == "MAMA") ? 1 : 2; // 
                                         inscripcion.MES = 0;
                                         inscripcion.ID_INSTANCIA = InstanciaID;
+                                        inscripcion.FECHA_ALTA = DateTime.Now;
+                                        inscripcion.FECHA_BAJA = null;
+                                        db.Inscripcion.Add(inscripcion);
                                         db.SaveChanges();
                                     }
 
@@ -240,14 +246,28 @@ namespace ServiceRestSMS.Controllers
         }
 
 
-        int getEmpresaID(string MOid)
+        int getEmpresaID(string ArgCarrier)
         {
             MilDiasEntities db = new MilDiasEntities();
-
+            int rslt = 0;
             try
             {
-                var query = db.Empresa.Where(e => e.Carrier == MOid).FirstOrDefault();
-                return query.ID;
+                if (ArgCarrier.ToUpper().Contains("PERSONAL"))
+                {
+                    rslt = 3;
+                }
+                else if(ArgCarrier.ToUpper().Contains("MOVISTAR")) {
+                    rslt = 2;
+                }
+                else if (ArgCarrier.ToUpper().Contains("CTI"))
+                {
+                    rslt = 4;
+                }
+                else if (ArgCarrier.ToUpper().Contains("NEXTEL"))
+                {
+                    rslt = 5;
+                }
+                return rslt;
             }
             catch (Exception e)
             {
