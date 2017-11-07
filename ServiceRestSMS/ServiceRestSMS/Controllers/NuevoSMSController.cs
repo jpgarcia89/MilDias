@@ -144,13 +144,11 @@ namespace ServiceRestSMS.Controllers
                                 int MES = 0;
                                 bool continuar = false;
                                 GuardaLog("Entro al caso MAMA", 6);
+
                                 //Valido que el DNI sea numerico
-                                if (Int32.TryParse(tmpDNI, out DNI))
+                                if (!Int32.TryParse(tmpDNI, out DNI))
                                 {
-                                    continuar = true;
-                                }
-                                else
-                                {
+                                    //continuar = false;
                                     EnviarMensaje("El mensaje no tiene el formato correcto. Recorda que para inscribirte debes enviar MAMA DNI MES. Ejemplo MAMA 30XXXXXX 3", MO.Servicio.Id, MO.Telefono.Msisdn);
                                 }
 
@@ -168,6 +166,7 @@ namespace ServiceRestSMS.Controllers
                                 }
                                 else
                                 {
+                                    continuar = false;
                                     EnviarMensaje("El mensaje no tiene el formato correcto. Recorda que para inscribirte debes enviar MAMA DNI MES. Ejemplo MAMA 30XXXXXX 3", MO.Servicio.Id, MO.Telefono.Msisdn);
                                 }
 
