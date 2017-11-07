@@ -72,7 +72,7 @@ namespace WFS_MilDias
             try
             {
                 HttpClient cliente = new HttpClient();
-                //cliente.BaseAddress = new Uri("http://localhost:1941");
+                //cliente.BaseAddress = new Uri("http://localhost:46836");
                 cliente.BaseAddress = new Uri("http://10.64.65.200");
                 cliente.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -90,8 +90,8 @@ namespace WFS_MilDias
                 };
 
                 var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
-                //var respuesta = cliente.PostAsync("/api/MilDias/Prueba", content).Result;
-                var respuesta = cliente.PostAsync("/ServiceRestSMS/api/NuevoSMS", content).Result;
+                //var respuesta = cliente.PostAsync("/ServiceRestSMS/api/EnviarSMS", content).Result;
+                var respuesta = cliente.PostAsync("/ServiceRestSMS/api/EnviarSMS", content).Result;
                 
                 var resultContent = respuesta.Content.ReadAsStringAsync().Result;
 
