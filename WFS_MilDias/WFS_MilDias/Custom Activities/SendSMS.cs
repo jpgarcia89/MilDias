@@ -53,18 +53,18 @@ namespace WFS_MilDias
             //var delay = new Delay();
 
 
-            if ((DateTime.Now < dt09AM) || (DateTime.Now > dt01PM))
-            {
-                TimeSpan tiempoEspera = dt09AM.Subtract(DateTime.Now);
+            //if ((DateTime.Now < dt09AM) || (DateTime.Now > dt01PM))
+            //{
+            //    TimeSpan tiempoEspera = dt09AM.Subtract(DateTime.Now);
                 
 
-                var seq = new Sequence
-                {
-                    Activities = { new Delay { Duration = tiempoEspera } }
-                };
+            //    var seq = new Sequence
+            //    {
+            //        Activities = { new Delay { Duration = tiempoEspera } }
+            //    };
 
-                WorkflowInvoker.Invoke(seq);
-            }
+            //    WorkflowInvoker.Invoke(seq);
+            //}
 
 
 
