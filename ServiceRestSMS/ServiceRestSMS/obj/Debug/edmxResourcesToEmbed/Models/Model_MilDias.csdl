@@ -34,6 +34,7 @@
     <Property Name="ID_INSTANCIA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Embarazada" Relationship="Self.FK_Inscripcion_Embarazada" FromRole="Inscripcion" ToRole="Embarazada" />
     <NavigationProperty Name="TipoInstancia" Relationship="Self.FK_Inscripcion_TipoInstancia" FromRole="Inscripcion" ToRole="TipoInstancia" />
+    <Property Name="MOTIVO_BAJA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="LogMensaje">
     <Key>
@@ -44,6 +45,7 @@
     <Property Name="MENSAJE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="ID_TIPOMENSAJE" Type="Byte" Nullable="false" />
     <NavigationProperty Name="TipoMensaje" Relationship="Self.FK_LogMensaje_TipoMensaje" FromRole="LogMensaje" ToRole="TipoMensaje" />
+    <Property Name="ID_INSTANCIA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="LogMensajeControl">
     <Key>

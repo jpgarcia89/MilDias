@@ -27,7 +27,7 @@ namespace ServiceRestSMS.Controllers
                 string j = sinsignos.Substring(v, 1);
                 rslt = ArgMensaje.Replace(i, j);
             }
-            return rslt.ToUpper();
+            return rslt;
         }
 
         [HttpPost]
@@ -36,7 +36,7 @@ namespace ServiceRestSMS.Controllers
             MilDiasEntities db = new MilDiasEntities();
             var embarazada = from e in db.Embarazada
                              join i in db.Inscripcion on e.ID equals i.ID_EMBARAZADA
-                             where i.ACTIVO == true
+                             where i.ACTIVO == true && i.ID_INSTANCIA == ArgSMS.ID_Instancia
                              select new
                              {
                                  telefono = e.TELEFONO,
@@ -47,8 +47,8 @@ namespace ServiceRestSMS.Controllers
 
             if (embarazada.ToList().Count > 0)
             {
-                GuardaLog("InstanceId: " + ArgSMS.ID_Instancia + " -- MSJ: " + ArgSMS.Mensaje + " -- Mes: " + ArgSMS.Mes + " -- Tel: " + embarazada.First().telefono + " -- Tel: " + embarazada.First().carrier, 6);
-                return Json(EnviarSMS(ArgSMS.Mensaje, embarazada.First().carrier, embarazada.First().telefono, ArgSMS.Es_Control, ArgSMS.ID_Instancia,ArgSMS.Mes));
+                GuardaLog("MSJ: " + ArgSMS.Mensaje + " -- Mes: " + ArgSMS.Mes + " -- Tel: " + embarazada.First().telefono + " -- Tel: " + embarazada.First().carrier, 6, ArgSMS.ID_Instancia);
+                return Json(EnviarSMS(ArgSMS.Mes + " -- " + ArgSMS.Mensaje, embarazada.First().carrier, embarazada.First().telefono, ArgSMS.Es_Control, ArgSMS.ID_Instancia,ArgSMS.Mes));
             }
             else
             {
@@ -94,7 +94,7 @@ namespace ServiceRestSMS.Controllers
                     LogMensaje log = new LogMensaje();
                     log.FECHA = DateTime.Now;
                     log.MENSAJE = responseText;
-                    
+                    log.ID_INSTANCIA = ArgInstancia;
                     if (ArgEsControl == true)
                     {
                         log.ID_TIPOMENSAJE = 4;
@@ -134,7 +134,7 @@ namespace ServiceRestSMS.Controllers
             }           
         }
 
-        private int GuardaLog(String Mensaje, byte IDTipoMensaje)
+        private int GuardaLog(String Mensaje, byte IDTipoMensaje, string IDInstancia)
         {
             MilDiasEntities db = new MilDiasEntities();
 
@@ -144,6 +144,7 @@ namespace ServiceRestSMS.Controllers
                 logSMS.MENSAJE = Mensaje;
                 logSMS.ID_TIPOMENSAJE = IDTipoMensaje;
                 logSMS.FECHA = DateTime.Now;
+                logSMS.ID_INSTANCIA = IDInstancia;
                 db.LogMensaje.Add(logSMS);
                 db.SaveChanges();
 

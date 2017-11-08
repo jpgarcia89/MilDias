@@ -23,6 +23,7 @@
     <EntitySetMapping Name="Inscripcion">
       <EntityTypeMapping TypeName="Model.Inscripcion">
         <MappingFragment StoreEntitySet="Inscripcion">
+          <ScalarProperty Name="MOTIVO_BAJA" ColumnName="MOTIVO_BAJA" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="ID_EMBARAZADA" ColumnName="ID_EMBARAZADA" />
           <ScalarProperty Name="FECHA_ALTA" ColumnName="FECHA_ALTA" />
@@ -37,6 +38,7 @@
     <EntitySetMapping Name="LogMensaje">
       <EntityTypeMapping TypeName="Model.LogMensaje">
         <MappingFragment StoreEntitySet="LogMensaje">
+          <ScalarProperty Name="ID_INSTANCIA" ColumnName="ID_INSTANCIA" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="FECHA" ColumnName="FECHA" />
           <ScalarProperty Name="MENSAJE" ColumnName="MENSAJE" />

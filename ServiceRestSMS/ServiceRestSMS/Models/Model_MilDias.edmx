@@ -34,6 +34,7 @@
           <Property Name="ACTIVO" Type="bit" Nullable="false" />
           <Property Name="ID_TIPOINSTANCIA" Type="int" Nullable="false" />
           <Property Name="ID_INSTANCIA" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MOTIVO_BAJA" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="LogMensaje">
           <Key>
@@ -43,6 +44,7 @@
           <Property Name="FECHA" Type="datetime" Nullable="false" />
           <Property Name="MENSAJE" Type="nvarchar(max)" Nullable="false" />
           <Property Name="ID_TIPOMENSAJE" Type="tinyint" Nullable="false" />
+          <Property Name="ID_INSTANCIA" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="LogMensajeControl">
           <Key>
@@ -204,6 +206,7 @@
           <Property Name="ID_INSTANCIA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Embarazada" Relationship="Self.FK_Inscripcion_Embarazada" FromRole="Inscripcion" ToRole="Embarazada" />
           <NavigationProperty Name="TipoInstancia" Relationship="Self.FK_Inscripcion_TipoInstancia" FromRole="Inscripcion" ToRole="TipoInstancia" />
+          <Property Name="MOTIVO_BAJA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="LogMensaje">
           <Key>
@@ -214,6 +217,7 @@
           <Property Name="MENSAJE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ID_TIPOMENSAJE" Type="Byte" Nullable="false" />
           <NavigationProperty Name="TipoMensaje" Relationship="Self.FK_LogMensaje_TipoMensaje" FromRole="LogMensaje" ToRole="TipoMensaje" />
+          <Property Name="ID_INSTANCIA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="LogMensajeControl">
           <Key>
@@ -369,6 +373,7 @@
           <EntitySetMapping Name="Inscripcion">
             <EntityTypeMapping TypeName="Model.Inscripcion">
               <MappingFragment StoreEntitySet="Inscripcion">
+                <ScalarProperty Name="MOTIVO_BAJA" ColumnName="MOTIVO_BAJA" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ID_EMBARAZADA" ColumnName="ID_EMBARAZADA" />
                 <ScalarProperty Name="FECHA_ALTA" ColumnName="FECHA_ALTA" />
@@ -383,6 +388,7 @@
           <EntitySetMapping Name="LogMensaje">
             <EntityTypeMapping TypeName="Model.LogMensaje">
               <MappingFragment StoreEntitySet="LogMensaje">
+                <ScalarProperty Name="ID_INSTANCIA" ColumnName="ID_INSTANCIA" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="FECHA" ColumnName="FECHA" />
                 <ScalarProperty Name="MENSAJE" ColumnName="MENSAJE" />

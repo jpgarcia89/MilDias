@@ -22,6 +22,7 @@ namespace ServiceRestSMS.Models
         public bool ACTIVO { get; set; }
         public int ID_TIPOINSTANCIA { get; set; }
         public string ID_INSTANCIA { get; set; }
+        public string MOTIVO_BAJA { get; set; }
     
         public virtual Embarazada Embarazada { get; set; }
         public virtual TipoInstancia TipoInstancia { get; set; }
