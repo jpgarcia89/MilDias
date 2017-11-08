@@ -1,0 +1,7 @@
+WFS_MilDias/.vs/config/applicationhost.config
+*.config
+WFS_MilDias/.vs/WFS_MilDias/v14/.suo
+WFS_MilDias/WFS_MilDias/bin/WFS_MilDias.dll
+WFS_MilDias/WFS_MilDias/bin/WFS_MilDias.pdb
+*.cache
+*.pdb
