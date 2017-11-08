@@ -18,12 +18,6 @@ namespace WFS_MilDias
         // Define an activity input argument of type string
         //public InArgument<string> Text { get; set; }
 
-        //public InArgument<Int32> Telefono { get; set; }
-
-        //public InArgument<string> DNI { get; set; }
-
-        //public InArgument<string> Carrier { get; set; }
-
         public InArgument<string> Mensaje { get; set; }
 
         public InArgument<string> ID_Instancia { get; set; }
@@ -32,25 +26,19 @@ namespace WFS_MilDias
 
         public InArgument<Int32> Mes { get; set; }
 
-
-
-
-
         //public OutArgument<bool> res { get; set; }
+
+
 
         // If your activity returns a value, derive from CodeActivity<v>
         // and return the value from the Execute method.
         protected override bool Execute(CodeActivityContext context)
         {
             // Obtain the runtime value of the Text input argument
-            //string text = context.GetValue(this.Text);
-            //Int32 telfono = context.GetValue(this.Telefono);
-            //string dni = context.GetValue(this.DNI);
-            //string carrier = context.GetValue(this.Carrier);
+            //string text = context.GetValue(this.Text);         
 
             DateTime dt09AM = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 09, 0, 0);
             DateTime dt01PM = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 0, 0);
-            //var delay = new Delay();
 
 
             //if ((DateTime.Now < dt09AM) || (DateTime.Now > dt01PM))
@@ -78,11 +66,6 @@ namespace WFS_MilDias
 
                 SMS data = new SMS
                 {
-                    //Mensaje = context.GetValue(this.Text),
-                    //Telefono = context.GetValue(this.Telefono),
-                    //DNI = context.GetValue(this.DNI),
-                    //Carrier = context.GetValue(this.Carrier),
-
                     Mensaje = context.GetValue(this.Mensaje),
                     ID_Instancia = context.GetValue(this.ID_Instancia),
                     Es_Control = context.GetValue(this.Es_Control),
@@ -90,6 +73,7 @@ namespace WFS_MilDias
                 };
 
                 var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+                
                 //var respuesta = cliente.PostAsync("/api/MilDias/Prueba", content).Result;
                 var respuesta = cliente.PostAsync("/ServiceRestSMS/api/NuevoSMS", content).Result;
                 
