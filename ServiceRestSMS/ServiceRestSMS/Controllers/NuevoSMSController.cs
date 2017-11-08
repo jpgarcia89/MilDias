@@ -67,80 +67,88 @@ namespace ServiceRestSMS.Controllers
                             //Es mensaje de control (SI, NO, INFO, BAJA, BEBE)
                             if (embarazada != null)
                             {
-                                if (mensaje == "SI" || mensaje == "NO")
+                                Inscripcion inscripcion = new Inscripcion();
+                                inscripcion = embarazada.Inscripcion.Where(i => i.ACTIVO == true).FirstOrDefault();
+                                if (inscripcion != null)
                                 {
-                                    LogMensajeControl logControl = new LogMensajeControl();
-                                    logControl = db.LogMensajeControl
-                                        .Where(c => c.ID_INSTANCIA == embarazada.Inscripcion.First().ID_INSTANCIA  && embarazada.Inscripcion.First().ACTIVO == true )
-                                        .OrderByDescending(x => x.ID).FirstOrDefault();
-
-                                    //Actualizo segun respuesta en LogMensajeControl
-                                    if (mensaje == "SI")
+                                    if (mensaje == "SI" || mensaje == "NO")
                                     {
-                                        logControl.ID_RESPUESTA = 1;
+
+                                        LogMensajeControl logControl = new LogMensajeControl();
+                                        logControl = db.LogMensajeControl
+                                            .Where(c => c.ID_INSTANCIA == inscripcion.ID_INSTANCIA).FirstOrDefault();
+
+                                        if (logControl != null)
+                                        {
+                                            //Actualizo segun respuesta en LogMensajeControl
+                                            if (mensaje == "SI")
+                                            {
+                                                logControl.ID_RESPUESTA = 1;
+                                            }
+                                            else
+                                            {
+                                                logControl.ID_RESPUESTA = 2;
+                                            }
+                                            if (inscripcion.ID_TIPOINSTANCIA == 1)
+                                            {
+                                                WF_SMSGestacion.RespSMSControlClient clientResp = new WF_SMSGestacion.RespSMSControlClient();
+                                                clientResp.RespSMSControl(embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_INSTANCIA);
+                                            }
+                                            else if (inscripcion.ID_TIPOINSTANCIA == 2)
+                                            {
+                                                WF_SMSNacido.RespSMSControlClient clientResp = new WF_SMSNacido.RespSMSControlClient();
+                                                clientResp.RespSMSControl(embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_INSTANCIA);
+                                            }
+                                            //Update DB
+                                            db.SaveChanges();
+                                        }
+                                        else
+                                        {
+                                            GuardaLog("LogControl NULL. -- ID_Instancia: " + inscripcion.ID_TIPOINSTANCIA, 6);
+                                        }
+
+
                                     }
-                                    else
+                                    else if (mensaje == "INFO")
                                     {
-                                        logControl.ID_RESPUESTA = 2;
-                                    }
+                                        //ENVIO MENSAJE AL TEL EMBARAZADA CON LA INFO DEL SERVICIO DE MENSAJERIA
 
-                                    if (embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_TIPOINSTANCIA == 1)
+                                        EnviarSMSController sms = new EnviarSMSController();
+                                        SMS smsModel = new SMS();
+
+                                        smsModel.Mensaje = "Mensaje modelo de info";
+                                        smsModel.ID_Instancia = embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_INSTANCIA;
+                                        smsModel.Es_Control = false;
+                                        sms.EnviarSMS(smsModel);
+
+                                        /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
+                                        GuardaLog("MENSAJE DE INFORMACION", 7);
+
+
+                                    }
+                                    else if (mensaje == "BAJA")
                                     {
-                                        WF_SMSGestacion.RespSMSControlClient clientResp = new WF_SMSGestacion.RespSMSControlClient();
-                                        clientResp.RespSMSControl(embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_INSTANCIA);
+                                        //BAJA EL SERVICIO PARA LA EMBARAZADA 
+                                        /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
+
+                                        GuardaLog("MENSAJE DE BAJA", 3);
+                                        /*Cambio el campo ACTIVO de la embarazada porque recibi la palabra baja*/
+                                        BajaEmbarazada(inscripcion.ID_INSTANCIA, 1);
+                                        /******/
                                     }
-                                    else if (embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_TIPOINSTANCIA  == 2)
+                                    else if (mensaje == "BEBE")
                                     {
-                                        WF_SMSNacido.RespSMSControlClient clientResp = new WF_SMSNacido.RespSMSControlClient();
-                                        clientResp.RespSMSControl(embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_INSTANCIA);
+                                        //UPDATE DE EMBARAZADA CON EL INDICADOR DE QUE EL BEBE HA NACIDO
+
+                                        GuardaLog("MENSAJE DE BAJA", 3);
+
+                                        /*Cambio el campo ACTIVO de la embarazada porque el bebe nacio*/
+                                        //inscripcion = db.Inscripcion.Where(e => e.ID_EMBARAZADA == embarazada.ID).FirstOrDefault();
+                                        BajaEmbarazada(inscripcion.ID_INSTANCIA, 2);
+                                        /******/
                                     }
-
-                                    //Update DB
-                                    db.SaveChanges();
                                 }
-                                else if (mensaje == "INFO")
-                                {
-                                    //ENVIO MENSAJE AL TEL EMBARAZADA CON LA INFO DEL SERVICIO DE MENSAJERIA
-
-                                    EnviarSMSController sms = new EnviarSMSController();
-                                    SMS smsModel = new SMS();
-                                                                        
-                                    smsModel.Mensaje = "Mensaje modelo de info";
-                                    smsModel.ID_Instancia = embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_INSTANCIA;
-                                    smsModel.Es_Control = false;
-                                    sms.EnviarSMS(smsModel);
-
-                                    /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
-                                    GuardaLog("MENSAJE DE INFORMACION", 7);
-
-
-                                }
-                                else if (mensaje == "BAJA")
-                                {
-                                    //BAJA EL SERVICIO PARA LA EMBARAZADA 
-                                    /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
-
-                                    GuardaLog("MENSAJE DE BAJA", 3);
-
-
-                                    /*Cambio el campo ACTIVO de la embarazada porque recibi la palabra baja*/
-                                    Inscripcion inscripcion = new Inscripcion();
-                                    inscripcion = db.Inscripcion.Where(e => e.ID_EMBARAZADA == embarazada.ID && e.ACTIVO==true).FirstOrDefault();
-                                    BajaEmbarazada(inscripcion.ID_INSTANCIA, 1);
-                                    /******/
-                                }
-                                else if (mensaje == "BEBE")
-                                {
-                                    //UPDATE DE EMBARAZADA CON EL INDICADOR DE QUE EL BEBE HA NACIDO
-
-                                    GuardaLog("MENSAJE DE BAJA", 3);
-
-                                    /*Cambio el campo ACTIVO de la embarazada porque el bebe nacio*/
-                                    Inscripcion inscripcion = new Inscripcion();
-                                    inscripcion = db.Inscripcion.Where(e => e.ID_EMBARAZADA == embarazada.ID && e.ACTIVO == true).FirstOrDefault();
-                                    BajaEmbarazada(inscripcion.ID_INSTANCIA, 2);
-                                    /******/
-                                }
+                               
                             }
                             break;
 
