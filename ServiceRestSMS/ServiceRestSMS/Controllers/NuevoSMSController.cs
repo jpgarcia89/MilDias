@@ -174,7 +174,7 @@ namespace ServiceRestSMS.Controllers
                                 if (continuar)
                                 {
                                     /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
-                                    GuardaLog(Palabra , 2);
+                                    GuardaLog(Palabra, 2);
 
                                     embarazada = db.Embarazada.Where(e => e.TELEFONO == MO.Telefono.Msisdn).FirstOrDefault();
                                     if (embarazada == null)
@@ -220,6 +220,10 @@ namespace ServiceRestSMS.Controllers
                                         GuardaLog("INSCRIPCION ---> ID_EMBARAZADA: "+ inscripcion.ID_EMBARAZADA+ "  -- ID_TIPOINSTANCIA: " + inscripcion.ID_TIPOINSTANCIA + " -- MES: "+inscripcion.MES+ " -- ID_INSTANCIA: " + inscripcion.ID_INSTANCIA + " -- FECHA_ALTA: " + inscripcion.FECHA_ALTA + " -- FECHA_BAJA: " + inscripcion.FECHA_BAJA + " -- ACTIVO: " + inscripcion.ACTIVO,6);
                                         db.SaveChanges();
 
+                                    }
+                                    else
+                                    {
+                                        //
                                     }
 
                                 }
