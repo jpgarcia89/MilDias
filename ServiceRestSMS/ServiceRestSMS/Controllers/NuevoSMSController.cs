@@ -87,12 +87,12 @@ namespace ServiceRestSMS.Controllers
                                             if (inscripcion.ID_TIPOINSTANCIA == 1)
                                             {
                                                 WF_SMSGestacion.RespSMSControlClient clientResp = new WF_SMSGestacion.RespSMSControlClient();
-                                                clientResp.RespSMSControl(embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_INSTANCIA);
+                                                clientResp.RespSMSControl(inscripcion.ID_INSTANCIA, logControl.ID_RESPUESTA);
                                             }
                                             else if (inscripcion.ID_TIPOINSTANCIA == 2)
                                             {
                                                 WF_SMSNacido.RespSMSControlClient clientResp = new WF_SMSNacido.RespSMSControlClient();
-                                                clientResp.RespSMSControl(embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_INSTANCIA);
+                                                clientResp.RespSMSControl(inscripcion.ID_INSTANCIA, logControl.ID_RESPUESTA);
                                             }
                                             //Update DB
                                             db.SaveChanges();
@@ -134,11 +134,11 @@ namespace ServiceRestSMS.Controllers
                                     {
                                         //UPDATE DE EMBARAZADA CON EL INDICADOR DE QUE EL BEBE HA NACIDO
 
-                                        GuardaLog("MENSAJE DE BAJA", 9, inscripcion.ID_INSTANCIA);
+                                        GuardaLog("MENSAJE DE BEBE", 9, inscripcion.ID_INSTANCIA);
 
                                         /*Cambio el campo ACTIVO de la embarazada porque el bebe nacio*/
                                         //inscripcion = db.Inscripcion.Where(e => e.ID_EMBARAZADA == embarazada.ID).FirstOrDefault();
-                                        BajaEmbarazada(inscripcion.ID_INSTANCIA, 2);
+                                        BajaEmbarazada(inscripcion.ID_INSTANCIA, 4);
                                         /******/
                                     }
                                 }
@@ -357,7 +357,7 @@ namespace ServiceRestSMS.Controllers
                                 }
                                 else if (inscripcion.ID_TIPOINSTANCIA == 2)
                                 {
-                                    StopSMSNacidoClient clientNacido = new WF_SMSNacido.StopSMSNacidoClient();
+                                    StopSMSNacidoClient clientNacido = new StopSMSNacidoClient();
                                     clientNacido.StopSMSNacido(inscripcion.ID_INSTANCIA);
                                 }
                                 inscripcion.ACTIVO = false;
@@ -366,12 +366,10 @@ namespace ServiceRestSMS.Controllers
                                 db.SaveChanges();
                             }
                             break;
-                        case 2:
-                        case 4: //Termina la gestación
+                        case 2: //Termina la gestación (workflow)
+                        case 4: //Recibi mensaje con la palabra BEBE
                             {
                                 //Fin periodo de gestacion embarazada
-                                inscripcion.ACTIVO = false;
-                                inscripcion.FECHA_BAJA = DateTime.Now;
                                 if (motivo == 2)
                                 {
                                     inscripcion.MOTIVO_BAJA = "Termina instancia de gestacion (workflow)";
@@ -379,7 +377,14 @@ namespace ServiceRestSMS.Controllers
                                 else
                                 {
                                     inscripcion.MOTIVO_BAJA = "Recibi mensaje con la palabra bebe";
+                                    if (inscripcion.ID_TIPOINSTANCIA == 1)
+                                    {
+                                        StopSMSGestacionClient clientGestacion = new StopSMSGestacionClient();
+                                        clientGestacion.StopSMSGestacion(inscripcion.ID_INSTANCIA);
+                                    }                              
                                 }
+                                inscripcion.ACTIVO = false;
+                                inscripcion.FECHA_BAJA = DateTime.Now;
                                 db.SaveChanges();
 
                                 /*Se debera crear una nueva instancia de bebe nacido 
@@ -405,14 +410,12 @@ namespace ServiceRestSMS.Controllers
                         case 3: //Termina instancia de nacido (workflow)
                             {
                                 /*Fin definitivo del WF para la embarazada*/
-                                inscripcion = db.Inscripcion.Where(e => e.ID_INSTANCIA == ID_INSTANCIA).FirstOrDefault();
                                 inscripcion.ACTIVO = false;
                                 inscripcion.FECHA_BAJA = DateTime.Now;
                                 inscripcion.MOTIVO_BAJA = "Termina instancia de nacido (workflow)";
                                 db.SaveChanges();
                             }
                             break;
-
                     }
                 }                
                 return Json(true);

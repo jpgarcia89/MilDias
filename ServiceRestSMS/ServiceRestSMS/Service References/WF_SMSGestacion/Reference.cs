@@ -112,10 +112,10 @@ namespace ServiceRestSMS.WF_SMSGestacion {
     public interface RespSMSControl {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/RespSMSControl/RespSMSControl")]
-        void RespSMSControl(string p_embarazadaId);
+        void RespSMSControl(string p_embarazadaId, int p_respuesta);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/RespSMSControl/RespSMSControl")]
-        System.Threading.Tasks.Task RespSMSControlAsync(string p_embarazadaId);
+        System.Threading.Tasks.Task RespSMSControlAsync(string p_embarazadaId, int p_respuesta);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -145,12 +145,12 @@ namespace ServiceRestSMS.WF_SMSGestacion {
                 base(binding, remoteAddress) {
         }
         
-        public void RespSMSControl(string p_embarazadaId) {
-            base.Channel.RespSMSControl(p_embarazadaId);
+        public void RespSMSControl(string p_embarazadaId, int p_respuesta) {
+            base.Channel.RespSMSControl(p_embarazadaId, p_respuesta);
         }
         
-        public System.Threading.Tasks.Task RespSMSControlAsync(string p_embarazadaId) {
-            return base.Channel.RespSMSControlAsync(p_embarazadaId);
+        public System.Threading.Tasks.Task RespSMSControlAsync(string p_embarazadaId, int p_respuesta) {
+            return base.Channel.RespSMSControlAsync(p_embarazadaId, p_respuesta);
         }
     }
 }
