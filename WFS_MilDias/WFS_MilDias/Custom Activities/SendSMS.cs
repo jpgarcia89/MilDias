@@ -37,14 +37,14 @@ namespace WFS_MilDias
             // Obtain the runtime value of the Text input argument
             //string text = context.GetValue(this.Text);         
 
-            DateTime dt09AM = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 09, 0, 0);
-            DateTime dt01PM = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 0, 0);
+            //DateTime dt09AM = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 09, 0, 0);
+            //DateTime dt01PM = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 0, 0);
 
 
             //if ((DateTime.Now < dt09AM) || (DateTime.Now > dt01PM))
             //{
             //    TimeSpan tiempoEspera = dt09AM.Subtract(DateTime.Now);
-                
+
 
             //    var seq = new Sequence
             //    {
