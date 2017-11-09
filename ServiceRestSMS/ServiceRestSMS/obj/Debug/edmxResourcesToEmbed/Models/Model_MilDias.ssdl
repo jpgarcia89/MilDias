@@ -29,6 +29,7 @@
     <Property Name="ACTIVO" Type="bit" Nullable="false" />
     <Property Name="ID_TIPOINSTANCIA" Type="int" Nullable="false" />
     <Property Name="ID_INSTANCIA" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MOTIVO_BAJA" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="LogMensaje">
     <Key>
@@ -38,6 +39,7 @@
     <Property Name="FECHA" Type="datetime" Nullable="false" />
     <Property Name="MENSAJE" Type="nvarchar(max)" Nullable="false" />
     <Property Name="ID_TIPOMENSAJE" Type="tinyint" Nullable="false" />
+    <Property Name="ID_INSTANCIA" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="LogMensajeControl">
     <Key>

@@ -18,6 +18,7 @@ namespace ServiceRestSMS.Models
         public System.DateTime FECHA { get; set; }
         public string MENSAJE { get; set; }
         public byte ID_TIPOMENSAJE { get; set; }
+        public string ID_INSTANCIA { get; set; }
     
         public virtual TipoMensaje TipoMensaje { get; set; }
     }

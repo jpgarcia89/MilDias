@@ -24,15 +24,10 @@ namespace ServiceRestSMS.Controllers
             {
                 string xmlString = request.Content.ReadAsStringAsync().Result;
                 xmlString = xmlString.Trim();
-
-                if (xmlString == "" || xmlString == "\n")
-                {
-                    GuardaLog("ValidaActualizacion-MovilGate "+xmlString, 6);
-                }
-                    
+                
                 if (xmlString != "" && xmlString != "\n")
                 {
-                    GuardaLog( xmlString, 6);
+                    GuardaLog(xmlString, 6, "");
 
                     string mensaje = "";
                     //log.FECHA = DateTime.Now;
@@ -46,13 +41,12 @@ namespace ServiceRestSMS.Controllers
                     }
 
                     mensaje = quitarAcentos(MO.Contenido);
-                    GuardaLog(mensaje, 6);
                     /*Obtengo la embarazada por unica vez*/
                     Embarazada embarazada = new Embarazada();
                     embarazada = db.Embarazada.Where(e => e.TELEFONO == MO.Telefono.Msisdn).FirstOrDefault();
 
 
-
+                    mensaje = mensaje.Trim();
                     //Quita los doble-espacios y los convierte en un espacio simple
                     while (mensaje.Contains("  "))
                         mensaje = mensaje.Replace("  ", " ");
@@ -76,7 +70,8 @@ namespace ServiceRestSMS.Controllers
 
                                         LogMensajeControl logControl = new LogMensajeControl();
                                         logControl = db.LogMensajeControl
-                                            .Where(c => c.ID_INSTANCIA == inscripcion.ID_INSTANCIA).FirstOrDefault();
+                                            .Where(c => c.ID_INSTANCIA == inscripcion.ID_INSTANCIA)
+                                            .OrderByDescending(x => x.ID).FirstOrDefault();
 
                                         if (logControl != null)
                                         {
@@ -104,7 +99,7 @@ namespace ServiceRestSMS.Controllers
                                         }
                                         else
                                         {
-                                            GuardaLog("LogControl NULL. -- ID_Instancia: " + inscripcion.ID_TIPOINSTANCIA, 6);
+                                            GuardaLog("LogControl NULL. -- ID_Instancia: " + inscripcion.ID_TIPOINSTANCIA, 6, inscripcion.ID_INSTANCIA);
                                         }
 
 
@@ -117,30 +112,29 @@ namespace ServiceRestSMS.Controllers
                                         SMS smsModel = new SMS();
 
                                         smsModel.Mensaje = "Mensaje modelo de info";
-                                        smsModel.ID_Instancia = embarazada.Inscripcion.Where(e => e.ACTIVO).FirstOrDefault().ID_INSTANCIA;
+                                        smsModel.ID_Instancia = inscripcion.ID_INSTANCIA;
                                         smsModel.Es_Control = false;
                                         sms.EnviarSMS(smsModel);
 
                                         /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
-                                        GuardaLog("MENSAJE DE INFORMACION", 7);
-
-
+                                        GuardaLog("MENSAJE DE INFORMACION", 7, inscripcion.ID_INSTANCIA);
                                     }
                                     else if (mensaje == "BAJA")
                                     {
                                         //BAJA EL SERVICIO PARA LA EMBARAZADA 
                                         /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
 
-                                        GuardaLog("MENSAJE DE BAJA", 3);
+                                        GuardaLog("MENSAJE DE BAJA", 3, inscripcion.ID_INSTANCIA);
                                         /*Cambio el campo ACTIVO de la embarazada porque recibi la palabra baja*/
                                         BajaEmbarazada(inscripcion.ID_INSTANCIA, 1);
+                                        EnviarMensaje("BAJA DEL SERVICIO DE MENSAJES DE 1000 DIAS CONFIRMADA", MO.Servicio.Id, MO.Telefono.Msisdn);
                                         /******/
                                     }
                                     else if (mensaje == "BEBE")
                                     {
                                         //UPDATE DE EMBARAZADA CON EL INDICADOR DE QUE EL BEBE HA NACIDO
 
-                                        GuardaLog("MENSAJE DE BAJA", 3);
+                                        GuardaLog("MENSAJE DE BAJA", 9, inscripcion.ID_INSTANCIA);
 
                                         /*Cambio el campo ACTIVO de la embarazada porque el bebe nacio*/
                                         //inscripcion = db.Inscripcion.Where(e => e.ID_EMBARAZADA == embarazada.ID).FirstOrDefault();
@@ -164,8 +158,7 @@ namespace ServiceRestSMS.Controllers
 
                                 int  DNI = 0;
                                 int MES = 0;
-                                bool continuar = false;
-                                GuardaLog("Entro al caso MAMA", 6);
+                                bool continuar = false;                               
 
                                 //Valido que el DNI sea numerico
                                 //Valido que si la palabra es mama y las otras dos palabras son numericas, esten dentro del siguiente rango.
@@ -175,18 +168,15 @@ namespace ServiceRestSMS.Controllers
                                     {
                                         continuar = true;
                                     }                                    
-                                }
-                                                              
-                                
+                                }                                            
 
                                 if (continuar)
                                 {
                                     /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
-                                    GuardaLog(Palabra, 2);
-
                                     embarazada = db.Embarazada.Where(e => e.TELEFONO == MO.Telefono.Msisdn).FirstOrDefault();
                                     if (embarazada == null)
                                     {
+                                        GuardaLog("NUEVA EMBARAZADA", 10, "");
                                         /*Creo el registro de la embarazada*/
                                         embarazada = new Embarazada();
                                         embarazada.DNI = DNI;
@@ -198,22 +188,22 @@ namespace ServiceRestSMS.Controllers
 
                                     /*Doy inicio al WF segun palabra*/
                                     /********************************/
-                                    string InstanciaID = "";
-                                    if (Palabra == "MAMA")
-                                    {
-                                        InstanciaID = WFAltaGestacion(MES);
-                                        GuardaLog("MAMA InstanciaId: " + InstanciaID+ " -- Embarazada DNI: "+ embarazada.DNI, 6 );
-                                    }
-                                    else if (Palabra == "BEBE")
-                                    {
-                                        InstanciaID = WFAltaNacido(MES);
-                                        GuardaLog("BEBE InstanciaId: " + InstanciaID + " -- Embarazada DNI: " + embarazada.DNI, 6);
-                                    }
-
                                     Inscripcion inscripcion = new Inscripcion();
-                                    inscripcion = db.Inscripcion.Where(e => e.ID_EMBARAZADA == embarazada.ID).FirstOrDefault();
+                                    inscripcion = db.Inscripcion.Where(e => e.ID_EMBARAZADA == embarazada.ID && e.ACTIVO == true).FirstOrDefault();
                                     if (inscripcion == null)
                                     {
+                                        string InstanciaID = "";
+                                        if (Palabra == "MAMA")
+                                        {
+                                            InstanciaID = WFAltaGestacion(MES);
+                                            GuardaLog("MAMA -- Embarazada DNI: "+ embarazada.DNI, 2, InstanciaID);
+                                        }
+                                        else if (Palabra == "BEBE")
+                                        {
+                                            InstanciaID = WFAltaNacido(MES);
+                                            GuardaLog("BEBE -- Embarazada DNI: " + embarazada.DNI, 2, InstanciaID);
+                                        }
+
                                         //Crear instancia de inscripcion 
                                         inscripcion = new Inscripcion();
                                         inscripcion.ID_EMBARAZADA = embarazada.ID;
@@ -222,16 +212,17 @@ namespace ServiceRestSMS.Controllers
                                         inscripcion.ID_INSTANCIA = InstanciaID;
                                         inscripcion.FECHA_ALTA = DateTime.Now;
                                         inscripcion.FECHA_BAJA = null;
+                                        inscripcion.MOTIVO_BAJA = null;
                                         inscripcion.ACTIVO = true;
-                                        db.Inscripcion.Add(inscripcion);
-
-                                        GuardaLog("INSCRIPCION ---> ID_EMBARAZADA: "+ inscripcion.ID_EMBARAZADA+ "  -- ID_TIPOINSTANCIA: " + inscripcion.ID_TIPOINSTANCIA + " -- MES: "+inscripcion.MES+ " -- ID_INSTANCIA: " + inscripcion.ID_INSTANCIA + " -- FECHA_ALTA: " + inscripcion.FECHA_ALTA + " -- FECHA_BAJA: " + inscripcion.FECHA_BAJA + " -- ACTIVO: " + inscripcion.ACTIVO,6);
+                                        db.Inscripcion.Add(inscripcion);                                        
                                         db.SaveChanges();
-
+                                        
+                                        EnviarMensaje("TE FELICITAMOS. BIENVENIDA A LA INICIATIVA 1000 DIAS", MO.Servicio.Id, MO.Telefono.Msisdn);
                                     }
                                     else
                                     {
                                         //
+                                        GuardaLog("la inscripción ya existe. TELEFONO" + embarazada.TELEFONO, 6, inscripcion.ID_INSTANCIA);
                                     }
 
                                 }
@@ -239,6 +230,7 @@ namespace ServiceRestSMS.Controllers
                                 {
                                     //continuar = false;
                                     EnviarMensaje("El mensaje no tiene el formato correcto. Recorda que para inscribirte debes enviar MAMA DNI MES. Ejemplo MAMA 30XXXXXX 3", MO.Servicio.Id, MO.Telefono.Msisdn);
+                                    GuardaLog("El mensaje no tiene el formato correcto." + MO.Telefono.Msisdn, 6, "");
                                 }
                             }
 
@@ -246,9 +238,9 @@ namespace ServiceRestSMS.Controllers
                         default:
                             {
                                 /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
-                                GuardaLog("MENSAJE MAL FORMADO", 8);
-                                //Respondemos que no tiene el formato correcto
+
                                 EnviarMensaje("El mensaje no tiene el formato correcto. Recorda que para inscribirte debes enviar MAMA DNI MES. Ejemplo MAMA 30XXXXXX 3", MO.Servicio.Id, MO.Telefono.Msisdn);
+                                GuardaLog("El mensaje no tiene el formato correcto." + MO.Telefono.Msisdn, 6, "");
                             }
                             break;
                     }                   
@@ -257,7 +249,7 @@ namespace ServiceRestSMS.Controllers
             }
             catch (Exception e)
             {
-                GuardaLog(e.Message, 6);
+                GuardaLog(e.InnerException.Message, 6, "");
                 return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
         }
@@ -299,7 +291,7 @@ namespace ServiceRestSMS.Controllers
 
         }
         /*Guardo el log con el id tipo de mensaje que corresponda segun db*/
-        private int GuardaLog(String Mensaje, byte IDTipoMensaje)
+        private int GuardaLog(String Mensaje, byte IDTipoMensaje, string IDInstancia)
         {
             MilDiasEntities db = new MilDiasEntities();
 
@@ -309,6 +301,7 @@ namespace ServiceRestSMS.Controllers
                 logSMS.MENSAJE = Mensaje;
                 logSMS.ID_TIPOMENSAJE = IDTipoMensaje;
                 logSMS.FECHA = DateTime.Now;
+                logSMS.ID_INSTANCIA = IDInstancia;
                 db.LogMensaje.Add(logSMS);
                 db.SaveChanges();
 
@@ -340,9 +333,10 @@ namespace ServiceRestSMS.Controllers
         {
             /*
             motivo:
-            1 - recibi un mensaje con la palabra baja
-            2 - termina gestacion
-            3 - Termina instancia de nacido
+            1 - Recibi un mensaje con la palabra BAJA
+            2 - Termina instancia de gestacion (workflow)
+            3 - Termina instancia de nacido (workflow)
+            4 - Recibi mensaje con la palabra BEBE
             */
             MilDiasEntities db = new MilDiasEntities();
             Embarazada embarazada = new Embarazada();
@@ -350,67 +344,82 @@ namespace ServiceRestSMS.Controllers
             try
             {
                 inscripcion = db.Inscripcion.Where(e => e.ID_INSTANCIA == ID_INSTANCIA).FirstOrDefault();
-
-                switch (motivo)
+                if (inscripcion != null)
                 {
-                    case 1: //Recibi un mensaje de baja
-                        {
-                            if (inscripcion.ID_TIPOINSTANCIA == 1) {
-                                StopSMSGestacionClient clientGestacion = new StopSMSGestacionClient();
-                                clientGestacion.StopSMSGestacion(inscripcion.ID_INSTANCIA);
-                            }
-                            else if (inscripcion.ID_TIPOINSTANCIA == 2)
+                    switch (motivo)
+                    {
+                        case 1: //Recibi un mensaje de baja
                             {
-                                StopSMSNacidoClient clientNacido = new WF_SMSNacido.StopSMSNacidoClient();
-                                clientNacido.StopSMSNacido(inscripcion.ID_INSTANCIA);
+                                if (inscripcion.ID_TIPOINSTANCIA == 1)
+                                {
+                                    StopSMSGestacionClient clientGestacion = new StopSMSGestacionClient();
+                                    clientGestacion.StopSMSGestacion(inscripcion.ID_INSTANCIA);
+                                }
+                                else if (inscripcion.ID_TIPOINSTANCIA == 2)
+                                {
+                                    StopSMSNacidoClient clientNacido = new WF_SMSNacido.StopSMSNacidoClient();
+                                    clientNacido.StopSMSNacido(inscripcion.ID_INSTANCIA);
+                                }
+                                inscripcion.ACTIVO = false;
+                                inscripcion.FECHA_BAJA = DateTime.Now;
+                                inscripcion.MOTIVO_BAJA = "Recibi un mensaje con la palabra BAJA";
+                                db.SaveChanges();
                             }
-                            inscripcion.ACTIVO = false;
-                            inscripcion.FECHA_BAJA = DateTime.Now;
-                            db.SaveChanges();                            
-                        }
-                        break;
+                            break;
+                        case 2:
+                        case 4: //Termina la gestación
+                            {
+                                //Fin periodo de gestacion embarazada
+                                inscripcion.ACTIVO = false;
+                                inscripcion.FECHA_BAJA = DateTime.Now;
+                                if (motivo == 2)
+                                {
+                                    inscripcion.MOTIVO_BAJA = "Termina instancia de gestacion (workflow)";
+                                }
+                                else
+                                {
+                                    inscripcion.MOTIVO_BAJA = "Recibi mensaje con la palabra bebe";
+                                }
+                                db.SaveChanges();
 
-                    case 2: //Termina la gestación
-                        {
-                            //Fin periodo de gestacion embarazada
-                            inscripcion.ACTIVO = false;
-                            inscripcion.FECHA_BAJA = DateTime.Now;
-                            db.SaveChanges();
+                                /*Se debera crear una nueva instancia de bebe nacido 
+                                y hacer todo el WF deshabilitando la actual*/
 
-                            embarazada = db.Embarazada.Where(e => e.ID == inscripcion.ID_EMBARAZADA).FirstOrDefault();
+                                string InstanciaID = WFAltaNacido(0);
 
+                                //Crear instancia de inscripcion 
+                                inscripcion.ID_EMBARAZADA = inscripcion.ID_EMBARAZADA;
+                                inscripcion.ID_TIPOINSTANCIA = 2; // WF Nacido
+                                inscripcion.MES = 0;
+                                inscripcion.ID_INSTANCIA = InstanciaID;
+                                inscripcion.FECHA_ALTA = DateTime.Now;
+                                inscripcion.FECHA_BAJA = null;
+                                inscripcion.MOTIVO_BAJA = null;
+                                inscripcion.ACTIVO = true;
+                                db.Inscripcion.Add(inscripcion);
+                                db.SaveChanges();
+                                /**/
+                            }
+                            break;
 
-                            /*Se debera crear una nueva instancia de bebe nacido 
-                            y hacer todo el WF deshabilitando la actual*/
+                        case 3: //Termina instancia de nacido (workflow)
+                            {
+                                /*Fin definitivo del WF para la embarazada*/
+                                inscripcion = db.Inscripcion.Where(e => e.ID_INSTANCIA == ID_INSTANCIA).FirstOrDefault();
+                                inscripcion.ACTIVO = false;
+                                inscripcion.FECHA_BAJA = DateTime.Now;
+                                inscripcion.MOTIVO_BAJA = "Termina instancia de nacido (workflow)";
+                                db.SaveChanges();
+                            }
+                            break;
 
-                            string InstanciaID = WFAltaNacido(0);
-
-                            //Crear instancia de inscripcion 
-                            inscripcion.ID_EMBARAZADA = embarazada.ID;
-                            inscripcion.ID_TIPOINSTANCIA = 2; // WF Nacido
-                            inscripcion.MES = 0;
-                            inscripcion.ID_INSTANCIA = InstanciaID;
-                            db.SaveChanges();
-                            /**/
-                        }
-                        break;
-
-                    case 3: //Termina instancia de nacido
-                        {
-                            /*Fin definitivo del WF para la embarazada*/
-                            inscripcion = db.Inscripcion.Where(e => e.ID_INSTANCIA == ID_INSTANCIA).FirstOrDefault();
-                            inscripcion.ACTIVO = false;
-                            inscripcion.FECHA_BAJA = DateTime.Now;
-                            db.SaveChanges();
-                        }
-                        break;
-
-                }
+                    }
+                }                
                 return Json(true);
             }
             catch (Exception e)
             {
-                GuardaLog(e.InnerException.Message,6);
+                GuardaLog(e.InnerException.Message,6, "");
                 return Json(false);
             }
 
