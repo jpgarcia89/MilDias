@@ -41,14 +41,14 @@ namespace WFS_MilDias
                 cliente.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var data = new
-                {
-                    Motivo = Motivo,
-                    ID_Instancia = InstanciaID,
+                {                    
+                    ID_INSTANCIA = InstanciaID,
+                    motivo = Motivo,
                 };
 
                 var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
                 //var respuesta = cliente.PostAsync("/ServiceRestSMS/api/EnviarSMS", content).Result;
-                var respuesta = cliente.PostAsync("/ServiceRestSMS/api/BajaEmbarazada", content).Result;
+                var respuesta = cliente.PostAsync("/ServiceRestSMS/BajaEmbarazada", content).Result;
 
                 var resultContent = respuesta.Content.ReadAsStringAsync().Result;
 

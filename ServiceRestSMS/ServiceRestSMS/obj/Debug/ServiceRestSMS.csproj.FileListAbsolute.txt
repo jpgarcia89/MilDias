@@ -147,3 +147,4 @@ D:\Git-MilDias\MilDias\ServiceRestSMS\ServiceRestSMS\bin\System.Web.WebPages.Raz
 D:\Git-MilDias\MilDias\ServiceRestSMS\ServiceRestSMS\bin\Antlr3.Runtime.pdb
 D:\Git-MilDias\MilDias\ServiceRestSMS\ServiceRestSMS\obj\Debug\ServiceRestSMS.dll
 D:\Git-MilDias\MilDias\ServiceRestSMS\ServiceRestSMS\obj\Debug\ServiceRestSMS.pdb
+D:\Git-MilDias\MilDias\ServiceRestSMS\ServiceRestSMS\obj\Debug\ServiceRestSMS.csprojResolveAssemblyReference.cache

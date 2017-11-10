@@ -52,6 +52,7 @@ namespace ServiceRestSMS.Controllers
             }
             else
             {
+                GuardaLog("ERROR EnviarSMS -- mensaje: " + ArgSMS.Mensaje + "countEmb: " + embarazada.ToList().Count, 6, ArgSMS.ID_Instancia);
                 return Json(false);
             }
         }
@@ -60,6 +61,7 @@ namespace ServiceRestSMS.Controllers
         {
             MilDiasEntities db = new MilDiasEntities();
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://64.76.120.14:6064/minsaludsanjuan");
+            
             try
             {
                 string responseText = "";
@@ -74,11 +76,12 @@ namespace ServiceRestSMS.Controllers
                 MT.Telefono.Msisdn = ArgTelefono;
                 MT.Contenido.Text = quitarAcentos(ArgMensaje);
 
-                var body = new StringWriter();
+                var body = new StringWriter();                
                 var serializerXML = new XmlSerializer(typeof(MTRequest));
                 serializerXML.Serialize(body, MT);
 
                 byte[] postBytes = Encoding.UTF8.GetBytes(body.ToString());
+                //byte[] postBytes = Encoding.GetEncoding("ISO-8859-1").GetBytes(body.ToString());
                 request.ContentLength = postBytes.Length;
                 Stream requestStream = request.GetRequestStream();
                 requestStream.Write(postBytes, 0, postBytes.Length);
@@ -86,6 +89,8 @@ namespace ServiceRestSMS.Controllers
                 using (var response = (HttpWebResponse)request.GetResponse())
                 {
                     var encoding = ASCIIEncoding.ASCII;
+                    //Encoding encoding = Encoding.GetEncoding("ISO-8859-1");
+
                     using (var reader = new StreamReader(response.GetResponseStream(), encoding))
                     {
                         responseText = reader.ReadToEnd();

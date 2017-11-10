@@ -7,3 +7,4 @@ WFS_MilDias/WFS_MilDias/bin/WFS_MilDias.pdb
 *.pdb
 *.dll
 *.dll
+*.cache

@@ -327,9 +327,22 @@ namespace ServiceRestSMS.Controllers
             return rslt.ToUpper();
         }
 
+
+
+        public class BajaEmbarazadaParams
+        {
+            public string ID_INSTANCIA { get; set; }
+            public int motivo { get; set; }
+        }
         [HttpPost]
         [Route("BajaEmbarazada")]
-        public IHttpActionResult BajaEmbarazada(string ID_INSTANCIA, int motivo)
+        public IHttpActionResult BajaEmbarazada(BajaEmbarazadaParams data)
+        {
+            return BajaEmbarazada(data.ID_INSTANCIA,data.motivo);
+        }
+
+
+        private IHttpActionResult BajaEmbarazada(string ID_INSTANCIA, int motivo)
         {
             /*
             motivo:
@@ -417,12 +430,13 @@ namespace ServiceRestSMS.Controllers
                             }
                             break;
                     }
-                }                
+                }
+                GuardaLog("INFO -- BajaEmbarazada -- IdInstancia: "+ID_INSTANCIA+" -- Motivo: "+motivo,6,ID_INSTANCIA);
                 return Json(true);
             }
             catch (Exception e)
             {
-                GuardaLog(e.InnerException.Message,6, "");
+                GuardaLog("ERROR -- BajaEmbarazada: "+e.InnerException.Message,6, "");
                 return Json(false);
             }
 
