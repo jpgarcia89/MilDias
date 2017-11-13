@@ -19,8 +19,8 @@ namespace ServiceRestSMS.Controllers
         private string quitarAcentos(string ArgMensaje)
         {
             string rslt = "";
-            string consignos = "áàäéèëíìïóòöúùuñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑçÇ";
-            string sinsignos = "aaaeeeiiiooouuunAAAEEEIIIOOOUUUNcC";
+            string consignos = "áàäéèëíìïóòöúùuñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑçÇ�";
+            string sinsignos = "aaaeeeiiiooouuunAAAEEEIIIOOOUUUNcCa";
             for (int v = 0; v < sinsignos.Length; v++)
             {
                 string i = consignos.Substring(v, 1);
@@ -47,7 +47,7 @@ namespace ServiceRestSMS.Controllers
 
             if (embarazada.ToList().Count > 0)
             {
-                GuardaLog("MSJ: " + ArgSMS.Mensaje + " -- Mes: " + ArgSMS.Mes + " -- Tel: " + embarazada.First().telefono + " -- Tel: " + embarazada.First().carrier, 6, ArgSMS.ID_Instancia);
+                GuardaLog("MSJ: " + ArgSMS.Mensaje + " -- Mes: " + ArgSMS.Mes + " -- Tel: " + embarazada.First().telefono + " -- Tel: " + embarazada.First().carrier, 1, ArgSMS.ID_Instancia);
                 return Json(EnviarSMS(ArgSMS.Mes + " -- " + ArgSMS.Mensaje, embarazada.First().carrier, embarazada.First().telefono, ArgSMS.Es_Control, ArgSMS.ID_Instancia,ArgSMS.Mes));
             }
             else
@@ -57,7 +57,7 @@ namespace ServiceRestSMS.Controllers
             }
         }
 
-        internal bool EnviarSMS(string ArgMensaje, string ArgCarrier, string ArgTelefono, bool ArgEsControl, string ArgInstancia,int Mes)
+        internal bool EnviarSMS(string ArgMensaje, string ArgCarrier, string ArgTelefono, bool ArgEsControl, string ArgInstancia,int ArgMes)
         {
             MilDiasEntities db = new MilDiasEntities();
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://64.76.120.14:6064/minsaludsanjuan");
@@ -115,6 +115,7 @@ namespace ServiceRestSMS.Controllers
                         logControl.ID_INSTANCIA = ArgInstancia;
                         logControl.ID_TRANSACCION = int.Parse(MTResp.Transaccion.IdTran);
                         logControl.ID_RESPUESTA = 3; //Por defecto ponemos que no contesto
+                        logControl.MES = ArgMes;
                         db.LogMensajeControl.Add(logControl);
                         db.SaveChanges();
                     }

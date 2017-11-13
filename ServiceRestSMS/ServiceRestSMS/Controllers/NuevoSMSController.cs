@@ -114,6 +114,7 @@ namespace ServiceRestSMS.Controllers
                                         smsModel.Mensaje = "Mensaje modelo de info";
                                         smsModel.ID_Instancia = inscripcion.ID_INSTANCIA;
                                         smsModel.Es_Control = false;
+                                        smsModel.Mes = 0;
                                         sms.EnviarSMS(smsModel);
 
                                         /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
@@ -127,7 +128,7 @@ namespace ServiceRestSMS.Controllers
                                         GuardaLog("MENSAJE DE BAJA", 3, inscripcion.ID_INSTANCIA);
                                         /*Cambio el campo ACTIVO de la embarazada porque recibi la palabra baja*/
                                         BajaEmbarazada(inscripcion.ID_INSTANCIA, 1);
-                                        EnviarMensaje("BAJA DEL SERVICIO DE MENSAJES DE 1000 DIAS CONFIRMADA", MO.Servicio.Id, MO.Telefono.Msisdn);
+                                        EnviarMensaje("BAJA DEL SERVICIO DE MENSAJES DE 1000 DIAS CONFIRMADA", MO.Servicio.Id, MO.Telefono.Msisdn, inscripcion.ID_INSTANCIA);
                                         /******/
                                     }
                                     else if (mensaje == "BEBE")
@@ -217,7 +218,7 @@ namespace ServiceRestSMS.Controllers
                                         db.Inscripcion.Add(inscripcion);                                        
                                         db.SaveChanges();
                                         
-                                        EnviarMensaje("TE FELICITAMOS. BIENVENIDA A LA INICIATIVA 1000 DIAS", MO.Servicio.Id, MO.Telefono.Msisdn);
+                                        EnviarMensaje("TE FELICITAMOS. BIENVENIDA A LA INICIATIVA 1000 DIAS", MO.Servicio.Id, MO.Telefono.Msisdn, InstanciaID);
                                     }
                                     else
                                     {
@@ -229,7 +230,7 @@ namespace ServiceRestSMS.Controllers
                                 else
                                 {
                                     //continuar = false;
-                                    EnviarMensaje("El mensaje no tiene el formato correcto. Recorda que para inscribirte debes enviar MAMA DNI MES. Ejemplo MAMA 30XXXXXX 3", MO.Servicio.Id, MO.Telefono.Msisdn);
+                                    EnviarMensaje("El mensaje no tiene el formato correcto. Recorda que para inscribirte debes enviar MAMA DNI MES. Ejemplo MAMA 30XXXXXX 3", MO.Servicio.Id, MO.Telefono.Msisdn, "");
                                     GuardaLog("El mensaje no tiene el formato correcto." + MO.Telefono.Msisdn, 6, "");
                                 }
                             }
@@ -239,7 +240,7 @@ namespace ServiceRestSMS.Controllers
                             {
                                 /*Guardo el mensaje de info saliente en el log de mensajes como tipo de mensaje enviado*/
 
-                                EnviarMensaje("El mensaje no tiene el formato correcto. Recorda que para inscribirte debes enviar MAMA DNI MES. Ejemplo MAMA 30XXXXXX 3", MO.Servicio.Id, MO.Telefono.Msisdn);
+                                EnviarMensaje("El mensaje no tiene el formato correcto. Recorda que para inscribirte debes enviar MAMA DNI MES. Ejemplo MAMA 30XXXXXX 3", MO.Servicio.Id, MO.Telefono.Msisdn, "");
                                 GuardaLog("El mensaje no tiene el formato correcto." + MO.Telefono.Msisdn, 6, "");
                             }
                             break;
@@ -254,10 +255,10 @@ namespace ServiceRestSMS.Controllers
             }
         }
 
-        private void EnviarMensaje(String Mensaje, string Carrier,string Telefono)
+        private void EnviarMensaje(String Mensaje, string Carrier,string Telefono, string InstanciaId)
         {
             EnviarSMSController sms = new EnviarSMSController();
-            sms.EnviarSMS(Mensaje,Carrier,Telefono,false,"",0);
+            sms.EnviarSMS(Mensaje,Carrier,Telefono,false, InstanciaId, 0);
         }
 
 
@@ -316,8 +317,8 @@ namespace ServiceRestSMS.Controllers
         private string quitarAcentos(string ArgMensaje)
         {
             string rslt = "";
-            string consignos = "áàäéèëíìïóòöúùuñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑçÇ";
-            string sinsignos = "aaaeeeiiiooouuunAAAEEEIIIOOOUUUNcC";
+            string consignos = "áàäéèëíìïóòöúùuñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑçÇ�";
+            string sinsignos = "aaaeeeiiiooouuunAAAEEEIIIOOOUUUNcCa";
             for (int v = 0; v < sinsignos.Length; v++)
             {
                 string i = consignos.Substring(v, 1);

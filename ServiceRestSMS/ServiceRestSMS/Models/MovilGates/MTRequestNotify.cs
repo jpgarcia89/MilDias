@@ -19,6 +19,14 @@ namespace ServiceRestSMS.Models.MovilGates
         public string Info { get; set; }
         [XmlElement(ElementName = "TicketId")]
         public TicketId TicketId { get; set; }
+
+        public MTRequestNotify()
+        {
+            Servicio = new Servicio();
+            Telefono = new Telefono();
+            Estado = new Estado();
+            TicketId = new TicketId();
+        }
     }
 
 }

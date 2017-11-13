@@ -55,6 +55,7 @@
           <Property Name="ID_TRANSACCION" Type="int" Nullable="false" />
           <Property Name="ID_RESPUESTA" Type="tinyint" Nullable="false" />
           <Property Name="FECHA" Type="datetime" Nullable="false" />
+          <Property Name="MES" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TipoInstancia">
           <Key>
@@ -229,6 +230,7 @@
           <Property Name="ID_RESPUESTA" Type="Byte" Nullable="false" />
           <NavigationProperty Name="TipoRespuestaControl" Relationship="Self.FK_LogMensajeControl_TipoRespuestaControl" FromRole="LogMensajeControl" ToRole="TipoRespuestaControl" />
           <Property Name="FECHA" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MES" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="TipoInstancia">
           <Key>
@@ -399,6 +401,7 @@
           <EntitySetMapping Name="LogMensajeControl">
             <EntityTypeMapping TypeName="Model.LogMensajeControl">
               <MappingFragment StoreEntitySet="LogMensajeControl">
+                <ScalarProperty Name="MES" ColumnName="MES" />
                 <ScalarProperty Name="FECHA" ColumnName="FECHA" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ID_INSTANCIA" ColumnName="ID_INSTANCIA" />

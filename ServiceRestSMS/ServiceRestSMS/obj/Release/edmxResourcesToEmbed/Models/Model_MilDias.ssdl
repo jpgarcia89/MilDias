@@ -50,6 +50,7 @@
     <Property Name="ID_TRANSACCION" Type="int" Nullable="false" />
     <Property Name="ID_RESPUESTA" Type="tinyint" Nullable="false" />
     <Property Name="FECHA" Type="datetime" Nullable="false" />
+    <Property Name="MES" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="TipoInstancia">
     <Key>
